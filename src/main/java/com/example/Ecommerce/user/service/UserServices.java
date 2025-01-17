@@ -3,11 +3,10 @@ package com.example.Ecommerce.user.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.Ecommerce.auth.service.CustomUserDetails;
+
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 
@@ -28,29 +27,21 @@ public class UserServices {
 
     public User updateUser(String id, EditTypeUserDTO tipoUser) {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> user = userRepository.findById(id);
 
-        String userId = userDetails.getId();
-
-        if (userId.equals(id)) {
-
-            Optional<User> user = userRepository.findById(id);
-
-            if (user.isPresent()) {
+        if (user.isPresent()) {
             
-                User newUser = user.get();
+            User newUser = user.get();
 
-                newUser.setTipo_user(tipoUser.getTipo_user());
+            newUser.setTipo_user(tipoUser.getTipo_user());
 
-                return userRepository.save(newUser);
+            return userRepository.save(newUser);
 
-            } else {
+        } else {
 
-                throw new RuntimeException();
-            }
-        }else {
-            throw new RuntimeException("User não tem permissão.");
+            throw new RuntimeException();
         }
+        
     }
 
     public void deleteUser(String id) {
