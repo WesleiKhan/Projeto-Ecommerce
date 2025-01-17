@@ -3,6 +3,7 @@ package com.example.Ecommerce.user.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
@@ -16,7 +17,9 @@ public class UserServices {
 
     public User createUser(UserEntryDTO data) {
 
-        User newUser = new User(data.getPrimeiro_nome(), data.getSobrenome(), data.getUsername(), data.getEmail(), data.getData_nascimento(), data.getPassword());
+        String encrytpedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
+
+        User newUser = new User(data.getPrimeiro_nome(), data.getSobrenome(), data.getUsername(), data.getEmail(), data.getData_nascimento(), encrytpedPassword);
 
         return userRepository.save(newUser);
     }
