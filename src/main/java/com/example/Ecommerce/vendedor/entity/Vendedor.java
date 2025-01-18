@@ -27,7 +27,7 @@ public class Vendedor {
     @Column(name = "cpf")
     private String cpf;
 
-    @Column(name = "cnpj")
+    @Column(name = "cnpj", unique = true)
     private String cnpj;
 
     @Column(name = "numero_telefone")
