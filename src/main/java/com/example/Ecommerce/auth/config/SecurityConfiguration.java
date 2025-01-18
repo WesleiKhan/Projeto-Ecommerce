@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                .authorizeHttpRequests(authorize -> authorize
                .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+               .requestMatchers(HttpMethod.GET, "/anuncio/anuncios").permitAll()
                .anyRequest().authenticated())
                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                .build(); 
