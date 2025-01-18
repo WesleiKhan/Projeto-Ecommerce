@@ -1,0 +1,147 @@
+package com.example.Ecommerce.anuncio_produto.entity;
+
+import java.math.BigDecimal;
+
+import com.example.Ecommerce.vendedor.entity.Vendedor;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "anuncios")
+public class Anuncio {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private String id;
+
+    @Column(name = "titulo")
+    private String titulo;
+
+    @Column(name = "descricao")
+    private String descricao;
+
+    @Column(name = "imagem")
+    private String imagem;
+
+    @Column(name = "valor", precision = 10, scale = 2)
+    private BigDecimal valor;
+
+    @ManyToOne
+    @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
+    private Vendedor vendedor;
+
+    @Column(name = "altura")
+    private Double altura;
+
+    @Column(name = "largura")
+    private Double largura;
+
+    @Column(name = "comprimento")
+    private Double comprimento;
+
+    @Column(name = "peso")
+    private Double peso;
+
+
+    public Anuncio() {
+    }
+
+
+    public Anuncio(String titulo, String descricao, String imagem, BigDecimal valor, Double altura, Double largura,
+            Double comprimento, Double peso) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.imagem = imagem;
+        this.valor = valor;
+        this.altura = altura;
+        this.largura = largura;
+        this.comprimento = comprimento;
+        this.peso = peso;
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public Double getAltura() {
+        return altura;
+    }
+
+    public void setAltura(Double altura) {
+        this.altura = altura;
+    }
+
+    public Double getLargura() {
+        return largura;
+    }
+
+    public void setLargura(Double largura) {
+        this.largura = largura;
+    }
+
+    public Double getComprimento() {
+        return comprimento;
+    }
+
+    public void setComprimento(Double comprimento) {
+        this.comprimento = comprimento;
+    }
+
+    public Double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+ 
+}
