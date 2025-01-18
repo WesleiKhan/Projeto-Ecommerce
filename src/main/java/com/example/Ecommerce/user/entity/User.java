@@ -2,6 +2,10 @@ package com.example.Ecommerce.user.entity;
 
 import java.time.LocalDate;
 
+import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,6 +46,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @OneToOne(mappedBy = "nome", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Vendedor cadastro_vendedor;
     
 
     public User() {
