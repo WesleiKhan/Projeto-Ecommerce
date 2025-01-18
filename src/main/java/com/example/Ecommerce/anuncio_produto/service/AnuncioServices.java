@@ -1,6 +1,7 @@
 package com.example.Ecommerce.anuncio_produto.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,10 @@ public class AnuncioServices {
         } else {
             throw new RuntimeException();
         }
-    }  
+    }
+    
+    public List<Anuncio> getAnuncios() {
+
+        return anuncioRepository.findAll();
+    }
 }
