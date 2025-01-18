@@ -1,13 +1,19 @@
 package com.example.Ecommerce.vendedor.entity;
 
-import com.example.Ecommerce.user.entity.User;
+import java.util.List;
 
+import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
+import com.example.Ecommerce.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -56,6 +62,11 @@ public class Vendedor {
 
     @Column(name = "codigo_banco")
     private String codigo_banco;
+
+    @Column(name = "anuncios_id")
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Anuncio> anuncios;
     
 
     public Vendedor() {
