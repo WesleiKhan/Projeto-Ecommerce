@@ -30,14 +30,22 @@ public class Carrinho {
     private Anuncio anuncio;
 
     @Column(name = "quantidade")
-    private Integer quantidade;
+    private Integer quantidade = 1;
 
 
     public Carrinho() {
     }
 
     public Carrinho(Integer quantidade) {
-        this.quantidade = quantidade;
+
+        if (quantidade != null && quantidade > this.quantidade) {
+
+            this.quantidade = quantidade;
+
+        } else {
+            this.quantidade = 1;
+        }
+        
     }
 
     public String getId() {
