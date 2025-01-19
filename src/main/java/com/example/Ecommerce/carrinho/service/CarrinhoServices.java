@@ -1,5 +1,6 @@
 package com.example.Ecommerce.carrinho.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,25 @@ public class CarrinhoServices {
             carrinho.setAnuncio(anuncio);
 
             return carrinhoRepository.save(carrinho);
+
+        } else {
+            throw new RuntimeException();
+        }
+    }
+
+    public List<Carrinho> getCarrinhos() {
+
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
+
+            User user = userOptional.get();
+
+            return user.getCarrinhos();
 
         } else {
             throw new RuntimeException();
