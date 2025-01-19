@@ -72,4 +72,25 @@ public class FavoritoServices {
             throw new RuntimeException();
         }
     }
+
+    public void deleteFavorito(String id) {
+
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        User user = userRepository.findById(userId).orElseThrow();
+
+        Favorito favOptional = favoritoRepository.findById(id).orElseThrow();
+
+        User userFavorito = favOptional.getUser();
+
+        if (user.equals(userFavorito)) {
+
+            favoritoRepository.delete(favOptional);
+
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
