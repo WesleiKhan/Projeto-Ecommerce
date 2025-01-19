@@ -72,5 +72,26 @@ public class CarrinhoServices {
             throw new RuntimeException();
         }
     }
+
+    public void deleteCarrinho(String id) {
+
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        User user = userRepository.findById(userId).orElseThrow();
+
+        Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow();
+
+        User user2 = carrinho.getUser();
+
+        if (user.equals(user2)) {
+
+            carrinhoRepository.delete(carrinho);
+            
+        } else {
+            throw new RuntimeException();
+        }
+    }
     
 }
