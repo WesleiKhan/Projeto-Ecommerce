@@ -1,9 +1,13 @@
 package com.example.Ecommerce.anuncio_produto.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -49,6 +54,11 @@ public class Anuncio {
 
     @Column(name = "peso")
     private Double peso;
+
+    @Column(name = "favoritos_id")
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Favorito> favoritos;
 
 
     public Anuncio() {
