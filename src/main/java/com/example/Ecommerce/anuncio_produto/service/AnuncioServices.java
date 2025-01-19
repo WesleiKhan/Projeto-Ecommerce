@@ -13,7 +13,10 @@ import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.utils.service.CepEntryDTO;
 import com.example.Ecommerce.utils.service.FileUploadImpl;
+import com.example.Ecommerce.utils.service.FreteEntryDTO;
+import com.example.Ecommerce.utils.service.FreteServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
 
@@ -31,6 +34,9 @@ public class AnuncioServices {
 
     @Autowired
     private FileUploadImpl fileUploadImpl;
+
+    @Autowired
+    private FreteServices freteServices;
 
     public Anuncio createAnuncio(AnuncioEntryDTO data) throws IOException{
 
@@ -62,5 +68,25 @@ public class AnuncioServices {
     public List<Anuncio> getAnuncios() {
 
         return anuncioRepository.findAll();
+    }
+
+    public String verFrete(String id, CepEntryDTO cep_destino) {
+
+        Optional<Anuncio> anuOptional = anuncioRepository.findById(id);
+
+        if (anuOptional.isPresent()) {
+
+            Anuncio anuncio = anuOptional.get();
+
+            Vendedor vendedor = anuncio.getVendedor();
+
+            String freteResult = freteServices.calcularFrete(new FreteEntryDTO(vendedor.getCep(), anuncio.getAltura(), anuncio.getLargura(), anuncio.getComprimento(), anuncio.getPeso()), cep_destino);
+
+            return freteResult;
+
+        } else {
+            throw new RuntimeException();
+        }
+
     }
 }
