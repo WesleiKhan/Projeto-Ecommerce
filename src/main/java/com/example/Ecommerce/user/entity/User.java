@@ -1,7 +1,9 @@
 package com.example.Ecommerce.user.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,6 +15,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -51,6 +54,10 @@ public class User {
     @JsonIgnore
     private Vendedor cadastro_vendedor;
     
+    @Column(name = "favoritos_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Favorito> favoritos;
 
     public User() {
     }
