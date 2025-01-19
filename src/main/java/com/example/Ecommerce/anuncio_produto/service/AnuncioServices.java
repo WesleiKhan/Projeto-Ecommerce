@@ -48,7 +48,7 @@ public class AnuncioServices {
 
             String imagem = fileUploadImpl.updloadFile(data.getImagem()) ;
 
-            Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(), imagem, data.getValor(), data.getAltura(), data.getLargura(), data.getComprimento(), data.getPeso());
+            Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(), imagem, data.getValor(), data.getQuantidade(), data.getAltura(), data.getLargura(), data.getComprimento(), data.getPeso());
 
             newAnuncio.setVendedor(vendedor);
 

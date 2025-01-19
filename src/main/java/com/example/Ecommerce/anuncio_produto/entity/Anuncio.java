@@ -40,6 +40,9 @@ public class Anuncio {
     @Column(name = "valor", precision = 10, scale = 2)
     private BigDecimal valor;
 
+    @Column(name = "quantidade_produto")
+    private Integer quantidade_produto;
+
     @ManyToOne
     @JoinColumn(name = "vendedor_id", referencedColumnName = "id")
     private Vendedor vendedor;
@@ -71,12 +74,13 @@ public class Anuncio {
     }
 
 
-    public Anuncio(String titulo, String descricao, String imagem, BigDecimal valor, Double altura, Double largura,
+    public Anuncio(String titulo, String descricao, String imagem, BigDecimal valor, Integer quantidade_produto, Double altura, Double largura,
             Double comprimento, Double peso) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.imagem = imagem;
         this.valor = valor;
+        this.quantidade_produto = quantidade_produto;
         this.altura = altura;
         this.largura = largura;
         this.comprimento = comprimento;
@@ -158,6 +162,14 @@ public class Anuncio {
 
     public void setPeso(Double peso) {
         this.peso = peso;
+    }
+
+    public Integer getQuantidade_produto() {
+        return quantidade_produto;
+    }
+
+    public void setQuantidade_produto(Integer quantidade_produto) {
+        this.quantidade_produto = quantidade_produto;
     }
  
 }

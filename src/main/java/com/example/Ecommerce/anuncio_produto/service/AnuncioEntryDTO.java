@@ -14,6 +14,8 @@ public class AnuncioEntryDTO {
 
     private BigDecimal valor;
 
+    private Integer quantidade;
+
     private Double altura;
 
     private Double largura;
@@ -86,5 +88,12 @@ public class AnuncioEntryDTO {
         this.peso = peso;
     }
 
-    
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+ 
 }
