@@ -3,6 +3,7 @@ package com.example.Ecommerce.user.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -58,6 +59,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Favorito> favoritos;
+
+    @Column(name = "carrinhos_id")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Carrinho> carrinhos;
 
     public User() {
     }
@@ -134,9 +140,12 @@ public class User {
         this.password = password;
     }
 
-
     public List<Favorito> getFavoritos() {
         return favoritos;
     }
-     
+
+    public List<Carrinho> getCarrinhos() {
+        return carrinhos;
+    }
+      
 }
