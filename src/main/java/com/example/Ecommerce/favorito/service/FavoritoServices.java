@@ -1,5 +1,6 @@
 package com.example.Ecommerce.favorito.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,23 @@ public class FavoritoServices {
             throw new RuntimeException();
         }
     } 
+
+    public List<Favorito> getFavoritos() {
+
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        Optional<User> user = userRepository.findById(userId);
+
+        if (user.isPresent()) {
+
+            User user2 = user.get();
+
+            return user2.getFavoritos();
+
+        } else {
+            throw new RuntimeException();
+        }
+    }
 }
