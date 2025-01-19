@@ -31,6 +31,7 @@ public class SecurityConfiguration {
                .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                .requestMatchers(HttpMethod.GET, "/anuncio/anuncios").permitAll()
+               .requestMatchers(HttpMethod.POST, "/anuncio/calcular-Frete/{id}").permitAll()
                .anyRequest().authenticated())
                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                .build(); 
