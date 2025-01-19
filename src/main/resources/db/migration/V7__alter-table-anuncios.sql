@@ -1,0 +1,1 @@
+ALTER TABLE anuncios ADD COLUMN quantidade_produto INT;
