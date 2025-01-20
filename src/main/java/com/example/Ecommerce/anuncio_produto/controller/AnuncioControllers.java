@@ -1,8 +1,8 @@
 package com.example.Ecommerce.anuncio_produto.controller;
 
+import java.io.IOException;
 import java.util.List;
 
-import org.apache.hc.core5.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,15 +26,12 @@ public class AnuncioControllers {
     private AnuncioServices anuncioServices;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data) {
+    public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data) throws IOException {
 
-        try {
-            anuncioServices.createAnuncio(data);
+        anuncioServices.createAnuncio(data);
 
-            return ResponseEntity.ok().body("Anuncio de venda criado com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.SC_BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok().body("Anuncio de venda criado com sucesso!");
+        
     }
 
     @PostMapping("/calcular-Frete/{id}")

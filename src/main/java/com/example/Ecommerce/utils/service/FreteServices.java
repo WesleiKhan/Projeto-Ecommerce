@@ -2,6 +2,7 @@ package com.example.Ecommerce.utils.service;
 
 import org.springframework.stereotype.Service;
 
+import com.example.Ecommerce.utils.exceptions.FreteException;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -63,7 +64,7 @@ public class FreteServices {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Erro ao calcular frete", e);
+            throw new FreteException();
         }
     }
 

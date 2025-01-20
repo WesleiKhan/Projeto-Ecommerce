@@ -12,7 +12,9 @@ import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.utils.exceptions.FreteException;
 import com.example.Ecommerce.utils.service.CepEntryDTO;
 import com.example.Ecommerce.utils.service.FileUploadImpl;
 import com.example.Ecommerce.utils.service.FreteEntryDTO;
@@ -44,7 +46,7 @@ public class AnuncioServices {
 
         String userId = userDetails.getId();
 
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
 
         Optional<Vendedor> userV = vendedorRepository.findByNome(user);
 
@@ -61,7 +63,7 @@ public class AnuncioServices {
             return anuncioRepository.save(newAnuncio);
 
         } else {
-            throw new RuntimeException();
+            throw new UserNotFound("Usuario não foi encontrado no cadastro de vendedores, por favor siga ate a aba de cadastro de vendedores para se cadastrar!");
         }
     }
     
@@ -85,7 +87,7 @@ public class AnuncioServices {
             return freteResult;
 
         } else {
-            throw new RuntimeException();
+            throw new FreteException();
         }
 
     }
