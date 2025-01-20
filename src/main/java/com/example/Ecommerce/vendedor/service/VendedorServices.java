@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
+import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
@@ -33,6 +35,8 @@ public class VendedorServices {
 
             User infoVendedor = user.get();
 
+            if (vendedorRepository.findByNome(infoVendedor) != null) throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");
+
             Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(), data.getNumero_telefone(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep(), data.getAgencia(), data.getConta(), data.getCodigo_banco());
 
             newVendedor.setNome(infoVendedor);
@@ -40,7 +44,7 @@ public class VendedorServices {
             return vendedorRepository.save(newVendedor);
 
         } else {
-            throw new RuntimeException();
+            throw new UserNotFound();
         }
     } 
 }
