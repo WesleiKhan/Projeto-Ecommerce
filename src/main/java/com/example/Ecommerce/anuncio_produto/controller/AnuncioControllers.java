@@ -37,13 +37,10 @@ public class AnuncioControllers {
     @PostMapping("/calcular-Frete/{id}")
     public ResponseEntity<String> getFrete(@PathVariable String id, @RequestBody CepEntryDTO cep) {
 
-        try {
-            String result = anuncioServices.verFrete(id, cep);
+        String result = anuncioServices.verFrete(id, cep);
 
-            return ResponseEntity.ok(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(org.springframework.http.HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok(result);
+        
     }
     
     @GetMapping("/anuncios")
