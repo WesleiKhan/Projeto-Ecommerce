@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
+import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 
 @Service
@@ -17,6 +19,8 @@ public class UserServices {
     private UserRepository userRepository;
 
     public User createUser(UserEntryDTO data) {
+
+        if (userRepository.findByEmail(data.getEmail()) != null) throw new UserAlreadyExists();
 
         String encryptPassword = new BCryptPasswordEncoder().encode(data.getPassword());
 
@@ -39,7 +43,7 @@ public class UserServices {
 
         } else {
 
-            throw new RuntimeException();
+            throw new UserNotFound();
         }
         
     }
@@ -55,7 +59,7 @@ public class UserServices {
             userRepository.delete(userToBeDelete);
 
         } else {
-            throw new RuntimeException();
+            throw new UserNotFound();
         }
     }
     

@@ -1,7 +1,6 @@
 package com.example.Ecommerce.user.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,39 +26,27 @@ public class UserControllers {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserEntryDTO data) {
 
-        try {
-            userServices.createUser(data);
+        userServices.createUser(data);
 
-            return ResponseEntity.ok().body("Usuario Cadastrado com sucesso!");
-        } catch (Exception e) {
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok().body("Usuario Cadastrado com sucesso!");
+         
     }
     
     @PutMapping("/edit/{id}")
     public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody EditTypeUserDTO data) {
 
-        try {
-            userServices.updateUser(id, data);
+        userServices.updateUser(id, data);
 
-            return ResponseEntity.ok().body("Tipo de Usuario Modificado com sucesso!");
-        } catch (Exception e) {
+        return ResponseEntity.ok().body("Tipo de Usuario Modificado com sucesso!"); 
 
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
     }
 
     @DeleteMapping("/delete/{id}") 
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
 
-        try {
-            userServices.deleteUser(id);
+        userServices.deleteUser(id);
 
-            return ResponseEntity.ok().body("Usuario deletado com sucesso!");
-        } catch (Exception e) {
-            
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok().body("Usuario deletado com sucesso!");
+        
     }
 }
