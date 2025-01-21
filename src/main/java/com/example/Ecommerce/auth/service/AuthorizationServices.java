@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 
 @Service
@@ -30,7 +31,7 @@ public class AuthorizationServices implements UserDetailsService {
 
         } else {
 
-            throw new RuntimeException();
+            throw new UserNotFound("Você ainda não e cadastrado, por favor realizar o cadastror antes de tentar efetuar o login!");
         }
     }
     
