@@ -15,10 +15,10 @@ import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.utils.exceptions.FreteException;
-import com.example.Ecommerce.utils.service.CepEntryDTO;
 import com.example.Ecommerce.utils.service.FileUploadImpl;
-import com.example.Ecommerce.utils.service.FreteEntryDTO;
 import com.example.Ecommerce.utils.service.FreteServices;
+import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
+import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
 

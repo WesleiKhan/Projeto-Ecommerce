@@ -3,6 +3,8 @@ package com.example.Ecommerce.utils.service;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.utils.exceptions.FreteException;
+import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
+import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

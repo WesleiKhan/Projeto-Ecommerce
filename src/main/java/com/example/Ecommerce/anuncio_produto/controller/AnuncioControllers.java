@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioServices;
-import com.example.Ecommerce.utils.service.CepEntryDTO;
+import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
 
 @RestController
 @RequestMapping("/anuncio")
