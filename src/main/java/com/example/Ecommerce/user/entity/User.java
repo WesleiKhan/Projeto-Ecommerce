@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.Ecommerce.carrinho.entity.Carrinho;
+import com.example.Ecommerce.comprador.entity.Comprador;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -64,6 +65,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Carrinho> carrinhos;
+
+    @OneToOne(mappedBy = "nome", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Comprador cadastro_comprador;
 
     public User() {
     }
@@ -146,6 +151,16 @@ public class User {
 
     public List<Carrinho> getCarrinhos() {
         return carrinhos;
+    }
+
+
+    public Vendedor getCadastro_vendedor() {
+        return cadastro_vendedor;
+    }
+
+
+    public Comprador getCadastro_comprador() {
+        return cadastro_comprador;
     }
       
 }
