@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS compradores (
+
+    id VARCHAR(40) PRIMARY KEY DEFAULT (UUID()),
+    nome_id VARCHAR(40),
+    cpf VARCHAR(12) NOT NULL,
+    numero_telefone VARCHAR(11) NOT NULL,
+    rua VARCHAR(100) NOT NULL,
+    numero VARCHAR(10) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    estado VARCHAR(30) NOT NULL,
+    cep VARCHAR(15) NOT NULL,
+
+    FOREIGN KEY (nome_id) REFERENCES users(id) ON DELETE CASCADE 
+);
