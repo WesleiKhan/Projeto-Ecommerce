@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
+import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -68,6 +69,11 @@ public class Anuncio {
     @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Carrinho> carrinhos;
+
+    @Column(name = "transacoes_id")
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Transacao> transacoes;
 
 
     public Anuncio() {

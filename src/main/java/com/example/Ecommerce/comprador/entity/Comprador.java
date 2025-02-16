@@ -1,13 +1,19 @@
 package com.example.Ecommerce.comprador.entity;
 
-import com.example.Ecommerce.user.entity.User;
+import java.util.List;
 
+import com.example.Ecommerce.transacoes.entity.Transacao;
+import com.example.Ecommerce.user.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -44,6 +50,11 @@ public class Comprador {
 
     @Column(name = "cep")
     private String cep;
+
+    @Column(name = "transacoes_id")
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Transacao> transacoes;
 
 
     public Comprador() {
