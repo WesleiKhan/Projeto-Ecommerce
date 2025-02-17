@@ -1,0 +1,8 @@
+CREATE TABLE IF NOT EXISTS saques (
+
+    id VARCHAR(40) PRIMARY KEY DEFAULT (UUID()),
+    sacador_id VARCHAR(40),
+    valor DECIMAL(10, 2) NOT NULL,
+
+    FOREIGN KEY (sacador_id) REFERENCES vendedores(id) ON DELETE CASCADE
+);
