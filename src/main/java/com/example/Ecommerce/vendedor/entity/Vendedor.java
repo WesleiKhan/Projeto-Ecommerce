@@ -195,4 +195,15 @@ public class Vendedor {
         this.codigo_banco = codigo_banco;
     }
 
+
+    public List<Anuncio> getAnuncios() {
+        return anuncios;
+    }
+
+
+    public List<Saque> getSaques() {
+        return saques;
+    }
+
+    
 }
