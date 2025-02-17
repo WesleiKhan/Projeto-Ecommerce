@@ -1,6 +1,7 @@
 package com.example.Ecommerce.transacoes.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.comprador.entity.Comprador;
@@ -36,6 +37,9 @@ public class Transacao {
 
     @Column(name = "valor_total", precision = 10, scale = 2)
     private BigDecimal valor_total;
+
+    @Column(name = "data_da_compra", nullable = false, updatable = false)
+    private LocalDateTime data_da_compra = LocalDateTime.now();
 
     public Transacao() {
     }
@@ -78,6 +82,10 @@ public class Transacao {
 
     public void setValor_total(BigDecimal valor_total) {
         this.valor_total = valor_total;
+    }
+
+    public LocalDateTime getData_da_compra() {
+        return data_da_compra;
     }
     
 }

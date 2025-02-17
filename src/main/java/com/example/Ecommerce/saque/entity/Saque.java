@@ -1,6 +1,7 @@
 package com.example.Ecommerce.saque.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 
@@ -27,6 +28,9 @@ public class Saque {
 
     @Column(name = "valor", precision = 10, scale = 2)
     private BigDecimal valor;
+
+    @Column(name = "data_do_saque", nullable = false, updatable = false)
+    private LocalDateTime data_do_saque = LocalDateTime.now();
 
     public Saque() {
     }
