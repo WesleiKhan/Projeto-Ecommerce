@@ -1,7 +1,6 @@
 package com.example.Ecommerce.comprador.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +21,11 @@ public class CompradorControllers {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody CompradorEntryDTO data) {
+ 
+        compradorServices.createComprador(data);
 
-        try {
-            compradorServices.createComprador(data);
-
-            return ResponseEntity.ok().body("Usuario cadstrado agora esta apto a realizar compras");
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("erro ao realizar cadastro de comprador " + e);
-        }
+        return ResponseEntity.ok().body("Usuario cadstrado agora esta apto a realizar compras");
+  
     }
     
 }

@@ -72,7 +72,7 @@ public class TransacaoServices {
 
         } else {
 
-            throw new RuntimeException();
+            throw new UserNotFound("Comprador não foi encontrado!");
         }
   
     }

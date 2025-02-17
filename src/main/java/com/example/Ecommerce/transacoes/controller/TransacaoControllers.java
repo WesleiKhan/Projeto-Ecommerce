@@ -2,7 +2,6 @@ package com.example.Ecommerce.transacoes.controller;
 
 import java.util.List;
 
-import org.apache.hc.core5.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,26 +25,19 @@ public class TransacaoControllers {
     @PostMapping("/comprar/{id}")
     public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody TransacaoEntryDTO data) {
 
-        try {
-            transacaoServices.createTrasacao(id, data);
+        transacaoServices.createTrasacao(id, data);
 
-            return ResponseEntity.ok().body("Compra realizada com sucesso !");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.SC_BAD_REQUEST).body("Error ao realizar compra " + e);
-        }
+        return ResponseEntity.ok().body("Compra realizada com sucesso !");
+       
     }
 
     @GetMapping("/ver-transacoes")
     public ResponseEntity<List<Transacao>> verTransacoes() {
 
-        try {
-            List<Transacao> transacoes = transacaoServices.getTransacao();
+        List<Transacao> transacoes = transacaoServices.getTransacao();
 
-            return ResponseEntity.ok().body(transacoes);
-
-        } catch (Exception e) {
-            return ResponseEntity.status(org.springframework.http.HttpStatus.BAD_REQUEST).body(null);
-        }
+        return ResponseEntity.ok().body(transacoes);
+    
     }
     
 }
