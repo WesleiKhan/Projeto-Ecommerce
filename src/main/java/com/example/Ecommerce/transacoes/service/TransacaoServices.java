@@ -1,6 +1,7 @@
 package com.example.Ecommerce.transacoes.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
 
 @Service
 public class TransacaoServices {
@@ -32,6 +35,10 @@ public class TransacaoServices {
 
     @Autowired
     private CompradorRepository compradorRepository;
+
+    @Autowired
+    private VendedorRepository vendedorRepository;
+
 
     public Transacao createTrasacao(String id, TransacaoEntryDTO data) {
 
@@ -67,7 +74,27 @@ public class TransacaoServices {
 
             throw new RuntimeException();
         }
+  
+    }
 
-        
+    public List<Transacao> getTransacao() {
+
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+
+        Optional<Vendedor> veOptional = vendedorRepository.findByNome(user);
+
+        if (veOptional.isPresent()) {
+
+            Vendedor vendedor = veOptional.get();
+
+            return transacaoRepository.findByProdutoVendedor(vendedor);
+
+        } else {
+            throw new UserNotFound("vendedor nao foi enconterado !");
+        }
     }
 }
