@@ -64,6 +64,18 @@ public class Saque {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
+
+    public LocalDateTime getData_do_saque() {
+        return data_do_saque;
+    }
+
+    public Transacao getTransacao() {
+        return transacao;
+    }
+
+    public void setTransacao(Transacao transacao) {
+        this.transacao = transacao;
+    }
     
     
 }

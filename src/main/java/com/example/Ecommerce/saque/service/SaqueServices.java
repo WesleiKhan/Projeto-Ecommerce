@@ -1,5 +1,6 @@
 package com.example.Ecommerce.saque.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.saque.entity.Saque;
+import com.example.Ecommerce.saque.execeptions.SaqueInvalidoException;
 import com.example.Ecommerce.saque.repositorie.SaqueRepository;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
@@ -34,7 +36,7 @@ public class SaqueServices {
     private TransacaoRepository transacaoRepository;
 
 
-    public Saque sacar(String id, SaqueEntryDTO data) {
+    public Saque sacar(String id) {
 
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -48,21 +50,22 @@ public class SaqueServices {
 
             Transacao transacao = transacaoRepository.findById(id).orElseThrow();
 
-            if (data.getValor() == null) {
-                throw new IllegalArgumentException("Valor do saque não pode ser nulo.");
+            if (saqueRepository.findByTransacao(transacao).isPresent()) {
+
+                throw new SaqueInvalidoException();
             }
 
-            if (transacao.getValor_total().compareTo(data.getValor()) < 0) {
-                throw new IllegalArgumentException("Valor do saque maior que o disponível na transação.");
-            }
+            BigDecimal desconto = transacao.getValor_total().multiply(new BigDecimal("0.10"));
 
-            transacaoRepository.save(transacao);
+            BigDecimal valor = transacao.getValor_total().subtract(desconto);
 
             Vendedor vendedor = venOptional.get();
 
-            Saque newSaque = new Saque(data.getValor());
+            Saque newSaque = new Saque(valor);
 
             newSaque.setSacador(vendedor);
+
+            newSaque.setTransacao(transacao);
 
             return saqueRepository.save(newSaque);
 
