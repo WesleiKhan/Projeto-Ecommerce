@@ -56,8 +56,6 @@ public class SaqueServices {
                 throw new IllegalArgumentException("Valor do saque maior que o disponível na transação.");
             }
 
-            transacao.setValor_total(transacao.getValor_total().subtract(data.getValor()));
-
             transacaoRepository.save(transacao);
 
             Vendedor vendedor = venOptional.get();
