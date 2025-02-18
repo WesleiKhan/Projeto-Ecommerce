@@ -59,6 +59,8 @@ public class SaqueServices {
 
             BigDecimal valor = transacao.getValor_total().subtract(desconto);
 
+            //long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
+
             Vendedor vendedor = venOptional.get();
 
             Saque newSaque = new Saque(valor);
