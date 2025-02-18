@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.comprador.entity.Comprador;
+import com.example.Ecommerce.saque.entity.Saque;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +44,10 @@ public class Transacao {
 
     @Column(name = "data_da_compra", nullable = false, updatable = false)
     private LocalDateTime data_da_compra = LocalDateTime.now();
+
+    @OneToOne(mappedBy = "transacao", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Saque saque;
 
     public Transacao() {
     }

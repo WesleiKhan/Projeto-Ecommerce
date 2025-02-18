@@ -3,6 +3,7 @@ package com.example.Ecommerce.saque.entity;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,6 +33,10 @@ public class Saque {
 
     @Column(name = "data_do_saque", nullable = false, updatable = false)
     private LocalDateTime data_do_saque = LocalDateTime.now();
+
+    @OneToOne
+    @JoinColumn(name = "transacoes_id", referencedColumnName = "id")
+    private Transacao transacao;
 
     public Saque() {
     }
