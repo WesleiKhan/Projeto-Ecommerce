@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.service.TransacaoEntryDTO;
 import com.example.Ecommerce.transacoes.service.TransacaoServices;
+import com.stripe.exception.StripeException;
 
 @RestController
 @RequestMapping("/transacoes")
@@ -23,7 +24,7 @@ public class TransacaoControllers {
     private TransacaoServices transacaoServices;
 
     @PostMapping("/comprar/{id}")
-    public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody TransacaoEntryDTO data) {
+    public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody TransacaoEntryDTO data) throws StripeException {
 
         transacaoServices.createTrasacao(id, data);
 

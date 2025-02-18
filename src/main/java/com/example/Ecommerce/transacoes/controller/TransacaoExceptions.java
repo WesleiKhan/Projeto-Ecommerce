@@ -8,7 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.transacoes.controller.TransacaoControllers")
+@ControllerAdvice(basePackages = "com.example.Ecommerce.transacoes.controller")
 public class TransacaoExceptions extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFound.class)

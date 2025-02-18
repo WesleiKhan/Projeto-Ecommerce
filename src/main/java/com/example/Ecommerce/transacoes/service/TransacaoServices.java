@@ -18,8 +18,10 @@ import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.utils.service.StripePaymentServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.stripe.exception.StripeException;
 
 @Service
 public class TransacaoServices {
@@ -39,8 +41,11 @@ public class TransacaoServices {
     @Autowired
     private VendedorRepository vendedorRepository;
 
+    @Autowired
+    private StripePaymentServices stripePaymentServices;
 
-    public Transacao createTrasacao(String id, TransacaoEntryDTO data) {
+
+    public Transacao createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {
 
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -59,6 +64,10 @@ public class TransacaoServices {
             BigDecimal valor = anuncio.getValor();
 
             BigDecimal valor_total = valor.multiply(BigDecimal.valueOf(data.getQuantidade())) ;
+
+            long valor_total_centavos = valor_total.multiply(new BigDecimal("100")).longValueExact();
+
+            stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
 
             Transacao newTransacao = new Transacao(data.getQuantidade());
 
