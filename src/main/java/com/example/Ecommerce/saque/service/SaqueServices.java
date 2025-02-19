@@ -69,7 +69,7 @@ public class SaqueServices {
 
             Vendedor vendedor = venOptional.get();
 
-            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(), valorEmCentavos);
+            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(), transacao.getId_charge_stripe(), valorEmCentavos);
 
             Saque newSaque = new Saque(valor);
 

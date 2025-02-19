@@ -14,7 +14,7 @@ public class StripeTransferServices {
     //@Value("${stripe.api.key}")
     //private String apiKey;
 
-    public Transfer createTransfer(String account_id, long amount) throws StripeException {
+    public Transfer createTransfer(String account_id, String id_charge, long amount) throws StripeException {
 
         Stripe.apiKey = "sk_test_51QFcGMGVRGySusxwg1Og8ykr499zS4HFNOz4YCQWZXMPHgQtVKvxOdDoxqZ0HnNITnh5CaBFU8l5HvlmjK70N4bC009dcq0yFW";
 
@@ -24,7 +24,7 @@ public class StripeTransferServices {
                         .setAmount(amount)  
                         .setCurrency("brl")                
                         .setDestination(account_id) 
-                        .setSourceTransaction("ch_3QuH5FGVRGySusxw20DnPV6q")        
+                        .setSourceTransaction(id_charge)        
                         .build()
                 );
 
