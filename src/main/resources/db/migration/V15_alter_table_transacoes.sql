@@ -1,0 +1,1 @@
+ALTER TABLE transacoes ADD COLUMN id_charge_stripe VARCHAR(300);
