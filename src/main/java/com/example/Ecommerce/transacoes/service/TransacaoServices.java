@@ -67,7 +67,7 @@ public class TransacaoServices {
 
             long valor_total_centavos = valor_total.multiply(new BigDecimal("100")).longValueExact();
 
-            stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
+            String id_charge = stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
 
             Transacao newTransacao = new Transacao(data.getQuantidade());
 
@@ -76,6 +76,8 @@ public class TransacaoServices {
             newTransacao.setComprador(infoComprador);
 
             newTransacao.setValor_total(valor_total);
+
+            newTransacao.setId_charge_stripe(id_charge);
 
             return transacaoRepository.save(newTransacao);
 

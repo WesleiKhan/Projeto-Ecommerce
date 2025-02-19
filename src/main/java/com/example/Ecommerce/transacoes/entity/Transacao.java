@@ -49,6 +49,9 @@ public class Transacao {
     @JsonIgnore
     private Saque saque;
 
+    @Column(name = "id_charge_stripe")
+    private String id_charge_stripe;
+
     public Transacao() {
     }
 
@@ -95,5 +98,14 @@ public class Transacao {
     public LocalDateTime getData_da_compra() {
         return data_da_compra;
     }
+
+    public String getId_charge_stripe() {
+        return id_charge_stripe;
+    }
+
+    public void setId_charge_stripe(String id_charge_stripe) {
+        this.id_charge_stripe = id_charge_stripe;
+    }
+    
     
 }
