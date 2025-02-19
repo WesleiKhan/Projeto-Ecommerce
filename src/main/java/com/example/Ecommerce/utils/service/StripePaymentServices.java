@@ -29,6 +29,7 @@ public class StripePaymentServices {
             .setCurrency("brl")
             .setPaymentMethod(token) 
             .setConfirmationMethod(PaymentIntentCreateParams.ConfirmationMethod.AUTOMATIC)
+            .setCaptureMethod(PaymentIntentCreateParams.CaptureMethod.AUTOMATIC)
             .setConfirm(true)
             .setReturnUrl("https://sucesso.com/") // URL de redirecionamento
             .build();

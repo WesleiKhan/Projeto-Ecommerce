@@ -10,7 +10,7 @@ import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.user.controller.UserControllers")
+@ControllerAdvice(basePackages = "com.example.Ecommerce.user.controller")
 public class UserExceptions extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExists.class)

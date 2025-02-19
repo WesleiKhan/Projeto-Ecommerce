@@ -11,8 +11,10 @@ import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.utils.service.StripeConnectServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.stripe.exception.StripeException;
 
 @Service
 public class VendedorServices {
@@ -23,7 +25,10 @@ public class VendedorServices {
     @Autowired
     private UserRepository userRepository;
 
-    public Vendedor createVendedor(VendedorEntryDTO data) {
+    @Autowired
+    private StripeConnectServices stripeConnectServices;
+
+    public Vendedor createVendedor(VendedorEntryDTO data) throws StripeException{
 
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -35,11 +40,15 @@ public class VendedorServices {
 
             User infoVendedor = user.get();
 
-            if (vendedorRepository.findByNome(infoVendedor) != null) throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");
+            if (vendedorRepository.findByNome(infoVendedor).isPresent()) {throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
+
+            String id_stripe = stripeConnectServices.criarContaVendedorStripe(infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(), infoVendedor.getSobrenome(), data.getCpf(), data.getNumero_telefone(), data.getConta(), data.getAgencia(), data.getCodigo_banco(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep());
 
             Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(), data.getNumero_telefone(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep(), data.getAgencia(), data.getConta(), data.getCodigo_banco());
 
             newVendedor.setNome(infoVendedor);
+
+            newVendedor.setId_account_stripe(id_stripe);
 
             return vendedorRepository.save(newVendedor);
 

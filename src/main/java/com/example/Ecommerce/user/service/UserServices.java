@@ -20,7 +20,7 @@ public class UserServices {
 
     public User createUser(UserEntryDTO data) {
 
-        if (userRepository.findByEmail(data.getEmail()) != null) throw new UserAlreadyExists();
+        if (userRepository.findByEmail(data.getEmail()).isPresent()) { throw new UserAlreadyExists();}
 
         String encryptPassword = new BCryptPasswordEncoder().encode(data.getPassword());
 
