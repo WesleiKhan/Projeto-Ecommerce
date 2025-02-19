@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.example.Ecommerce.saque.execeptions.SaqueInvalidoException;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.saque.controller")
+@ControllerAdvice(basePackages = "com.example.Ecommerce.saque.controller.SaqueControllers")
 public class SaqueExceptions extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFound.class)

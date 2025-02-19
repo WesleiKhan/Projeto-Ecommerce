@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Ecommerce.saque.entity.Saque;
 import com.example.Ecommerce.saque.service.SaqueServices;
+import com.stripe.exception.StripeException;
 
 @RestController
 @RequestMapping("/saque")
@@ -21,7 +22,7 @@ public class SaqueControllers {
     private SaqueServices saqueServices;
 
     @PostMapping("/sacar/{id}")
-    public ResponseEntity<String> realizarSaque(@PathVariable String id) {
+    public ResponseEntity<String> realizarSaque(@PathVariable String id) throws StripeException {
 
         saqueServices.sacar(id);
 

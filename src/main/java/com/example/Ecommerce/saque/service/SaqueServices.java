@@ -1,6 +1,7 @@
 package com.example.Ecommerce.saque.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +18,10 @@ import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
+import com.example.Ecommerce.utils.service.StripeTransferServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.stripe.exception.StripeException;
 
 @Service
 public class SaqueServices {
@@ -35,8 +38,11 @@ public class SaqueServices {
     @Autowired
     private TransacaoRepository transacaoRepository;
 
+    @Autowired
+    private StripeTransferServices stripeTransferServices;
 
-    public Saque sacar(String id) {
+
+    public Saque sacar(String id) throws StripeException {
 
         CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -57,11 +63,13 @@ public class SaqueServices {
 
             BigDecimal desconto = transacao.getValor_total().multiply(new BigDecimal("0.10"));
 
-            BigDecimal valor = transacao.getValor_total().subtract(desconto);
+            BigDecimal valor = transacao.getValor_total().subtract(desconto).setScale(2, RoundingMode.HALF_UP);
 
-            //long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
+            long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
 
             Vendedor vendedor = venOptional.get();
+
+            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(), valorEmCentavos);
 
             Saque newSaque = new Saque(valor);
 
