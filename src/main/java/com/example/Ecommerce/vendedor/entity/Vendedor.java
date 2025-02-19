@@ -73,6 +73,9 @@ public class Vendedor {
     @OneToMany(mappedBy = "sacador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Saque> saques;
+
+    @Column(name = "id_account_stripe")
+    private String id_account_stripe;
     
 
     public Vendedor() {
@@ -203,6 +206,16 @@ public class Vendedor {
 
     public List<Saque> getSaques() {
         return saques;
+    }
+
+
+    public String getId_account_stripe() {
+        return id_account_stripe;
+    }
+
+
+    public void setId_account_stripe(String id_account_stripe) {
+        this.id_account_stripe = id_account_stripe;
     }
 
     
