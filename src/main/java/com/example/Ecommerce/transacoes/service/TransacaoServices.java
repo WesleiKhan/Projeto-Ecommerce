@@ -18,7 +18,7 @@ import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
-import com.example.Ecommerce.utils.service.StripePaymentServices;
+import com.example.Ecommerce.utils.service.stripe.StripePaymentServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
