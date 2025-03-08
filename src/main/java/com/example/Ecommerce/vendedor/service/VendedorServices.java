@@ -86,5 +86,57 @@ public class VendedorServices {
         } else {
             throw new UserNotFound();
         }
-    } 
+    }
+
+    public Vendedor updateVendedor(VendedorEntryEditDTO data) {
+
+        CustomUserDetails userDetails =
+                (CustomUserDetails) SecurityContextHolder.getContext().
+                        getAuthentication().getPrincipal();
+
+        String userId = userDetails.getId();
+
+        User user =
+                userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+
+        Optional<Vendedor> vendeOptional =
+                vendedorRepository.findByNome(user);
+
+        if(vendeOptional.isPresent()) {
+
+            Vendedor newVendedor = vendeOptional.get();
+
+            if(data.getNumeroTelefone() != null && !data.getNumeroTelefone()
+                    .trim().isEmpty()) {
+
+                newVendedor.setNumero_telefone(data.getNumeroTelefone());
+            }
+            if(data.getRua() != null && !data.getRua().trim().isEmpty()) {
+
+                newVendedor.setRua(data.getRua());
+            }
+            if(data.getNumero() != null && !data.getNumero().trim().isEmpty()) {
+
+                newVendedor.setNumero(data.getNumero());
+            }
+            if(data.getCidade() != null && !data.getCidade().trim().isEmpty()) {
+
+                newVendedor.setCidade(data.getCidade());
+            }
+            if(data.getEstado() != null && !data.getEstado().trim().isEmpty()) {
+
+                newVendedor.setEstado(data.getEstado());
+            }
+            if(data.getCep() != null && !data.getCep().trim().isEmpty()) {
+
+                newVendedor.setCep(data.getCep());
+            }
+
+            return vendedorRepository.save(newVendedor);
+
+        }else {
+            throw new UserNotFound("Vendedor não foi encontrado!");
+        }
+
+    }
 }

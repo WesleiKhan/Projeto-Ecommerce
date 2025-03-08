@@ -1,12 +1,10 @@
 package com.example.Ecommerce.vendedor.controller;
 
+import com.example.Ecommerce.vendedor.service.VendedorEntryEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.vendedor.service.VendedorEntryDTO;
 import com.example.Ecommerce.vendedor.service.VendedorServices;
@@ -30,6 +28,15 @@ public class VendedorControllers {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
         }
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<String> edit(@Valid @RequestBody VendedorEntryEditDTO data) {
+
+        vendedorServices.updateVendedor(data);
+
+        return ResponseEntity.ok().body("Cadastro De Vendedor Atualizado com" +
+                " sucesso.");
     }
     
 }

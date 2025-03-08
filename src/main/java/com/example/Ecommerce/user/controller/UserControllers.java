@@ -34,7 +34,7 @@ public class UserControllers {
     }
     
     @PutMapping("/edit")
-    public ResponseEntity<String> updateUser(@RequestBody UserEntryEditDTO data) {
+    public ResponseEntity<String> updateUser(@Valid @RequestBody UserEntryEditDTO data) {
 
         userServices.updateUser(data);
 
