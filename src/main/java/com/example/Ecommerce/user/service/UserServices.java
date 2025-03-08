@@ -2,7 +2,9 @@ package com.example.Ecommerce.user.service;
 
 import java.util.Optional;
 
+import com.example.Ecommerce.auth.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +24,57 @@ public class UserServices {
 
         if (userRepository.findByEmail(data.getEmail()).isPresent()) { throw new UserAlreadyExists();}
 
-        String encryptPassword = new BCryptPasswordEncoder().encode(data.getPassword());
+        String encryptPassword =
+                new BCryptPasswordEncoder().encode(data.getPassword().trim());
 
-        User newUser = new User(data.getPrimeiro_nome(), data.getSobrenome(), data.getUsername(), data.getEmail(), data.getData_nascimento(), encryptPassword);
+        User newUser = new User(data.getPrimeiro_nome().trim(),
+                data.getSobrenome().trim(), data.getUsername().trim(),
+                data.getEmail().trim(), data.getData_nascimento(), encryptPassword);
 
         return userRepository.save(newUser);
     }
 
-    public User updateUser(String id, EditTypeUserDTO tipoUser) {
+    public User updateUser(UserEntryEditDTO data) {
 
-        Optional<User> user = userRepository.findById(id);
+        CustomUserDetails userDetails =
+                (CustomUserDetails) SecurityContextHolder
+                        .getContext().getAuthentication().getPrincipal();
 
-        if (user.isPresent()) {
+        String userId = userDetails.getId();
+
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (userOptional.isPresent()) {
             
-            User newUser = user.get();
+            User newUser = userOptional.get();
 
-            newUser.setTipo_user(tipoUser.getTipo_user());
+            if(data.getPrimeiroNome() != null && !data.getPrimeiroNome()
+                    .trim().isEmpty()) {
+
+                newUser.setPrimeiro_nome(data.getPrimeiroNome());
+            }
+            if(data.getSobrenome() != null && !data.getSobrenome()
+                    .trim().isEmpty()) {
+
+                newUser.setSobrenome(data.getSobrenome());
+            }
+            if(data.getUsername() != null && !data.getUsername()
+                    .trim().isEmpty()) {
+
+                newUser.setUsername(data.getUsername());
+            }
+            if(data.getDataNascimento() != null) {
+
+                newUser.setData_nascimento(data.getDataNascimento());
+            }
+            if(data.getPassword() != null && !data.getPassword()
+                    .trim().isEmpty()) {
+
+                String passwordEncrypt =
+                        new BCryptPasswordEncoder().encode(data.getPassword());
+
+                newUser.setPassword(passwordEncrypt);
+            }
 
             return userRepository.save(newUser);
 

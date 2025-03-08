@@ -1,5 +1,6 @@
 package com.example.Ecommerce.user.controller;
 
+import com.example.Ecommerce.user.service.UserEntryEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,10 +33,10 @@ public class UserControllers {
          
     }
     
-    @PutMapping("/edit/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody EditTypeUserDTO data) {
+    @PutMapping("/edit")
+    public ResponseEntity<String> updateUser(@RequestBody UserEntryEditDTO data) {
 
-        userServices.updateUser(id, data);
+        userServices.updateUser(data);
 
         return ResponseEntity.ok().body("Tipo de Usuario Modificado com sucesso!"); 
 

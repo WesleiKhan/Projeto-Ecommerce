@@ -38,9 +38,11 @@ public class VendedorServices {
     @Autowired
     private SendGridServices sendGridServices;
 
-    public Vendedor createVendedor(VendedorEntryDTO data) throws StripeException, IOException{
+    public Vendedor createVendedor(VendedorEntryDTO data) throws StripeException,
+            IOException{
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
 
         String userId = userDetails.getId();
 
@@ -50,7 +52,8 @@ public class VendedorServices {
 
             User infoVendedor = user.get();
 
-            if (vendedorRepository.findByNome(infoVendedor).isPresent()) {throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
+            if (vendedorRepository.findByNome(infoVendedor).isPresent()) {
+                throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
 
             LocalDate dataNascimento = infoVendedor.getData_nascimento();
 
@@ -58,11 +61,19 @@ public class VendedorServices {
             long mes = (long) dataNascimento.getMonthValue();
             long ano = (long) dataNascimento.getYear();
 
-            String id_stripe = stripeConnectServices.criarContaVendedorStripe(infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(), infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(), data.getNumero_telefone(), data.getConta(), data.getAgencia(), data.getCodigo_banco(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep());
+            String id_stripe = stripeConnectServices.criarContaVendedorStripe(
+                    infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
+                    infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
+                    data.getNumero_telefone(), data.getConta(), data.getAgencia(),
+                    data.getCodigo_banco(), data.getRua(), data.getNumero(),
+                    data.getCidade(), data.getEstado(), data.getCep());
 
             String urlCadastro = stripeAccountLinkServices.criarLinkDeOnboading(id_stripe);
 
-            Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(), data.getNumero_telefone(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep(), data.getAgencia(), data.getConta(), data.getCodigo_banco());
+            Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
+                    data.getNumero_telefone(), data.getRua(), data.getNumero(),
+                    data.getCidade(), data.getEstado(), data.getCep(),
+                    data.getAgencia(), data.getConta(), data.getCodigo_banco());
 
             newVendedor.setNome(infoVendedor);
 
