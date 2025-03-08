@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -56,20 +59,26 @@ public class AnuncioServices {
 
             String imagem = fileUploadImpl.updloadFile(data.getImagem()) ;
 
-            Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(), imagem, data.getValor(), data.getQuantidade(), data.getAltura(), data.getLargura(), data.getComprimento(), data.getPeso());
+            Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(),
+                    imagem, data.getValor(), data.getQuantidade(),
+                    data.getAltura(), data.getLargura(), data.getComprimento(),
+                    data.getPeso());
 
             newAnuncio.setVendedor(vendedor);
 
             return anuncioRepository.save(newAnuncio);
 
         } else {
-            throw new UserNotFound("Usuario não foi encontrado no cadastro de vendedores, por favor siga ate a aba de cadastro de vendedores para se cadastrar!");
+            throw new UserNotFound("Usuario não foi encontrado no cadastro " +
+                    "de vendedores, " + " por favor siga ate a aba de " +
+                    "cadastro de vendedores para se cadastrar!");
         }
     }
     
-    public List<Anuncio> getAnuncios() {
+    public Page<Anuncio> getAnuncios(int page) {
 
-        return anuncioRepository.findAll();
+        Pageable pageable = PageRequest.of(page, 40);
+        return anuncioRepository.findAll(pageable);
     }
 
     public String verFrete(String id, CepEntryDTO cep_destino) {
@@ -82,9 +91,12 @@ public class AnuncioServices {
 
             Vendedor vendedor = anuncio.getVendedor();
 
-            String freteResult = freteServices.calcularFrete(new FreteEntryDTO(vendedor.getCep(), anuncio.getAltura(), anuncio.getLargura(), anuncio.getComprimento(), anuncio.getPeso()), cep_destino);
-
-            return freteResult;
+            return freteServices.calcularFrete(new FreteEntryDTO(vendedor.getCep(),
+                    anuncio.getAltura(),
+                    anuncio.getLargura(),
+                    anuncio.getComprimento(),
+                    anuncio.getPeso()),
+                    cep_destino);
 
         } else {
             throw new FreteException();

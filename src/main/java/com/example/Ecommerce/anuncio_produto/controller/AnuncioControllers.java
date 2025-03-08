@@ -1,17 +1,11 @@
 package com.example.Ecommerce.anuncio_produto.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
@@ -26,7 +20,8 @@ public class AnuncioControllers {
     private AnuncioServices anuncioServices;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data) throws IOException {
+    public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data)
+            throws IOException {
 
         anuncioServices.createAnuncio(data);
 
@@ -44,9 +39,9 @@ public class AnuncioControllers {
     }
     
     @GetMapping("/anuncios")
-    public ResponseEntity<List<Anuncio>> viewAnuncios() {
+    public ResponseEntity<Page<Anuncio>> viewAnuncios(@RequestParam(defaultValue = "0") int page) {
 
-        List<Anuncio> anuncios = anuncioServices.getAnuncios();
+        Page<Anuncio> anuncios = anuncioServices.getAnuncios(page);
 
         return ResponseEntity.ok(anuncios);
     }

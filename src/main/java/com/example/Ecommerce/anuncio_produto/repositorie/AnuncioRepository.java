@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 
 @Repository
-public interface AnuncioRepository extends JpaRepository<Anuncio, String> {
-    
+public interface AnuncioRepository extends JpaRepository<Anuncio, String>{
+
 }
