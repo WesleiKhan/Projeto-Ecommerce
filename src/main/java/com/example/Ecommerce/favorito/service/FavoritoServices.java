@@ -3,13 +3,12 @@ package com.example.Ecommerce.favorito.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.favorito.repositorie.FavoritoRepository;
 import com.example.Ecommerce.user.entity.User;
@@ -25,61 +24,45 @@ public class FavoritoServices {
     private UserRepository userRepository;
 
     @Autowired
+    private UserServices userServices;
+
+    @Autowired
     private AnuncioRepository anuncioRepository;
 
-    public Favorito addFavorito(String id) {
+    public void addFavorito(String id) {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(id);
 
-        String userid = userDetails.getId();
+        if (anuncioOptional.isPresent()) {
 
-        Anuncio anuncio = anuncioRepository.findById(id).orElseThrow();
+            Anuncio anuncio = anuncioOptional.get();
 
-        Optional<User> user = userRepository.findById(userid);
-
-        if (user.isPresent()) {
-
-            User user2 = user.get();
+            User user = userServices.getLoggedInUser();
 
             Favorito newFavorito = new Favorito();
 
-            newFavorito.setUser(user2);
+            newFavorito.setUser(user);
 
             newFavorito.setAnuncio(anuncio);
 
-            return favoritoRepository.save(newFavorito);
+            favoritoRepository.save(newFavorito);
 
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("Anuncio nõa foi encontrado.");
         }
     } 
 
     public List<Favorito> getFavoritos() {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userServices.getLoggedInUser();
 
-        String userId = userDetails.getId();
+        return user.getFavoritos();
 
-        Optional<User> user = userRepository.findById(userId);
-
-        if (user.isPresent()) {
-
-            User user2 = user.get();
-
-            return user2.getFavoritos();
-
-        } else {
-            throw new RuntimeException();
-        }
     }
 
     public void deleteFavorito(String id) {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow();
+        User user = userServices.getLoggedInUser();
 
         Favorito favOptional = favoritoRepository.findById(id).orElseThrow();
 
@@ -90,7 +73,8 @@ public class FavoritoServices {
             favoritoRepository.delete(favOptional);
 
         } else {
-            throw new RuntimeException();
+            throw new RuntimeException("Voce não tem permição para essa ação" +
+                    ".");
         }
     }
 }

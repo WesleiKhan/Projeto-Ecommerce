@@ -4,13 +4,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.comprador.entity.Comprador;
 import com.example.Ecommerce.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.transacoes.entity.Transacao;
@@ -33,7 +32,7 @@ public class TransacaoServices {
     private AnuncioRepository anuncioRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserServices userServices;
 
     @Autowired
     private CompradorRepository compradorRepository;
@@ -45,13 +44,9 @@ public class TransacaoServices {
     private StripePaymentServices stripePaymentServices;
 
 
-    public Transacao createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {
+    public void createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Comprador> comprador = compradorRepository.findByNome(user);
 
@@ -63,11 +58,14 @@ public class TransacaoServices {
 
             BigDecimal valor = anuncio.getValor();
 
-            BigDecimal valor_total = valor.multiply(BigDecimal.valueOf(data.getQuantidade())) ;
+            BigDecimal valor_total =
+                    valor.multiply(BigDecimal.valueOf(data.getQuantidade()));
 
-            long valor_total_centavos = valor_total.multiply(new BigDecimal("100")).longValueExact();
+            long valor_total_centavos = valor_total.multiply(new BigDecimal(
+                    "100")).longValueExact();
 
-            String id_charge = stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
+            String id_charge =
+                    stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
 
             Transacao newTransacao = new Transacao(data.getQuantidade());
 
@@ -79,7 +77,7 @@ public class TransacaoServices {
 
             newTransacao.setId_charge_stripe(id_charge);
 
-            return transacaoRepository.save(newTransacao);
+            transacaoRepository.save(newTransacao);
 
         } else {
 
@@ -90,11 +88,7 @@ public class TransacaoServices {
 
     public List<Transacao> getTransacao() {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Vendedor> veOptional = vendedorRepository.findByNome(user);
 

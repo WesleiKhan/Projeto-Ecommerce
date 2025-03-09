@@ -4,11 +4,10 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
@@ -30,6 +29,9 @@ public class VendedorServices {
     private UserRepository userRepository;
 
     @Autowired
+    private UserServices userServices;
+
+    @Autowired
     private StripeConnectServices stripeConnectServices;
 
     @Autowired
@@ -38,66 +40,47 @@ public class VendedorServices {
     @Autowired
     private SendGridServices sendGridServices;
 
-    public Vendedor createVendedor(VendedorEntryDTO data) throws StripeException,
+    public void createVendedor(VendedorEntryDTO data) throws StripeException,
             IOException{
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder
-                .getContext().getAuthentication().getPrincipal();
+        User infoVendedor = userServices.getLoggedInUser();
 
-        String userId = userDetails.getId();
+        if (vendedorRepository.findByNome(infoVendedor).isPresent()) {
+            throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
 
-        Optional<User> user = userRepository.findById(userId);
+        LocalDate dataNascimento = infoVendedor.getData_nascimento();
 
-        if (user.isPresent()) {
+        long dia = (long) dataNascimento.getDayOfMonth();
+        long mes = (long) dataNascimento.getMonthValue();
+        long ano = (long) dataNascimento.getYear();
 
-            User infoVendedor = user.get();
+        String id_stripe = stripeConnectServices.criarContaVendedorStripe(
+                infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
+                infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
+                data.getNumero_telefone(), data.getConta(), data.getAgencia(),
+                data.getCodigo_banco(), data.getRua(), data.getNumero(),
+                data.getCidade(), data.getEstado(), data.getCep());
 
-            if (vendedorRepository.findByNome(infoVendedor).isPresent()) {
-                throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
+        String urlCadastro = stripeAccountLinkServices.criarLinkDeOnboading(id_stripe);
 
-            LocalDate dataNascimento = infoVendedor.getData_nascimento();
+        Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
+                data.getNumero_telefone(), data.getRua(), data.getNumero(),
+                data.getCidade(), data.getEstado(), data.getCep(),
+                data.getAgencia(), data.getConta(), data.getCodigo_banco());
 
-            long dia = (long) dataNascimento.getDayOfMonth();
-            long mes = (long) dataNascimento.getMonthValue();
-            long ano = (long) dataNascimento.getYear();
+        newVendedor.setNome(infoVendedor);
 
-            String id_stripe = stripeConnectServices.criarContaVendedorStripe(
-                    infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
-                    infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
-                    data.getNumero_telefone(), data.getConta(), data.getAgencia(),
-                    data.getCodigo_banco(), data.getRua(), data.getNumero(),
-                    data.getCidade(), data.getEstado(), data.getCep());
+        newVendedor.setId_account_stripe(id_stripe);
 
-            String urlCadastro = stripeAccountLinkServices.criarLinkDeOnboading(id_stripe);
-
-            Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
-                    data.getNumero_telefone(), data.getRua(), data.getNumero(),
-                    data.getCidade(), data.getEstado(), data.getCep(),
-                    data.getAgencia(), data.getConta(), data.getCodigo_banco());
-
-            newVendedor.setNome(infoVendedor);
-
-            newVendedor.setId_account_stripe(id_stripe);
-
-            sendGridServices.sendEmail(urlCadastro, infoVendedor.getEmail());
+        sendGridServices.sendEmail(urlCadastro, infoVendedor.getEmail());
            
-            return vendedorRepository.save(newVendedor);
+        vendedorRepository.save(newVendedor);
 
-        } else {
-            throw new UserNotFound();
-        }
     }
 
-    public Vendedor updateVendedor(VendedorEntryEditDTO data) {
+    public void updateVendedor(VendedorEntryEditDTO data) {
 
-        CustomUserDetails userDetails =
-                (CustomUserDetails) SecurityContextHolder.getContext().
-                        getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user =
-                userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Vendedor> vendeOptional =
                 vendedorRepository.findByNome(user);
@@ -132,11 +115,20 @@ public class VendedorServices {
                 newVendedor.setCep(data.getCep());
             }
 
-            return vendedorRepository.save(newVendedor);
+            vendedorRepository.save(newVendedor);
 
         }else {
             throw new UserNotFound("Vendedor não foi encontrado!");
         }
-
     }
+
 }
+
+
+
+
+
+
+
+
+

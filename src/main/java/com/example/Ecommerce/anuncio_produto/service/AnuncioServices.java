@@ -1,19 +1,17 @@
 package com.example.Ecommerce.anuncio_produto.service;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
@@ -35,6 +33,9 @@ public class AnuncioServices {
     private UserRepository userRepository;
 
     @Autowired
+    private UserServices userServices;
+
+    @Autowired
     private VendedorRepository vendedorRepository;
 
     @Autowired
@@ -43,13 +44,9 @@ public class AnuncioServices {
     @Autowired
     private FreteServices freteServices;
 
-    public Anuncio createAnuncio(AnuncioEntryDTO data) throws IOException{
+    public void createAnuncio(AnuncioEntryDTO data) throws IOException{
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Vendedor> userV = vendedorRepository.findByNome(user);
 
@@ -66,7 +63,7 @@ public class AnuncioServices {
 
             newAnuncio.setVendedor(vendedor);
 
-            return anuncioRepository.save(newAnuncio);
+            anuncioRepository.save(newAnuncio);
 
         } else {
             throw new UserNotFound("Usuario não foi encontrado no cadastro " +

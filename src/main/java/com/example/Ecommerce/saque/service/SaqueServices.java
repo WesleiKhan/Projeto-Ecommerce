@@ -5,11 +5,10 @@ import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.saque.entity.Saque;
 import com.example.Ecommerce.saque.execeptions.SaqueInvalidoException;
 import com.example.Ecommerce.saque.repositorie.SaqueRepository;
@@ -33,6 +32,9 @@ public class SaqueServices {
     private UserRepository userRepository;
 
     @Autowired
+    private UserServices userServices;
+
+    @Autowired
     private VendedorRepository vendedorRepository;
 
     @Autowired
@@ -42,13 +44,9 @@ public class SaqueServices {
     private StripeTransferServices stripeTransferServices;
 
 
-    public Saque sacar(String id) throws StripeException {
+    public void sacar(String id) throws StripeException {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Vendedor> venOptional = vendedorRepository.findByNome(user);
 
@@ -61,15 +59,18 @@ public class SaqueServices {
                 throw new SaqueInvalidoException();
             }
 
-            BigDecimal desconto = transacao.getValor_total().multiply(new BigDecimal("0.10"));
+            BigDecimal desconto = transacao.getValor_total()
+                    .multiply(new BigDecimal("0.10"));
 
-            BigDecimal valor = transacao.getValor_total().subtract(desconto).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal valor = transacao.getValor_total().subtract(desconto)
+                    .setScale(2, RoundingMode.HALF_UP);
 
             long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
 
             Vendedor vendedor = venOptional.get();
 
-            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(), transacao.getId_charge_stripe(), valorEmCentavos);
+            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(),
+                    transacao.getId_charge_stripe(), valorEmCentavos);
 
             Saque newSaque = new Saque(valor);
 
@@ -77,7 +78,7 @@ public class SaqueServices {
 
             newSaque.setTransacao(transacao);
 
-            return saqueRepository.save(newSaque);
+            saqueRepository.save(newSaque);
 
         } else {
             throw new UserNotFound("vendedor não foi encontrador !");
@@ -86,11 +87,7 @@ public class SaqueServices {
 
     public List<Saque> getSaques() {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        String userId = userDetails.getId();
-
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFound());
+        User user = userServices.getLoggedInUser();
 
         Optional<Vendedor> venOptional = vendedorRepository.findByNome(user);
 

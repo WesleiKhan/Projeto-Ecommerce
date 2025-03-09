@@ -1,18 +1,15 @@
 package com.example.Ecommerce.comprador.service;
 
-import java.util.Optional;
-
+import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.comprador.entity.Comprador;
 import com.example.Ecommerce.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
-import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.repositorie.UserRepository;
+
+
 
 @Service
 public class CompradorServices {
@@ -21,32 +18,22 @@ public class CompradorServices {
     private CompradorRepository compradorRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserServices userServices;
 
-    public Comprador createComprador(CompradorEntryDTO data) {
+    public void createComprador(CompradorEntryDTO data) {
 
-        CustomUserDetails userDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User infoComprador = userServices.getLoggedInUser();
 
-        String userId = userDetails.getId();
+        if (compradorRepository.findByNome(infoComprador).isPresent()) {
+            throw new UserAlreadyExists("Usuario ja e Cadastrado como Comprador!"); }
 
-        Optional<User> user = userRepository.findById(userId);
+        Comprador newComprador = new Comprador(data.getCpf(),
+                data.getNumero_telefone(), data.getRua(), data.getNumero(),
+                data.getCidade(), data.getEstado(), data.getCep());
 
-        if (user.isPresent()) {
+        newComprador.setNome(infoComprador);
 
-            User infoComprador = user.get();
-
-            if (compradorRepository.findByNome(infoComprador).isPresent()) { throw new UserAlreadyExists("Usuario ja e Cadastrado como Comprador!"); }
-
-            Comprador newComprador = new Comprador(data.getCpf(), data.getNumero_telefone(), data.getRua(), data.getNumero(), data.getCidade(), data.getEstado(), data.getCep());
-
-            newComprador.setNome(infoComprador);
-
-            return compradorRepository.save(newComprador);
-
-        } else {
-
-            throw new UserNotFound();
-        }
+        compradorRepository.save(newComprador);
 
     }
     
