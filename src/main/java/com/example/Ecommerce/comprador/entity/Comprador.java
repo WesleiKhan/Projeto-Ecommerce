@@ -30,7 +30,7 @@ public class Comprador {
     @JoinColumn(name = "nome_id", referencedColumnName = "id")
     private User nome;
 
-    @Column(name = "cpf")
+    @Column(name = "cpf", unique = true)
     private String cpf;
 
     @Column(name = "numero_telefone")

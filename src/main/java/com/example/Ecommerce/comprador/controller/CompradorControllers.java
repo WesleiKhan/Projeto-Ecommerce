@@ -1,11 +1,9 @@
 package com.example.Ecommerce.comprador.controller;
 
+import com.example.Ecommerce.comprador.service.CompradorEntryEditDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.comprador.service.CompradorEntryDTO;
 import com.example.Ecommerce.comprador.service.CompradorServices;
@@ -26,6 +24,15 @@ public class CompradorControllers {
 
         return ResponseEntity.ok().body("Usuario cadstrado agora esta apto a realizar compras");
   
+    }
+
+    @PutMapping("/edit")
+    public ResponseEntity<String> edit(@Valid @RequestBody CompradorEntryEditDTO data) {
+
+        compradorServices.updateComprador(data);
+
+        return ResponseEntity.ok().body("Cadastro comprador atualizado com " +
+                "sucesso.");
     }
     
 }
