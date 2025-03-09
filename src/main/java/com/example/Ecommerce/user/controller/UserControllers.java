@@ -1,7 +1,6 @@
 package com.example.Ecommerce.user.controller;
 
 import com.example.Ecommerce.user.service.UserEntryEditDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/user")
 public class UserControllers {
 
-    @Autowired
-    private UserServices userServices;
+    private final UserServices userServices;
+
+    public UserControllers(UserServices userServices) {
+        this.userServices = userServices;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserEntryDTO data) {

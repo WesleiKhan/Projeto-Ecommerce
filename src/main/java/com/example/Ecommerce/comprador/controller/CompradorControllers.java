@@ -1,7 +1,6 @@
 package com.example.Ecommerce.comprador.controller;
 
 import com.example.Ecommerce.comprador.service.CompradorEntryEditDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/comprador")
 public class CompradorControllers {
 
-    @Autowired
-    private CompradorServices compradorServices;
+    private final CompradorServices compradorServices;
+
+    public CompradorControllers(CompradorServices compradorServices) {
+        this.compradorServices = compradorServices;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody CompradorEntryDTO data) {

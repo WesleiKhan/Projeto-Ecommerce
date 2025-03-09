@@ -10,13 +10,13 @@ import com.example.Ecommerce.user.entity.TypeUserEnum;
 
 public class CustomUserDetails implements UserDetails {
 
-    private String id;
+    private final String id;
 
-    private String email;
+    private final String email;
 
-    private TypeUserEnum tipo_user;
+    private final TypeUserEnum tipo_user;
 
-    private String password;
+    private final String password;
 
     public CustomUserDetails(String id, String email, TypeUserEnum tipo_user, String password) {
 

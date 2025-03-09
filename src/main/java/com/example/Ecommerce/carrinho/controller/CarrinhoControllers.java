@@ -2,7 +2,6 @@ package com.example.Ecommerce.carrinho.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +22,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/carrinho")
 public class CarrinhoControllers {
 
-    @Autowired
-    private CarrinhoServices carrinhoServices;
+    private final CarrinhoServices carrinhoServices;
+
+    public CarrinhoControllers(CarrinhoServices carrinhoServices) {
+        this.carrinhoServices = carrinhoServices;
+    }
 
     @PostMapping("/add/{id}")
     public ResponseEntity<String> adicionar(@PathVariable String id, @Valid @RequestBody CarrinhoEntryDTO data) {

@@ -2,7 +2,6 @@ package com.example.Ecommerce.saque.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,8 +17,11 @@ import com.stripe.exception.StripeException;
 @RequestMapping("/saque")
 public class SaqueControllers {
 
-    @Autowired
-    private SaqueServices saqueServices;
+    private final SaqueServices saqueServices;
+
+    public SaqueControllers(SaqueServices saqueServices) {
+        this.saqueServices = saqueServices;
+    }
 
     @PostMapping("/sacar/{id}")
     public ResponseEntity<String> realizarSaque(@PathVariable String id) throws StripeException {

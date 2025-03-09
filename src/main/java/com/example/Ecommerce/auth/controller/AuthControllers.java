@@ -1,6 +1,5 @@
 package com.example.Ecommerce.auth.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,11 +17,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/auth")
 public class AuthControllers {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenServices tokenServices;
+    private final TokenServices tokenServices;
+
+    public AuthControllers(AuthenticationManager authenticationManager,
+                           TokenServices tokenServices) {
+
+        this.authenticationManager = authenticationManager;
+        this.tokenServices = tokenServices;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) {

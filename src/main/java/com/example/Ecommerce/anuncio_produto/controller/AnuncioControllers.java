@@ -2,7 +2,6 @@ package com.example.Ecommerce.anuncio_produto.controller;
 
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,12 @@ import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
 @RequestMapping("/anuncio")
 public class AnuncioControllers {
 
-    @Autowired
-    private AnuncioServices anuncioServices;
+    private final AnuncioServices anuncioServices;
+
+    public AnuncioControllers(AnuncioServices anuncioServices) {
+
+        this.anuncioServices = anuncioServices;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data)

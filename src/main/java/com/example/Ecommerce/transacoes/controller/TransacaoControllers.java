@@ -2,7 +2,6 @@ package com.example.Ecommerce.transacoes.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +19,11 @@ import com.stripe.exception.StripeException;
 @RequestMapping("/transacoes")
 public class TransacaoControllers {
 
-    @Autowired
-    private TransacaoServices transacaoServices;
+    private final TransacaoServices transacaoServices;
+
+    public TransacaoControllers(TransacaoServices transacaoServices) {
+        this.transacaoServices = transacaoServices;
+    }
 
     @PostMapping("/comprar/{id}")
     public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody TransacaoEntryDTO data) throws StripeException {
