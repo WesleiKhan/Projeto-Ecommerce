@@ -29,6 +29,18 @@ public class AnuncioControllers {
         
     }
 
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<String> edit(@ModelAttribute AnuncioEntryDTO data,
+                                       @PathVariable String id)
+            throws IOException {
+
+        anuncioServices.updateAnuncio(id, data);
+
+        return ResponseEntity.ok().body("O Anuncio do Produto Foi Editado " +
+                "Com Sucesso.");
+
+    }
+
     @PostMapping("/calcular-Frete/{id}")
     public ResponseEntity<String> getFrete(@PathVariable String id, @RequestBody CepEntryDTO cep) {
 

@@ -74,12 +74,75 @@ public class AnuncioServices {
                     "cadastro de vendedores para se cadastrar!");
         }
     }
+
+
+    public void updateAnuncio(String id, AnuncioEntryDTO data) throws IOException{
+
+        User user = userServices.getLoggedInUser();
+
+        Vendedor vendeUser =
+                vendedorRepository.findByNome(user)
+                        .orElseThrow(() -> new UserNotFound("Vendedor com o Nome de "
+                                + user.getPrimeiro_nome() + " Não foi Encontrado."));
+
+        Anuncio newAnuncio = anuncioRepository.findById(id).orElseThrow();
+
+        if(vendeUser.equals(newAnuncio.getVendedor())) {
+
+            if(data.getTitulo() != null && !data.getTitulo().trim().isEmpty()) {
+
+                newAnuncio.setTitulo(data.getTitulo());
+            }
+            if(data.getDescricao() != null && !data.getDescricao().trim().isEmpty()) {
+
+                newAnuncio.setDescricao(data.getDescricao());
+            }
+            if(data.getImagem() != null && !data.getImagem().isEmpty()) {
+
+                String newImagem =
+                        fileUploadImpl.updloadFile(data.getImagem());
+
+                newAnuncio.setImagem(newImagem);
+            }
+            if(data.getValor() != null) {
+
+                newAnuncio.setValor(data.getValor());
+            }
+            if(data.getQuantidade() != null) {
+
+                newAnuncio.setQuantidade_produto(data.getQuantidade());
+            }
+            if(data.getAltura() != null) {
+
+                newAnuncio.setAltura(data.getAltura());
+            }
+            if(data.getLargura() != null) {
+
+                newAnuncio.setLargura(data.getLargura());
+            }
+            if(data.getComprimento() != null) {
+
+                newAnuncio.setComprimento(data.getComprimento());
+            }
+            if(data.getPeso() != null) {
+
+                newAnuncio.setPeso(data.getPeso());
+            }
+
+            anuncioRepository.save(newAnuncio);
+
+        } else {
+            throw new RuntimeException("Voce não tem permissão para realizar" +
+                    " essa ação");
+        }
+    }
     
     public Page<Anuncio> getAnuncios(int page) {
 
         Pageable pageable = PageRequest.of(page, 40);
         return anuncioRepository.findAll(pageable);
     }
+
 
     public String verFrete(String id, CepEntryDTO cep_destino) {
 
