@@ -1,0 +1,1 @@
+ALTER TABLE compradores ADD UNIQUE (cpf);
