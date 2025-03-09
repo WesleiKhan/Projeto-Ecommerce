@@ -17,8 +17,12 @@ import com.example.Ecommerce.user.repositorie.UserRepository;
 @Service
 public class UserServices {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    public UserServices(UserRepository userRepository) {
+
+        this.userRepository = userRepository;
+    }
 
     public void createUser(UserEntryDTO data) {
 

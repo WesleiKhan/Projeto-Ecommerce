@@ -37,7 +37,10 @@ public class FreteServices {
 
             // Criar o JSON com a formatação desejada
             String json = String.format(
-            "{\"from\":{\"postal_code\":\"%s\"},\"to\":{\"postal_code\":\"%s\"},\"package\":{\"height\":%d,\"width\":%d,\"length\":%d,\"weight\":%s}}",
+            "{\"from\":{\"postal_code\":\"%s\"}," +
+                    "\"to\":{\"postal_code\":\"%s\"}," +
+                    "\"package\":{\"height\":%d,\"width\":%d,\"length\":%d," +
+                    "\"weight\":%s}}",
             cepOrigem, cepDestino, altura, largura, comprimento, peso
             );
 

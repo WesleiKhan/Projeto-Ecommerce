@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +13,6 @@ import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.utils.exceptions.FreteException;
 import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
 import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
@@ -26,23 +24,28 @@ import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
 @Service
 public class AnuncioServices {
 
-    @Autowired
-    private AnuncioRepository anuncioRepository;
+    private final AnuncioRepository anuncioRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final VendedorRepository vendedorRepository;
 
-    @Autowired
-    private VendedorRepository vendedorRepository;
+    private final FileUploadImpl fileUploadImpl;
 
-    @Autowired
-    private FileUploadImpl fileUploadImpl;
+    private final FreteServices freteServices;
 
-    @Autowired
-    private FreteServices freteServices;
+    public AnuncioServices(AnuncioRepository anuncioRepository,
+                           UserServices userServices,
+                           VendedorRepository vendedorRepository,
+                           FileUploadImpl fileUploadImpl,
+                           FreteServices freteServices) {
+
+        this.anuncioRepository = anuncioRepository;
+        this.userServices = userServices;
+        this.vendedorRepository = vendedorRepository;
+        this.fileUploadImpl = fileUploadImpl;
+        this.freteServices = freteServices;
+    }
 
     public void createAnuncio(AnuncioEntryDTO data) throws IOException{
 

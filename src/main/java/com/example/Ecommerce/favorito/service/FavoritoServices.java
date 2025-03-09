@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -12,22 +11,24 @@ import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.favorito.repositorie.FavoritoRepository;
 import com.example.Ecommerce.user.entity.User;
-import com.example.Ecommerce.user.repositorie.UserRepository;
 
 @Service
 public class FavoritoServices {
 
-    @Autowired
-    private FavoritoRepository favoritoRepository;
+    private final FavoritoRepository favoritoRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final AnuncioRepository anuncioRepository;
 
-    @Autowired
-    private AnuncioRepository anuncioRepository;
+    public FavoritoServices(FavoritoRepository favoritoRepository,
+                            UserServices userServices,
+                            AnuncioRepository anuncioRepository) {
+
+        this.favoritoRepository = favoritoRepository;
+        this.userServices = userServices;
+        this.anuncioRepository = anuncioRepository;
+    }
 
     public void addFavorito(String id) {
 

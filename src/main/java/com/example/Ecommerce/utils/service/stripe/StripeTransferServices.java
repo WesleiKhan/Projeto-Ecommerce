@@ -1,6 +1,6 @@
 package com.example.Ecommerce.utils.service.stripe;
 
-//import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.stripe.Stripe;
@@ -11,12 +11,12 @@ import com.stripe.param.TransferCreateParams;
 @Service
 public class StripeTransferServices {
 
-    //@Value("${stripe.api.key}")
-    //private String apiKey;
+    @Value("${stripe.api.key}")
+    private String apiKey;
 
     public Transfer createTransfer(String account_id, String id_charge, long amount) throws StripeException {
 
-        Stripe.apiKey = "sk_test_51QFcGMGVRGySusxwg1Og8ykr499zS4HFNOz4YCQWZXMPHgQtVKvxOdDoxqZ0HnNITnh5CaBFU8l5HvlmjK70N4bC009dcq0yFW";
+        Stripe.apiKey = apiKey;
 
         try {
             Transfer transfer = Transfer.create(

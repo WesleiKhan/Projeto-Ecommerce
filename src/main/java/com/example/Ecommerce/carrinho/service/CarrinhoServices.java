@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -12,22 +11,25 @@ import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.carrinho.repositorie.CarrinhoRepository;
 import com.example.Ecommerce.user.entity.User;
-import com.example.Ecommerce.user.repositorie.UserRepository;
+
 
 @Service
 public class CarrinhoServices {
 
-    @Autowired
-    private CarrinhoRepository carrinhoRepository;
+    private final CarrinhoRepository carrinhoRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final AnuncioRepository anuncioRepository;
 
-    @Autowired
-    private AnuncioRepository anuncioRepository;
+    public CarrinhoServices(CarrinhoRepository carrinhoRepository,
+                            UserServices userServices,
+                            AnuncioRepository anuncioRepository) {
+
+        this.carrinhoRepository = carrinhoRepository;
+        this.userServices = userServices;
+        this.anuncioRepository = anuncioRepository;
+    }
 
     public void addCarrinho(String id, CarrinhoEntryDTO data) {
 

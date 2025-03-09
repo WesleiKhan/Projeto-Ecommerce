@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.saque.entity.Saque;
@@ -16,7 +15,6 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.utils.service.stripe.StripeTransferServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
@@ -25,23 +23,28 @@ import com.stripe.exception.StripeException;
 @Service
 public class SaqueServices {
 
-    @Autowired
-    private SaqueRepository saqueRepository;
+    private final SaqueRepository saqueRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final VendedorRepository vendedorRepository;
 
-    @Autowired
-    private VendedorRepository vendedorRepository;
+    private final TransacaoRepository transacaoRepository;
 
-    @Autowired
-    private TransacaoRepository transacaoRepository;
+    private final StripeTransferServices stripeTransferServices;
 
-    @Autowired
-    private StripeTransferServices stripeTransferServices;
+    public SaqueServices(SaqueRepository saqueRepository,
+                         UserServices userServices,
+                         VendedorRepository vendedorRepository,
+                         TransacaoRepository transacaoRepository,
+                         StripeTransferServices stripeTransferServices) {
+
+        this.saqueRepository = saqueRepository;
+        this.userServices = userServices;
+        this.vendedorRepository = vendedorRepository;
+        this.transacaoRepository = transacaoRepository;
+        this.stripeTransferServices = stripeTransferServices;
+    }
 
 
     public void sacar(String id) throws StripeException {

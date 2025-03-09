@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -16,7 +15,6 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.utils.service.stripe.StripePaymentServices;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
@@ -24,24 +22,34 @@ import com.stripe.exception.StripeException;
 
 @Service
 public class TransacaoServices {
-    
-    @Autowired
-    private TransacaoRepository transacaoRepository;
 
-    @Autowired
-    private AnuncioRepository anuncioRepository;
+    private final TransacaoRepository transacaoRepository;
 
-    @Autowired
-    private UserServices userServices;
+    private final AnuncioRepository anuncioRepository;
 
-    @Autowired
-    private CompradorRepository compradorRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private VendedorRepository vendedorRepository;
+    private final CompradorRepository compradorRepository;
 
-    @Autowired
-    private StripePaymentServices stripePaymentServices;
+    private final VendedorRepository vendedorRepository;
+
+    private final StripePaymentServices stripePaymentServices;
+
+    public TransacaoServices(TransacaoRepository transacaoRepository,
+                             AnuncioRepository anuncioRepository,
+                             UserServices userServices,
+                             CompradorRepository compradorRepository,
+                             VendedorRepository vendedorRepository,
+                             StripePaymentServices stripePaymentServices) {
+
+        this.transacaoRepository = transacaoRepository;
+        this.anuncioRepository =anuncioRepository;
+        this.userServices = userServices;
+        this.compradorRepository = compradorRepository;
+        this.vendedorRepository = vendedorRepository;
+        this.stripePaymentServices = stripePaymentServices;
+
+    }
 
 
     public void createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {

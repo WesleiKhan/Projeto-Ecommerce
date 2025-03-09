@@ -5,13 +5,11 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.repositorie.UserRepository;
 import com.example.Ecommerce.utils.service.sendGrid.SendGridServices;
 import com.example.Ecommerce.utils.service.stripe.StripeAccountLinkServices;
 import com.example.Ecommerce.utils.service.stripe.StripeConnectServices;
@@ -22,23 +20,30 @@ import com.stripe.exception.StripeException;
 @Service
 public class VendedorServices {
 
-    @Autowired
-    private VendedorRepository vendedorRepository;
+    private final VendedorRepository vendedorRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserServices userServices;
 
-    @Autowired
-    private UserServices userServices;
+    private final StripeConnectServices stripeConnectServices;
 
-    @Autowired
-    private StripeConnectServices stripeConnectServices;
+    private final StripeAccountLinkServices stripeAccountLinkServices;
 
-    @Autowired
-    private StripeAccountLinkServices stripeAccountLinkServices;
+    private final SendGridServices sendGridServices;
 
-    @Autowired
-    private SendGridServices sendGridServices;
+
+    public VendedorServices(VendedorRepository vendedorRepository,
+                            UserServices userServices,
+                            StripeConnectServices stripeConnectServices,
+                            StripeAccountLinkServices stripeAccountLinkServices,
+                            SendGridServices sendGridServices) {
+
+        this.vendedorRepository = vendedorRepository;
+        this.userServices = userServices;
+        this.stripeConnectServices = stripeConnectServices;
+        this.stripeAccountLinkServices = stripeAccountLinkServices;
+        this.sendGridServices = sendGridServices;
+
+    }
 
     public void createVendedor(VendedorEntryDTO data) throws StripeException,
             IOException{
@@ -50,9 +55,9 @@ public class VendedorServices {
 
         LocalDate dataNascimento = infoVendedor.getData_nascimento();
 
-        long dia = (long) dataNascimento.getDayOfMonth();
-        long mes = (long) dataNascimento.getMonthValue();
-        long ano = (long) dataNascimento.getYear();
+        long dia =  dataNascimento.getDayOfMonth();
+        long mes =  dataNascimento.getMonthValue();
+        long ano =  dataNascimento.getYear();
 
         String id_stripe = stripeConnectServices.criarContaVendedorStripe(
                 infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),

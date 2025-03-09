@@ -1,6 +1,6 @@
 package com.example.Ecommerce.utils.service.stripe;
 
-//import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.stripe.Stripe;
@@ -12,15 +12,13 @@ import com.stripe.param.PaymentIntentCreateParams;
 @Service
 public class StripePaymentServices {
 
-    //@Value("${stripe.api.key}")
-    //private String stripeApiKey;
+    @Value("${stripe.api.key}")
+    private String stripeApiKey;
 
-    public StripePaymentServices() {
-
-        Stripe.apiKey = "sk_test_51QFcGMGVRGySusxwg1Og8ykr499zS4HFNOz4YCQWZXMPHgQtVKvxOdDoxqZ0HnNITnh5CaBFU8l5HvlmjK70N4bC009dcq0yFW";
-    }
 
     public String createPaymentIntent(String token, long amount) throws StripeException {
+
+        Stripe.apiKey = stripeApiKey;
 
         try {
             PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
