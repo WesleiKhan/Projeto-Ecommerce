@@ -78,7 +78,7 @@ public class Vendedor {
                     String estado, String cep) {
 
         this.cpf = cpf;
-        this.cnpj = cnpj;
+        this.cnpj = (cnpj == null || cnpj.trim().isEmpty()) ? null : cnpj;
         this.numero_telefone = numero_telefone;
         this.rua = rua;
         this.numero = numero;
@@ -114,7 +114,7 @@ public class Vendedor {
     }
 
     public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+        this.cnpj = (cnpj == null || cnpj.trim().isEmpty()) ? null : cnpj;
     }
 
     public String getNumero_telefone() {
