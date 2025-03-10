@@ -70,8 +70,8 @@ public class VendedorServices {
 
         Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
                 data.getNumero_telefone(), data.getRua(), data.getNumero(),
-                data.getCidade(), data.getEstado(), data.getCep(),
-                data.getAgencia(), data.getConta(), data.getCodigo_banco());
+                data.getCidade(), data.getEstado(), data.getCep()
+                );
 
         newVendedor.setNome(infoVendedor);
 

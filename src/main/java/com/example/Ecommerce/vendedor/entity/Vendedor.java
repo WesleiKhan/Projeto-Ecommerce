@@ -55,15 +55,6 @@ public class Vendedor {
     @Column(name = "cep")
     private String cep;
 
-    @Column(name = "agencia")
-    private String agencia;
-
-    @Column(name = "conta")
-    private String conta;
-
-    @Column(name = "codigo_banco")
-    private String codigo_banco;
-
     @Column(name = "anuncios_id")
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -82,8 +73,10 @@ public class Vendedor {
     }
 
 
-    public Vendedor(String cpf, String cnpj, String numero_telefone, String rua, String numero, String cidade,
-            String estado, String cep, String agencia, String conta, String codigo_banco) {
+    public Vendedor(String cpf, String cnpj, String numero_telefone,
+                    String rua, String numero, String cidade,
+                    String estado, String cep) {
+
         this.cpf = cpf;
         this.cnpj = cnpj;
         this.numero_telefone = numero_telefone;
@@ -92,9 +85,7 @@ public class Vendedor {
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
-        this.agencia = agencia;
-        this.conta = conta;
-        this.codigo_banco = codigo_banco;
+
     }
 
 
@@ -174,29 +165,6 @@ public class Vendedor {
         this.cep = cep;
     }
 
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public String getConta() {
-        return conta;
-    }
-
-    public void setConta(String conta) {
-        this.conta = conta;
-    }
-
-    public String getCodigo_banco() {
-        return codigo_banco;
-    }
-
-    public void setCodigo_banco(String codigo_banco) {
-        this.codigo_banco = codigo_banco;
-    }
 
 
     public List<Anuncio> getAnuncios() {
