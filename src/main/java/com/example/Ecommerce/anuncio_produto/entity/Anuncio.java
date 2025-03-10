@@ -80,8 +80,10 @@ public class Anuncio {
     }
 
 
-    public Anuncio(String titulo, String descricao, String imagem, BigDecimal valor, Integer quantidade_produto, Double altura, Double largura,
-            Double comprimento, Double peso) {
+    public Anuncio(String titulo, String descricao, String imagem,
+                   BigDecimal valor, Integer quantidade_produto, Double altura,
+                   Double largura, Double comprimento, Double peso) {
+
         this.titulo = titulo;
         this.descricao = descricao;
         this.imagem = imagem;
@@ -103,7 +105,9 @@ public class Anuncio {
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        if(titulo != null && !titulo.trim().isEmpty()) {
+            this.titulo = titulo;
+        }
     }
 
     public String getDescricao() {
@@ -111,7 +115,9 @@ public class Anuncio {
     }
 
     public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        if(descricao != null && !descricao.trim().isEmpty()) {
+            this.descricao = descricao;
+        }
     }
 
     public String getImagem() {
@@ -123,11 +129,14 @@ public class Anuncio {
     }
 
     public BigDecimal getValor() {
+
         return valor;
     }
 
     public void setValor(BigDecimal valor) {
-        this.valor = valor;
+        if(valor != null) {
+            this.valor = valor;
+        }
     }
 
     public Vendedor getVendedor() {
@@ -143,7 +152,9 @@ public class Anuncio {
     }
 
     public void setAltura(Double altura) {
-        this.altura = altura;
+        if(altura != null) {
+            this.altura = altura;
+        }
     }
 
     public Double getLargura() {
@@ -151,7 +162,9 @@ public class Anuncio {
     }
 
     public void setLargura(Double largura) {
-        this.largura = largura;
+        if(largura != null) {
+            this.largura = largura;
+        }
     }
 
     public Double getComprimento() {
@@ -159,7 +172,9 @@ public class Anuncio {
     }
 
     public void setComprimento(Double comprimento) {
-        this.comprimento = comprimento;
+        if(comprimento != null) {
+            this.comprimento = comprimento;
+        }
     }
 
     public Double getPeso() {
@@ -167,7 +182,9 @@ public class Anuncio {
     }
 
     public void setPeso(Double peso) {
-        this.peso = peso;
+        if(peso != null) {
+            this.peso = peso;
+        }
     }
 
     public Integer getQuantidade_produto() {
@@ -175,7 +192,9 @@ public class Anuncio {
     }
 
     public void setQuantidade_produto(Integer quantidade_produto) {
-        this.quantidade_produto = quantidade_produto;
+        if(quantidade_produto != null) {
+            this.quantidade_produto = quantidade_produto;
+        }
     }
  
 }

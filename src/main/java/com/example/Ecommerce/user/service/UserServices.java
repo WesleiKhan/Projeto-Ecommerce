@@ -42,25 +42,16 @@ public class UserServices {
             
         User newUser = this.getLoggedInUser();
 
-        if(data.getPrimeiroNome() != null && !data.getPrimeiroNome()
-                .trim().isEmpty()) {
+        /*A Logica Para ve se os valores atribuidos a os metodos sets
+            são null ou blank esta dentros dos metodos sets da entidade,
+            se os valores que estão sendo atribuido forem null ou um string
+            vazia o valor não sera atualizado no banco de dados.*/
 
-            newUser.setPrimeiro_nome(data.getPrimeiroNome());
-        }
-        if(data.getSobrenome() != null && !data.getSobrenome()
-                .trim().isEmpty()) {
+        newUser.setPrimeiro_nome(data.getPrimeiroNome());
+        newUser.setSobrenome(data.getSobrenome());
+        newUser.setUsername(data.getUsername());
+        newUser.setData_nascimento(data.getDataNascimento());
 
-            newUser.setSobrenome(data.getSobrenome());
-        }
-        if(data.getUsername() != null && !data.getUsername()
-                .trim().isEmpty()) {
-
-            newUser.setUsername(data.getUsername());
-        }
-        if(data.getDataNascimento() != null) {
-
-            newUser.setData_nascimento(data.getDataNascimento());
-        }
         if(data.getPassword() != null && !data.getPassword()
                 .trim().isEmpty()) {
 

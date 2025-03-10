@@ -46,38 +46,24 @@ public class CompradorServices {
     public void updateComprador(CompradorEntryEditDTO data) {
         User user = userServices.getLoggedInUser();
 
-        Optional<Comprador> optiComprador =
-                compradorRepository.findByNome(user);
+        Optional<Comprador> optiComprador = compradorRepository.findByNome(user);
 
         if (optiComprador.isPresent()) {
 
             Comprador newComprador = optiComprador.get();
 
-            if(data.getNumeroTelefone() != null && !data.getNumeroTelefone()
-                    .trim().isEmpty()) {
+            /*A Logica Para ve se os valores atribuidos a os metodos sets
+            são null ou blank esta dentros dos metodos sets da entidade,
+            se os valores que estão sendo atribuido forem null ou um string
+            vazia o valor não sera atualizado no banco de dados.*/
 
-                newComprador.setNumero_telefone(data.getNumeroTelefone());
-            }
-            if(data.getRua() != null && !data.getRua().trim().isEmpty()) {
+            newComprador.setNumero_telefone(data.getNumeroTelefone());
+            newComprador.setRua(data.getRua());
+            newComprador.setNumero(data.getNumero());
+            newComprador.setCidade(data.getCidade());
+            newComprador.setEstado(data.getEstado());
+            newComprador.setCep(data.getCep());
 
-                newComprador.setRua(data.getRua());
-            }
-            if(data.getNumero() != null && !data.getNumero().trim().isEmpty()) {
-
-                newComprador.setNumero(data.getNumero());
-            }
-            if(data.getCidade() != null && !data.getCidade().trim().isEmpty()) {
-
-                newComprador.setCidade(data.getCidade());
-            }
-            if(data.getEstado() != null && !data.getEstado().trim().isEmpty()) {
-
-                newComprador.setEstado(data.getEstado());
-            }
-            if(data.getCep() != null && !data.getCep().trim().isEmpty()) {
-
-                newComprador.setCep(data.getCep());
-            }
 
             compradorRepository.save(newComprador);
 

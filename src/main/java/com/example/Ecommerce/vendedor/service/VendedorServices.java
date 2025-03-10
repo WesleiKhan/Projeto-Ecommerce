@@ -94,31 +94,17 @@ public class VendedorServices {
 
             Vendedor newVendedor = vendeOptional.get();
 
-            if(data.getNumeroTelefone() != null && !data.getNumeroTelefone()
-                    .trim().isEmpty()) {
+            /*A Logica Para ve se os valores atribuidos a os metodos sets
+            são null ou blank esta dentros dos metodos sets da entidade,
+            se os valores que estão sendo atribuido forem null ou um string
+            vazia o valor não sera atualizado no banco de dados.*/
 
-                newVendedor.setNumero_telefone(data.getNumeroTelefone());
-            }
-            if(data.getRua() != null && !data.getRua().trim().isEmpty()) {
-
-                newVendedor.setRua(data.getRua());
-            }
-            if(data.getNumero() != null && !data.getNumero().trim().isEmpty()) {
-
-                newVendedor.setNumero(data.getNumero());
-            }
-            if(data.getCidade() != null && !data.getCidade().trim().isEmpty()) {
-
-                newVendedor.setCidade(data.getCidade());
-            }
-            if(data.getEstado() != null && !data.getEstado().trim().isEmpty()) {
-
-                newVendedor.setEstado(data.getEstado());
-            }
-            if(data.getCep() != null && !data.getCep().trim().isEmpty()) {
-
-                newVendedor.setCep(data.getCep());
-            }
+            newVendedor.setNumero_telefone(data.getNumeroTelefone());
+            newVendedor.setRua(data.getRua());
+            newVendedor.setNumero(data.getNumero());
+            newVendedor.setCidade(data.getCidade());
+            newVendedor.setEstado(data.getEstado());
+            newVendedor.setCep(data.getCep());
 
             vendedorRepository.save(newVendedor);
 

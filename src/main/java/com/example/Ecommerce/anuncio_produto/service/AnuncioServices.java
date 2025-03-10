@@ -89,44 +89,24 @@ public class AnuncioServices {
 
         if(vendeUser.equals(newAnuncio.getVendedor())) {
 
-            if(data.getTitulo() != null && !data.getTitulo().trim().isEmpty()) {
+            /*A Logica Para ve se os valores atribuidos a os metodos sets
+            são null ou blank esta dentros dos metodos sets da entidade,
+            se os valores que estão sendo atribuido forem null ou um string
+            vazia o valor não sera atualizado no banco de dados.*/
 
-                newAnuncio.setTitulo(data.getTitulo());
-            }
-            if(data.getDescricao() != null && !data.getDescricao().trim().isEmpty()) {
+            newAnuncio.setTitulo(data.getTitulo());
+            newAnuncio.setDescricao(data.getDescricao());
+            newAnuncio.setValor(data.getValor());
+            newAnuncio.setQuantidade_produto(data.getQuantidade());
+            newAnuncio.setAltura(data.getAltura());
+            newAnuncio.setLargura(data.getLargura());
+            newAnuncio.setComprimento(data.getComprimento());
+            newAnuncio.setPeso(data.getPeso());
 
-                newAnuncio.setDescricao(data.getDescricao());
-            }
             if(data.getImagem() != null && !data.getImagem().isEmpty()) {
-
                 String newImagem =
                         fileUploadImpl.updloadFile(data.getImagem());
-
                 newAnuncio.setImagem(newImagem);
-            }
-            if(data.getValor() != null) {
-
-                newAnuncio.setValor(data.getValor());
-            }
-            if(data.getQuantidade() != null) {
-
-                newAnuncio.setQuantidade_produto(data.getQuantidade());
-            }
-            if(data.getAltura() != null) {
-
-                newAnuncio.setAltura(data.getAltura());
-            }
-            if(data.getLargura() != null) {
-
-                newAnuncio.setLargura(data.getLargura());
-            }
-            if(data.getComprimento() != null) {
-
-                newAnuncio.setComprimento(data.getComprimento());
-            }
-            if(data.getPeso() != null) {
-
-                newAnuncio.setPeso(data.getPeso());
             }
 
             anuncioRepository.save(newAnuncio);

@@ -122,7 +122,9 @@ public class Vendedor {
     }
 
     public void setNumero_telefone(String numero_telefone) {
-        this.numero_telefone = numero_telefone;
+        if(numero_telefone != null && !numero_telefone.trim().isEmpty()) {
+            this.numero_telefone = numero_telefone;
+        }
     }
 
     public String getRua() {
@@ -130,7 +132,9 @@ public class Vendedor {
     }
 
     public void setRua(String rua) {
-        this.rua = rua;
+        if(rua != null && !rua.trim().isEmpty()) {
+            this.rua = rua;
+        }
     }
 
     public String getNumero() {
@@ -138,6 +142,9 @@ public class Vendedor {
     }
 
     public void setNumero(String numero) {
+        if(numero != null && !numero.trim().isEmpty()) {
+            this.numero = numero;
+        }
         this.numero = numero;
     }
 
@@ -146,7 +153,9 @@ public class Vendedor {
     }
 
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        if(cidade != null && !cidade.trim().isEmpty()) {
+            this.cidade = cidade;
+        }
     }
 
     public String getEstado() {
@@ -154,7 +163,9 @@ public class Vendedor {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if(estado != null && !estado.trim().isEmpty()) {
+            this.estado = estado;
+        }
     }
 
     public String getCep() {
@@ -162,7 +173,9 @@ public class Vendedor {
     }
 
     public void setCep(String cep) {
-        this.cep = cep;
+        if(cep != null && !cep.trim().isEmpty()) {
+            this.cep = cep;
+        }
     }
 
 

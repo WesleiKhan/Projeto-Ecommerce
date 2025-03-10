@@ -98,8 +98,9 @@ public class Comprador {
     }
 
     public void setNumero_telefone(String numero_telefone) {
-
-        this.numero_telefone = numero_telefone;
+        if(numero_telefone != null && !numero_telefone.trim().isEmpty()) {
+            this.numero_telefone = numero_telefone;
+        }
     }
 
     public String getNumero_telefone() {
@@ -112,7 +113,9 @@ public class Comprador {
     }
 
     public void setRua(String rua) {
-        this.rua = rua;
+        if(rua != null && !rua.trim().isEmpty()) {
+            this.rua = rua;
+        }
     }
 
     public String getNumero() {
@@ -120,7 +123,9 @@ public class Comprador {
     }
 
     public void setNumero(String numero) {
-        this.numero = numero;
+        if(numero != null && !numero.trim().isEmpty()) {
+            this.numero = numero;
+        }
     }
 
     public String getCidade() {
@@ -128,7 +133,9 @@ public class Comprador {
     }
 
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        if(cidade != null && !cidade.trim().isEmpty()) {
+            this.cidade = cidade;
+        }
     }
 
     public String getEstado() {
@@ -136,7 +143,9 @@ public class Comprador {
     }
 
     public void setEstado(String estado) {
-        this.estado = estado;
+        if(estado != null && !estado.trim().isEmpty()) {
+            this.estado = estado;
+        }
     }
 
     public String getCep() {
@@ -144,7 +153,9 @@ public class Comprador {
     }
 
     public void setCep(String cep) {
-        this.cep = cep;
+        if(cep != null && !cep.trim().isEmpty()) {
+            this.cep = cep;
+        }
     }
 
 }

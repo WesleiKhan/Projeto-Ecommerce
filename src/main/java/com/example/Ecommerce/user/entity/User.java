@@ -74,8 +74,9 @@ public class User {
     }
 
 
-    public User(String primeiro_nome, String sobrenome, String username, String email, LocalDate data_nascimento,
-            String password) {
+    public User(String primeiro_nome, String sobrenome, String username,
+                String email, LocalDate data_nascimento, String password) {
+
         this.primeiro_nome = primeiro_nome;
         this.sobrenome = sobrenome;
         this.username = username;
@@ -94,7 +95,9 @@ public class User {
     }
 
     public void setPrimeiro_nome(String primeiro_nome) {
-        this.primeiro_nome = primeiro_nome;
+        if(primeiro_nome != null && !primeiro_nome.trim().isEmpty()) {
+            this.primeiro_nome = primeiro_nome;
+        }
     }
 
     public String getSobrenome() {
@@ -102,7 +105,9 @@ public class User {
     }
 
     public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
+        if(sobrenome != null && !sobrenome.trim().isEmpty()) {
+            this.sobrenome = sobrenome;
+        }
     }
 
     public String getUsername() {
@@ -110,7 +115,9 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        if(username != null && !username.trim().isEmpty()) {
+            this.username = username;
+        }
     }
 
     public String getEmail() {
@@ -126,7 +133,9 @@ public class User {
     }
 
     public void setData_nascimento(LocalDate data_nascimento) {
-        this.data_nascimento = data_nascimento;
+        if(data_nascimento != null ) {
+            this.data_nascimento = data_nascimento;
+        }
     }
 
     public TypeUserEnum getTipo_user() {
