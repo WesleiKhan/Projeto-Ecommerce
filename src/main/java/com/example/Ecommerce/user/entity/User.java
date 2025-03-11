@@ -162,7 +162,6 @@ public class User {
         return carrinhos;
     }
 
-
     public Vendedor getCadastro_vendedor() {
         return cadastro_vendedor;
     }
@@ -174,5 +173,8 @@ public class User {
     public Comprador getCadastro_comprador() {
         return cadastro_comprador;
     }
-      
+
+    public void setCadastro_comprador(Comprador cadastro_comprador) {
+        this.cadastro_comprador = cadastro_comprador;
+    }
 }

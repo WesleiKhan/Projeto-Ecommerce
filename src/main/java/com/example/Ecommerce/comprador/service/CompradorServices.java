@@ -70,7 +70,26 @@ public class CompradorServices {
         } else {
             throw new UserNotFound("Comprador não foi encontrado.");
         }
+    }
 
+    public void deleteComprador() {
+
+        User user = userServices.getLoggedInUser();
+
+        Optional<Comprador> optiComprador =
+                compradorRepository.findByNome(user);
+
+        if(optiComprador.isPresent()) {
+
+            Comprador comprador = optiComprador.get();
+
+            user.setCadastro_comprador(null);
+
+            compradorRepository.delete(comprador);
+
+        }else {
+            throw new UserNotFound("Comprador não foi encontrado.");
+        }
     }
     
 }

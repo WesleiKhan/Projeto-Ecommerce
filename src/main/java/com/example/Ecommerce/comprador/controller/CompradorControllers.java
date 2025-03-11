@@ -36,5 +36,14 @@ public class CompradorControllers {
         return ResponseEntity.ok().body("Cadastro comprador atualizado com " +
                 "sucesso.");
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteComprador() {
+
+        compradorServices.deleteComprador();
+
+        return ResponseEntity.ok().body("cadastro de comprador excluido com " +
+                "sucesso!");
+    }
     
 }
