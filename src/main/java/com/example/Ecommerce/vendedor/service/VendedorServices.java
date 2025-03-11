@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.utils.service.stripe.StripeExcludeAccount;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
@@ -28,6 +29,8 @@ public class VendedorServices {
 
     private final StripeAccountLinkServices stripeAccountLinkServices;
 
+    private final StripeExcludeAccount stripeExcludeAccount;
+
     private final SendGridServices sendGridServices;
 
 
@@ -35,12 +38,14 @@ public class VendedorServices {
                             UserServices userServices,
                             StripeConnectServices stripeConnectServices,
                             StripeAccountLinkServices stripeAccountLinkServices,
+                            StripeExcludeAccount stripeExcludeAccount,
                             SendGridServices sendGridServices) {
 
         this.vendedorRepository = vendedorRepository;
         this.userServices = userServices;
         this.stripeConnectServices = stripeConnectServices;
         this.stripeAccountLinkServices = stripeAccountLinkServices;
+        this.stripeExcludeAccount = stripeExcludeAccount;
         this.sendGridServices = sendGridServices;
 
     }
@@ -109,6 +114,31 @@ public class VendedorServices {
             vendedorRepository.save(newVendedor);
 
         }else {
+            throw new UserNotFound("Vendedor não foi encontrado!");
+        }
+    }
+
+    public String deleteVendedor() throws  Exception {
+
+        User user = userServices.getLoggedInUser();
+
+        Optional<Vendedor> optVendedor = vendedorRepository.findByNome(user);
+
+        if(optVendedor.isPresent()) {
+
+            Vendedor vendedor = optVendedor.get();
+
+            String response =
+                    stripeExcludeAccount.deleteAccountStripe(vendedor
+                    .getId_account_stripe());
+
+            user.setCadastro_vendedor(null);
+
+            vendedorRepository.delete(vendedor);
+
+            return response;
+
+        } else {
             throw new UserNotFound("Vendedor não foi encontrado!");
         }
     }

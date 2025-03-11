@@ -40,5 +40,13 @@ public class VendedorControllers {
         return ResponseEntity.ok().body("Cadastro De Vendedor Atualizado com" +
                 " sucesso.");
     }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteVendedor() throws Exception {
+
+        vendedorServices.deleteVendedor();
+
+        return ResponseEntity.ok().body("Conta foi excluida com sucesso.");
+    }
     
 }

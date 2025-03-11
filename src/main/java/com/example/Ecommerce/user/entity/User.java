@@ -167,6 +167,9 @@ public class User {
         return cadastro_vendedor;
     }
 
+    public void setCadastro_vendedor(Vendedor cadastro_vendedor) {
+        this.cadastro_vendedor = cadastro_vendedor;
+    }
 
     public Comprador getCadastro_comprador() {
         return cadastro_comprador;
