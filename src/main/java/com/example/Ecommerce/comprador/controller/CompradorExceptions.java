@@ -9,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.comprador.controller.CompradorControllers")
+@ControllerAdvice(basePackages = "com.example.Ecommerce.comprador.controller")
 public class CompradorExceptions extends ResponseEntityExceptionHandler {
     
     @ExceptionHandler(UserNotFound.class)

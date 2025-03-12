@@ -3,6 +3,8 @@ package com.example.Ecommerce.anuncio_produto.service;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
+import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,8 +72,7 @@ public class AnuncioServices {
 
         } else {
             throw new UserNotFound("Usuario não foi encontrado no cadastro " +
-                    "de vendedores, " + " por favor siga ate a aba de " +
-                    "cadastro de vendedores para se cadastrar!");
+                    "de vendedores");
         }
     }
 
@@ -85,7 +86,8 @@ public class AnuncioServices {
                         .orElseThrow(() -> new UserNotFound("Vendedor com o Nome de "
                                 + user.getPrimeiro_nome() + " Não foi Encontrado."));
 
-        Anuncio newAnuncio = anuncioRepository.findById(id).orElseThrow();
+        Anuncio newAnuncio =
+                anuncioRepository.findById(id).orElseThrow(AnuncioNotFound::new);
 
         if(vendeUser.equals(newAnuncio.getVendedor())) {
 
@@ -112,8 +114,7 @@ public class AnuncioServices {
             anuncioRepository.save(newAnuncio);
 
         } else {
-            throw new RuntimeException("Voce não tem permissão para realizar" +
-                    " essa ação");
+            throw new UserNotAutorization();
         }
     }
     

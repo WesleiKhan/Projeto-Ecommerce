@@ -3,6 +3,7 @@ package com.example.Ecommerce.user.service;
 import java.util.Optional;
 
 import com.example.Ecommerce.auth.service.CustomUserDetails;
+import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -94,7 +95,7 @@ public class UserServices {
             return optionalUser.get();
 
         }else {
-            throw new UserNotFound("Não foi possivel Obter o Usuario logado.");
+            throw new UserNotAutorization("Não foi possivel Obter o Usuario logado.");
         }
     }
     

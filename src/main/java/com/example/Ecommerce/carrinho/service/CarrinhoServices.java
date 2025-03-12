@@ -3,6 +3,8 @@ package com.example.Ecommerce.carrinho.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
+import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +52,7 @@ public class CarrinhoServices {
             carrinhoRepository.save(carrinho);
 
         } else {
-            throw new RuntimeException();
+            throw new AnuncioNotFound();
         }
     }
 
@@ -75,7 +77,7 @@ public class CarrinhoServices {
             carrinhoRepository.delete(carrinho);
             
         } else {
-            throw new RuntimeException();
+            throw new UserNotAutorization();
         }
     }
     

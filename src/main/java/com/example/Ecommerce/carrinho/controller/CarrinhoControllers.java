@@ -31,14 +31,10 @@ public class CarrinhoControllers {
     @PostMapping("/add/{id}")
     public ResponseEntity<String> adicionar(@PathVariable String id, @Valid @RequestBody CarrinhoEntryDTO data) {
 
-        try {
-            carrinhoServices.addCarrinho(id, data);
+        carrinhoServices.addCarrinho(id, data);
 
-            return ResponseEntity.ok().body("Produto adicionado ao carrinho com sucesso!");
+        return ResponseEntity.ok().body("Produto adicionado ao carrinho com sucesso!");
 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
     }
 
     @GetMapping("/meu-carrinho")
@@ -52,14 +48,10 @@ public class CarrinhoControllers {
     @DeleteMapping("delete/{id}")
     public ResponseEntity<String> deleteAnuncioCarrinho(@PathVariable String id) {
 
-        try {
-            carrinhoServices.deleteCarrinho(id);
+        carrinhoServices.deleteCarrinho(id);
 
-            return ResponseEntity.ok().body("Anuncio deletado do carrinho com sucesso!");
+        return ResponseEntity.ok().body("Anuncio deletado do carrinho com sucesso!");
 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
     }
     
 }

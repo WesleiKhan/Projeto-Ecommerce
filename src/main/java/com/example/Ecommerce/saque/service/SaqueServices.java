@@ -84,7 +84,7 @@ public class SaqueServices {
             saqueRepository.save(newSaque);
 
         } else {
-            throw new UserNotFound("vendedor não foi encontrador !");
+            throw new UserNotFound("Vendedor não foi encontrador.");
         }
     }
 
@@ -101,7 +101,7 @@ public class SaqueServices {
             return vendedor.getSaques();
 
         } else {
-            throw new UserNotFound("Vendedor não foi encontrado!");
+            throw new UserNotFound("Vendedor não foi encontrado.");
         }
     }
     

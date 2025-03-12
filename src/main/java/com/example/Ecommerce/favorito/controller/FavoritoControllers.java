@@ -27,14 +27,9 @@ public class FavoritoControllers {
     @PostMapping("/add/{id}")
     public ResponseEntity<String> adicionar(@PathVariable String id) {
 
-        try {
-            favoritoServices.addFavorito(id);
+        favoritoServices.addFavorito(id);
 
-            return ResponseEntity.ok().body("produto adicionado aos favoritos com sucesso!");
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok().body("produto adicionado aos favoritos com sucesso!");
     }
 
     @GetMapping("/meus-favoritos")
@@ -48,14 +43,10 @@ public class FavoritoControllers {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFavorito(@PathVariable String id) {
 
-        try {
-            favoritoServices.deleteFavorito(id);
+        favoritoServices.deleteFavorito(id);
 
-            return ResponseEntity.ok().body("Produto deletado de favoritos com sucesso!");
+        return ResponseEntity.ok().body("Produto deletado de favoritos com sucesso!");
 
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
     }
     
 }

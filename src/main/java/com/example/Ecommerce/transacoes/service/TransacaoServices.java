@@ -89,7 +89,8 @@ public class TransacaoServices {
 
         } else {
 
-            throw new UserNotFound("Comprador não foi encontrado!");
+            throw new UserNotFound("Usuario não foi encontrado no Cadatro de" +
+                    " Compradores.");
         }
   
     }
@@ -107,7 +108,7 @@ public class TransacaoServices {
             return transacaoRepository.findByProdutoVendedor(vendedor);
 
         } else {
-            throw new UserNotFound("vendedor nao foi enconterado !");
+            throw new UserNotFound();
         }
     }
 }

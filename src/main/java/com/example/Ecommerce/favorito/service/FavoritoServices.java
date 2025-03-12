@@ -3,6 +3,8 @@ package com.example.Ecommerce.favorito.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
+import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +51,7 @@ public class FavoritoServices {
             favoritoRepository.save(newFavorito);
 
         } else {
-            throw new RuntimeException("Anuncio nõa foi encontrado.");
+            throw new AnuncioNotFound();
         }
     } 
 
@@ -65,7 +67,9 @@ public class FavoritoServices {
 
         User user = userServices.getLoggedInUser();
 
-        Favorito favOptional = favoritoRepository.findById(id).orElseThrow();
+        Favorito favOptional = favoritoRepository.findById(id)
+                .orElseThrow(() -> new AnuncioNotFound("O Anuncio " +
+                        "Favoritado não foi encontrado."));
 
         User userFavorito = favOptional.getUser();
 
@@ -74,8 +78,7 @@ public class FavoritoServices {
             favoritoRepository.delete(favOptional);
 
         } else {
-            throw new RuntimeException("Voce não tem permição para essa ação" +
-                    ".");
+            throw new UserNotAutorization();
         }
     }
 }

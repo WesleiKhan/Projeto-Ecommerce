@@ -8,13 +8,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.auth.controller.AuthControllers")
+import java.util.HashMap;
+import java.util.Map;
+
+@ControllerAdvice(basePackages = "com.example.Ecommerce.auth.controller")
 public class AuthExceptions extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFound.class)
     public ResponseEntity<String> userNotFound(UserNotFound e) {
+
+        Map<String, String> response = new HashMap<>();
+
+        response.put("Message", e.getMessage());
         
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Message: " + e.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(response.get("Message"));
     }
     
 }

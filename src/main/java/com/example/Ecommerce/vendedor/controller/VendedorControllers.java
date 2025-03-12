@@ -1,6 +1,7 @@
 package com.example.Ecommerce.vendedor.controller;
 
 import com.example.Ecommerce.vendedor.service.VendedorEntryEditDTO;
+import com.stripe.exception.StripeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,8 @@ import com.example.Ecommerce.vendedor.service.VendedorEntryDTO;
 import com.example.Ecommerce.vendedor.service.VendedorServices;
 
 import jakarta.validation.Valid;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/vendedor")
@@ -21,15 +24,14 @@ public class VendedorControllers {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody VendedorEntryDTO data) {
+    public ResponseEntity<String> register(@Valid @RequestBody VendedorEntryDTO data)
+    throws IOException, StripeException {
 
-        try {
-            vendedorServices.createVendedor(data);
+        vendedorServices.createVendedor(data);
 
-            return ResponseEntity.ok().body("Usuario conseguir se cadastra como vendedor com sucesso!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e);
-        }
+        return ResponseEntity.ok().body("Usuario Cadastrado Como " +
+                "Vendedor Com Sucesso!");
+
     }
 
     @PutMapping("/edit")
@@ -37,8 +39,8 @@ public class VendedorControllers {
 
         vendedorServices.updateVendedor(data);
 
-        return ResponseEntity.ok().body("Cadastro De Vendedor Atualizado com" +
-                " sucesso.");
+        return ResponseEntity.ok().body("Cadastro De Vendedor Atualizado Com" +
+                " Sucesso.");
     }
 
     @DeleteMapping("/delete")
@@ -46,7 +48,7 @@ public class VendedorControllers {
 
         vendedorServices.deleteVendedor();
 
-        return ResponseEntity.ok().body("Conta foi excluida com sucesso.");
+        return ResponseEntity.ok().body("Conta Foi Excluida Com Sucesso.");
     }
     
 }

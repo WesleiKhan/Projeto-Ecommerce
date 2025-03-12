@@ -114,7 +114,7 @@ public class VendedorServices {
             vendedorRepository.save(newVendedor);
 
         }else {
-            throw new UserNotFound("Vendedor não foi encontrado!");
+            throw new UserNotFound("Vendedor não foi encontrado.");
         }
     }
 
@@ -139,7 +139,7 @@ public class VendedorServices {
             return response;
 
         } else {
-            throw new UserNotFound("Vendedor não foi encontrado!");
+            throw new UserNotFound("Vendedor não foi encontrado.");
         }
     }
 
