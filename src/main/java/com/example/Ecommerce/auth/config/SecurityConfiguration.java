@@ -32,6 +32,9 @@ public class SecurityConfiguration {
                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                .requestMatchers(HttpMethod.GET, "/anuncio/anuncios").permitAll()
                .requestMatchers(HttpMethod.POST, "/anuncio/calcular-Frete/{id}").permitAll()
+                       .requestMatchers("/v3/api-docs/**",
+                               "/swagger-ui/**",
+                               "/swagger-ui.html").permitAll()
                .anyRequest().authenticated())
                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                .build(); 
