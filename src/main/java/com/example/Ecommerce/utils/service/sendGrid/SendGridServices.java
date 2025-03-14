@@ -22,9 +22,10 @@ public class SendGridServices {
         String apiKey = "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";
 
         Email from = new Email(remetente);
-        String subject = "Enviando e-mail para o vendedor terminar cadastro";
+        String subject = "E-mail para o vendedor terminar cadastro";
         Email to = new Email(emailDestinatario);
-        Content content = new Content("text/html", "Clique no link para continuar o cadastro: <a href=\"" + contentEmail + "\">Confirmar</a>");
+        Content content = new Content("text/html", "Clique no link para " +
+                "continuar o cadastro: <a href=\"" + contentEmail + "\">Confirmar</a>");
         Mail mail = new Mail(from, subject, to, content);
 
         // Cria a instância do cliente do SendGrid usando a sua API Key

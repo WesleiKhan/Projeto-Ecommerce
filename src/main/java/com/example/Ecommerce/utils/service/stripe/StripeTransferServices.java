@@ -14,7 +14,8 @@ public class StripeTransferServices {
     @Value("${stripe.api.key}")
     private String apiKey;
 
-    public Transfer createTransfer(String account_id, String id_charge, long amount) throws StripeException {
+    public Transfer createTransfer(String account_id, String id_charge, long amount)
+            throws StripeException {
 
         Stripe.apiKey = apiKey;
 
