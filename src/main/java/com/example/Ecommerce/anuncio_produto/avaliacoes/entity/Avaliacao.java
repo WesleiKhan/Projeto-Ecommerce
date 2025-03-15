@@ -36,7 +36,16 @@ public class Avaliacao {
     }
 
     public Avaliacao(BigDecimal nota, String comentario) {
-        this.nota = nota;
+
+        if(nota.compareTo(BigDecimal.ZERO) < 0) {
+            this.nota = BigDecimal.ZERO;
+
+        } else if (nota.compareTo(BigDecimal.valueOf(5)) > 5) {
+            this.nota = BigDecimal.valueOf(5);
+
+        } else {
+            this.nota = nota;
+        }
         this.comentario = comentario;
     }
 
