@@ -2,6 +2,7 @@ package com.example.Ecommerce.comprador.entity;
 
 import java.util.List;
 
+import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,6 +56,11 @@ public class Comprador {
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Transacao> transacoes;
+
+    @Column(name = "avaliacoes_id")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Avaliacao> avaliacaos;
 
 
     public Comprador() {
@@ -158,4 +164,7 @@ public class Comprador {
         }
     }
 
+    public List<Transacao> getTransacoes() {
+        return transacoes;
+    }
 }

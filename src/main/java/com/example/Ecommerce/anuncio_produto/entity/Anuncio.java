@@ -1,8 +1,12 @@
 package com.example.Ecommerce.anuncio_produto.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
+import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.transacoes.entity.Transacao;
@@ -74,6 +78,11 @@ public class Anuncio {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Transacao> transacoes;
+
+    @Column(name = "avaliacoes_id")
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Avaliacao> avaliacaos;
 
 
     public Anuncio() {
@@ -196,5 +205,45 @@ public class Anuncio {
             this.quantidade_produto = quantidade_produto;
         }
     }
- 
+
+    public AvaliacaoResponseDTO getAvaliacaos() {
+
+        BigDecimal notas = BigDecimal.ZERO;
+        Integer avaliacoesPositivas = 0;
+        Integer avaliacoesNegativas = 0;
+        Integer avaliacoesNeutras = 0;
+
+        for(int i = 0; i < avaliacaos.size(); i++) {
+
+            notas = notas.add(avaliacaos.get(i).getNota());
+
+            if(avaliacaos.get(i).getNota().compareTo(BigDecimal.valueOf(4))
+                    >= 0) {
+                avaliacoesPositivas++;
+
+            } else if(avaliacaos.get(i).getNota().compareTo(BigDecimal.valueOf(2))
+                    < 0) {
+                avaliacoesNegativas++;
+
+            } else {
+                avaliacoesNeutras++;
+            }
+        }
+
+        BigDecimal mediaNotas =
+                notas.divide(BigDecimal.valueOf(avaliacaos.size()), 2,
+                        RoundingMode.HALF_UP);
+
+        if(mediaNotas.compareTo(BigDecimal.ZERO) < 0) {
+            mediaNotas = BigDecimal.ZERO;
+
+        } else if (mediaNotas.compareTo(BigDecimal.valueOf(5)) > 5) {
+            mediaNotas = BigDecimal.valueOf(5);
+        }
+        return new AvaliacaoResponseDTO(mediaNotas,
+                avaliacoesPositivas,
+                avaliacoesNegativas,
+                avaliacoesNeutras,
+                avaliacaos);
+    }
 }
