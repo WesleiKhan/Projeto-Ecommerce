@@ -1,0 +1,1 @@
+ALTER TABLE anuncios MODIFY COLUMN descricao TEXT;

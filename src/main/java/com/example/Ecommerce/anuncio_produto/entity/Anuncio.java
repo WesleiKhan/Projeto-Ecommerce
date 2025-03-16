@@ -13,16 +13,7 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "anuncios")
@@ -36,9 +27,10 @@ public class Anuncio {
     @Column(name = "titulo")
     private String titulo;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", columnDefinition = "TEXT")
     private String descricao;
 
+    @Lob
     @Column(name = "imagem")
     private String imagem;
 

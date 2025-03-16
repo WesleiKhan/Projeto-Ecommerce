@@ -28,7 +28,8 @@ public class Avaliacao {
     @Column(name = "nota", precision = 3, scale = 1)
     private BigDecimal nota;
 
-    @Column(name = "comentario")
+    @Lob
+    @Column(name = "comentario", columnDefinition = "TEXT")
     private String comentario;
 
     public Avaliacao() {
