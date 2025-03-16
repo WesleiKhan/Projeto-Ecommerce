@@ -11,6 +11,7 @@ import com.example.Ecommerce.comprador.entity.Comprador;
 import com.example.Ecommerce.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.service.UserServices;
 import org.springframework.stereotype.Service;
@@ -59,16 +60,27 @@ public class AvaliacaoService {
                         .equals(anuncio));
 
         if(!transacaoEncontrada) {
-            throw new AnuncioNotFound("O anuncio não foi encontrdo nas " +
-                    "transações de comprador");
+            throw new AnuncioNotFound("Você não pode avaliar um anuncio que " +
+                    "de uma produto que você não fez a compra.");
         }
 
-        Avaliacao avaliacao = new Avaliacao(data.getNota(), data.getComentario());
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProduto(anuncio);
 
-        avaliacao.setAutor(comprador);
-        avaliacao.setProduto(anuncio);
+        boolean avaliacaoEncontrada = avaliacoes.stream()
+                .anyMatch(avaliacao -> avaliacao.getAutor()
+                        .equals(comprador));
 
-        avaliacaoRepository.save(avaliacao);
+        if(!avaliacaoEncontrada) {
+
+            Avaliacao avaliacao = new Avaliacao(data.getNota(), data.getComentario());
+
+            avaliacao.setAutor(comprador);
+            avaliacao.setProduto(anuncio);
+
+            avaliacaoRepository.save(avaliacao);
+        } else {
+            throw new UserNotAutorization("Você ja avaliou esse anuncio.");
+        }
 
     }
 

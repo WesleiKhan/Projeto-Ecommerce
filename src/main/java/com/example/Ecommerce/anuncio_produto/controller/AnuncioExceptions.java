@@ -69,6 +69,7 @@ public class AnuncioExceptions extends ResponseEntityExceptionHandler {
 
         response.put("Message", e.getMessage());
 
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Message");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(response.get("Message"));
     }
 }
