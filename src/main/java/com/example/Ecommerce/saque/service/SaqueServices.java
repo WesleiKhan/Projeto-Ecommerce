@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeTransferAdpted;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.saque.entity.Saque;
@@ -31,19 +32,19 @@ public class SaqueServices {
 
     private final TransacaoRepository transacaoRepository;
 
-    private final StripeTransferServices stripeTransferServices;
+    private final StripeTransferAdpted stripeTransferAdpted;
 
     public SaqueServices(SaqueRepository saqueRepository,
                          UserServices userServices,
                          VendedorRepository vendedorRepository,
                          TransacaoRepository transacaoRepository,
-                         StripeTransferServices stripeTransferServices) {
+                         StripeTransferAdpted stripeTransferAdpted) {
 
         this.saqueRepository = saqueRepository;
         this.userServices = userServices;
         this.vendedorRepository = vendedorRepository;
         this.transacaoRepository = transacaoRepository;
-        this.stripeTransferServices = stripeTransferServices;
+        this.stripeTransferAdpted = stripeTransferAdpted;
     }
 
 
@@ -51,58 +52,45 @@ public class SaqueServices {
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Vendedor> venOptional = vendedorRepository.findByNome(user);
+        Vendedor vendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrador."));
 
-        if (venOptional.isPresent()) {
+        Transacao transacao = transacaoRepository.findById(id).orElseThrow();
 
-            Transacao transacao = transacaoRepository.findById(id).orElseThrow();
+        if (saqueRepository.findByTransacao(transacao).isPresent()) {
 
-            if (saqueRepository.findByTransacao(transacao).isPresent()) {
+            throw new SaqueInvalidoException();
+        }
 
-                throw new SaqueInvalidoException();
-            }
+        BigDecimal desconto = transacao.getValor_total().multiply(new BigDecimal("0.10"));
 
-            BigDecimal desconto = transacao.getValor_total()
-                    .multiply(new BigDecimal("0.10"));
-
-            BigDecimal valor = transacao.getValor_total().subtract(desconto)
+        BigDecimal valor = transacao.getValor_total().subtract(desconto)
                     .setScale(2, RoundingMode.HALF_UP);
 
-            long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
+        long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
 
-            Vendedor vendedor = venOptional.get();
-
-            stripeTransferServices.createTransfer(vendedor.getId_account_stripe(),
+        stripeTransferAdpted.createTransfer(vendedor.getId_account_stripe(),
                     transacao.getId_charge_stripe(), valorEmCentavos);
 
-            Saque newSaque = new Saque(valor);
+        Saque newSaque = new Saque(valor);
 
-            newSaque.setSacador(vendedor);
+        newSaque.setSacador(vendedor);
 
-            newSaque.setTransacao(transacao);
+        newSaque.setTransacao(transacao);
 
-            saqueRepository.save(newSaque);
+        saqueRepository.save(newSaque);
 
-        } else {
-            throw new UserNotFound("Vendedor não foi encontrador.");
-        }
     }
 
     public List<Saque> getSaques() {
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Vendedor> venOptional = vendedorRepository.findByNome(user);
+        Vendedor vendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(() ->  new UserNotFound("Vendedor não foi encontrado."));
 
-        if (venOptional.isPresent()) {
+        return vendedor.getSaques();
 
-            Vendedor vendedor = venOptional.get();
-
-            return vendedor.getSaques();
-
-        } else {
-            throw new UserNotFound("Vendedor não foi encontrado.");
-        }
     }
     
 }

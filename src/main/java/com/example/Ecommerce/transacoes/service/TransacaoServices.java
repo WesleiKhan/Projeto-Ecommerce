@@ -2,9 +2,9 @@ package com.example.Ecommerce.transacoes.service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripePaymentAdpted;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -15,7 +15,6 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.utils.service.stripe.StripePaymentServices;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
@@ -33,21 +32,21 @@ public class TransacaoServices {
 
     private final VendedorRepository vendedorRepository;
 
-    private final StripePaymentServices stripePaymentServices;
+    private final StripePaymentAdpted stripePaymentAdpted;
 
     public TransacaoServices(TransacaoRepository transacaoRepository,
                              AnuncioRepository anuncioRepository,
                              UserServices userServices,
                              CompradorRepository compradorRepository,
                              VendedorRepository vendedorRepository,
-                             StripePaymentServices stripePaymentServices) {
+                             StripePaymentAdpted stripePaymentAdpted) {
 
         this.transacaoRepository = transacaoRepository;
         this.anuncioRepository =anuncioRepository;
         this.userServices = userServices;
         this.compradorRepository = compradorRepository;
         this.vendedorRepository = vendedorRepository;
-        this.stripePaymentServices = stripePaymentServices;
+        this.stripePaymentAdpted = stripePaymentAdpted;
 
     }
 
@@ -56,59 +55,44 @@ public class TransacaoServices {
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Comprador> comprador = compradorRepository.findByNome(user);
+        Comprador infoComprador = compradorRepository.findByNome(user)
+                .orElseThrow(() -> new UserNotFound("Usuario não foi encontrado no Cadatro de" +
+                        " Compradores."));
 
-        if (comprador.isPresent()) {
 
-            Comprador infoComprador = comprador.get();
+        Anuncio anuncio = anuncioRepository.findById(id).orElseThrow();
 
-            Anuncio anuncio = anuncioRepository.findById(id).orElseThrow();
+        BigDecimal valor = anuncio.getValor();
 
-            BigDecimal valor = anuncio.getValor();
+        BigDecimal valor_total = valor.multiply(BigDecimal.valueOf(data.getQuantidade()));
 
-            BigDecimal valor_total =
-                    valor.multiply(BigDecimal.valueOf(data.getQuantidade()));
-
-            long valor_total_centavos = valor_total.multiply(new BigDecimal(
+        long valor_total_centavos = valor_total.multiply(new BigDecimal(
                     "100")).longValueExact();
 
-            String id_charge =
-                    stripePaymentServices.createPaymentIntent(data.getToken(), valor_total_centavos);
+        String id_charge = stripePaymentAdpted.createPaymentIntent(data.getToken(), valor_total_centavos);
 
-            Transacao newTransacao = new Transacao(data.getQuantidade());
+        Transacao newTransacao = new Transacao(data.getQuantidade());
 
-            newTransacao.setProduto(anuncio);
+        newTransacao.setProduto(anuncio);
 
-            newTransacao.setComprador(infoComprador);
+        newTransacao.setComprador(infoComprador);
 
-            newTransacao.setValor_total(valor_total);
+        newTransacao.setValor_total(valor_total);
 
-            newTransacao.setId_charge_stripe(id_charge);
+        newTransacao.setId_charge_stripe(id_charge);
 
-            transacaoRepository.save(newTransacao);
+        transacaoRepository.save(newTransacao);
 
-        } else {
-
-            throw new UserNotFound("Usuario não foi encontrado no Cadatro de" +
-                    " Compradores.");
-        }
-  
     }
 
     public List<Transacao> getTransacao() {
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Vendedor> veOptional = vendedorRepository.findByNome(user);
+        Vendedor vendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(UserNotFound::new);
 
-        if (veOptional.isPresent()) {
+        return transacaoRepository.findByProdutoVendedor(vendedor);
 
-            Vendedor vendedor = veOptional.get();
-
-            return transacaoRepository.findByProdutoVendedor(vendedor);
-
-        } else {
-            throw new UserNotFound();
-        }
     }
 }

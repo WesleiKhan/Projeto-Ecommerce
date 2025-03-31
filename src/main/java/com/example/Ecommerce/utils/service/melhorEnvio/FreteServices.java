@@ -1,5 +1,6 @@
 package com.example.Ecommerce.utils.service.melhorEnvio;
 
+import com.example.Ecommerce.utils.service.melhorEnvio.interfaces.FreteAdpted;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.utils.exceptions.FreteException;
@@ -13,7 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 @Service
-public class FreteServices {
+public class FreteServices implements FreteAdpted {
     
     private static final String API_URL = "https://sandbox.melhorenvio.com.br/api/v2/me/shipment/calculate";
 

@@ -1,11 +1,12 @@
 package com.example.Ecommerce.anuncio_produto.service;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.utils.service.cloudinary.interfaces.FileUpload;
+import com.example.Ecommerce.utils.service.melhorEnvio.interfaces.FreteAdpted;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +19,6 @@ import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.utils.exceptions.FreteException;
 import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
 import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
-import com.example.Ecommerce.utils.service.cloudinary.FileUploadImpl;
-import com.example.Ecommerce.utils.service.melhorEnvio.FreteServices;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 
@@ -32,48 +31,43 @@ public class AnuncioServices {
 
     private final VendedorRepository vendedorRepository;
 
-    private final FileUploadImpl fileUploadImpl;
+    private final FileUpload fileUpload;
 
-    private final FreteServices freteServices;
+    private final FreteAdpted freteAdpted;
 
     public AnuncioServices(AnuncioRepository anuncioRepository,
                            UserServices userServices,
                            VendedorRepository vendedorRepository,
-                           FileUploadImpl fileUploadImpl,
-                           FreteServices freteServices) {
+                           FileUpload fileUpload,
+                           FreteAdpted freteAdpted) {
 
         this.anuncioRepository = anuncioRepository;
         this.userServices = userServices;
         this.vendedorRepository = vendedorRepository;
-        this.fileUploadImpl = fileUploadImpl;
-        this.freteServices = freteServices;
+        this.fileUpload = fileUpload;
+        this.freteAdpted = freteAdpted;
     }
 
     public void createAnuncio(AnuncioEntryDTO data) throws IOException{
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Vendedor> userV = vendedorRepository.findByNome(user);
+        Vendedor vendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(() -> new UserNotFound("Usuario não foi encontrado no cadastro " +
+                        "de vendedores"));
 
-        if (userV.isPresent()) {
+        String imagem = fileUpload.updloadFile(data.getImagem()) ;
 
-            Vendedor vendedor = userV.get();
+        Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(),
+                imagem, data.getValor(), data.getQuantidade(),
+                data.getAltura(), data.getLargura(), data.getComprimento(),
+                data.getPeso());
 
-            String imagem = fileUploadImpl.updloadFile(data.getImagem()) ;
+        newAnuncio.setVendedor(vendedor);
 
-            Anuncio newAnuncio = new Anuncio(data.getTitulo(), data.getDescricao(),
-                    imagem, data.getValor(), data.getQuantidade(),
-                    data.getAltura(), data.getLargura(), data.getComprimento(),
-                    data.getPeso());
+        anuncioRepository.save(newAnuncio);
 
-            newAnuncio.setVendedor(vendedor);
 
-            anuncioRepository.save(newAnuncio);
-
-        } else {
-            throw new UserNotFound("Usuario não foi encontrado no cadastro " +
-                    "de vendedores");
-        }
     }
 
 
@@ -107,7 +101,7 @@ public class AnuncioServices {
 
             if(data.getImagem() != null && !data.getImagem().isEmpty()) {
                 String newImagem =
-                        fileUploadImpl.updloadFile(data.getImagem());
+                        fileUpload.updloadFile(data.getImagem());
                 newAnuncio.setImagem(newImagem);
             }
 
@@ -127,24 +121,19 @@ public class AnuncioServices {
 
     public String verFrete(String id, CepEntryDTO cep_destino) {
 
-        Optional<Anuncio> anuOptional = anuncioRepository.findById(id);
+        Anuncio anuncio = anuncioRepository.findById(id)
+                .orElseThrow(FreteException::new);
 
-        if (anuOptional.isPresent()) {
 
-            Anuncio anuncio = anuOptional.get();
+        Vendedor vendedor = anuncio.getVendedor();
 
-            Vendedor vendedor = anuncio.getVendedor();
+        return freteAdpted.calcularFrete(new FreteEntryDTO(vendedor.getCep(),
+                        anuncio.getAltura(),
+                        anuncio.getLargura(),
+                        anuncio.getComprimento(),
+                        anuncio.getPeso()),
+                        cep_destino);
 
-            return freteServices.calcularFrete(new FreteEntryDTO(vendedor.getCep(),
-                    anuncio.getAltura(),
-                    anuncio.getLargura(),
-                    anuncio.getComprimento(),
-                    anuncio.getPeso()),
-                    cep_destino);
-
-        } else {
-            throw new FreteException();
-        }
 
     }
 }
