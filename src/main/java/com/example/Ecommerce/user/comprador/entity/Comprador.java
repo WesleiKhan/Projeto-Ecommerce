@@ -1,9 +1,9 @@
-package com.example.Ecommerce.vendedor.entity;
+package com.example.Ecommerce.user.comprador.entity;
 
 import java.util.List;
 
-import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.saque.entity.Saque;
+import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
+import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,8 +19,8 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vendedores")
-public class Vendedor {
+@Table(name = "compradores")
+public class Comprador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -33,9 +33,6 @@ public class Vendedor {
 
     @Column(name = "cpf", unique = true)
     private String cpf;
-
-    @Column(name = "cnpj", unique = true)
-    private String cnpj;
 
     @Column(name = "numero_telefone")
     private String numero_telefone;
@@ -55,76 +52,66 @@ public class Vendedor {
     @Column(name = "cep")
     private String cep;
 
-    @Column(name = "anuncios_id")
-    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "transacoes_id")
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Anuncio> anuncios;
+    private List<Transacao> transacoes;
 
-    @Column(name = "saques_id")
-    @OneToMany(mappedBy = "sacador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Column(name = "avaliacoes_id")
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Saque> saques;
+    private List<Avaliacao> avaliacaos;
 
-    @Column(name = "id_account_stripe")
-    private String id_account_stripe;
-    
 
-    public Vendedor() {
+    public Comprador() {
+
     }
 
-
-    public Vendedor(String cpf, String cnpj, String numero_telefone,
-                    String rua, String numero, String cidade,
-                    String estado, String cep) {
+    public Comprador(String cpf, String numero_telefone, String rua, String numero, String cidade, String estado, String cep) {
 
         this.cpf = cpf;
-        this.cnpj = (cnpj == null || cnpj.trim().isEmpty()) ? null : cnpj;
         this.numero_telefone = numero_telefone;
         this.rua = rua;
         this.numero = numero;
         this.cidade = cidade;
         this.estado = estado;
         this.cep = cep;
-
     }
 
-
     public String getId() {
+
         return id;
     }
 
-    public User getNome() {
-        return nome;
-    }
-
     public void setNome(User nome) {
+
         this.nome = nome;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
+    public User getNome() {
 
+        return nome;
+    }
+    
     public void setCpf(String cpf) {
+
         this.cpf = cpf;
     }
 
-    public String getCnpj() {
-        return cnpj;
-    }
+    public String getCpf() {
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = (cnpj == null || cnpj.trim().isEmpty()) ? null : cnpj;
-    }
-
-    public String getNumero_telefone() {
-        return numero_telefone;
+        return cpf;
     }
 
     public void setNumero_telefone(String numero_telefone) {
         if(numero_telefone != null && !numero_telefone.trim().isEmpty()) {
             this.numero_telefone = numero_telefone;
         }
+    }
+
+    public String getNumero_telefone() {
+
+        return numero_telefone;
     }
 
     public String getRua() {
@@ -145,7 +132,6 @@ public class Vendedor {
         if(numero != null && !numero.trim().isEmpty()) {
             this.numero = numero;
         }
-        this.numero = numero;
     }
 
     public String getCidade() {
@@ -178,26 +164,7 @@ public class Vendedor {
         }
     }
 
-
-
-    public List<Anuncio> getAnuncios() {
-        return anuncios;
+    public List<Transacao> getTransacoes() {
+        return transacoes;
     }
-
-
-    public List<Saque> getSaques() {
-        return saques;
-    }
-
-
-    public String getId_account_stripe() {
-        return id_account_stripe;
-    }
-
-
-    public void setId_account_stripe(String id_account_stripe) {
-        this.id_account_stripe = id_account_stripe;
-    }
-
-    
 }

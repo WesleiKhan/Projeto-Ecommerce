@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.example.Ecommerce.transacoes.entity.Transacao;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

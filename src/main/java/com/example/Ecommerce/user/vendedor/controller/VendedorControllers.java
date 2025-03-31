@@ -1,13 +1,12 @@
-package com.example.Ecommerce.vendedor.controller;
+package com.example.Ecommerce.user.vendedor.controller;
 
-import com.example.Ecommerce.vendedor.service.VendedorEntryEditDTO;
+import com.example.Ecommerce.user.vendedor.service.VendedorEntryEditDTO;
 import com.stripe.exception.StripeException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Ecommerce.vendedor.service.VendedorEntryDTO;
-import com.example.Ecommerce.vendedor.service.VendedorServices;
+import com.example.Ecommerce.user.vendedor.service.VendedorEntryDTO;
+import com.example.Ecommerce.user.vendedor.service.VendedorServices;
 
 import jakarta.validation.Valid;
 

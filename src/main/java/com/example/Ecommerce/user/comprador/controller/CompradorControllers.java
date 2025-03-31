@@ -1,11 +1,11 @@
-package com.example.Ecommerce.comprador.controller;
+package com.example.Ecommerce.user.comprador.controller;
 
-import com.example.Ecommerce.comprador.service.CompradorEntryEditDTO;
+import com.example.Ecommerce.user.comprador.service.CompradorEntryEditDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.Ecommerce.comprador.service.CompradorEntryDTO;
-import com.example.Ecommerce.comprador.service.CompradorServices;
+import com.example.Ecommerce.user.comprador.service.CompradorEntryDTO;
+import com.example.Ecommerce.user.comprador.service.CompradorServices;
 
 import jakarta.validation.Valid;
 

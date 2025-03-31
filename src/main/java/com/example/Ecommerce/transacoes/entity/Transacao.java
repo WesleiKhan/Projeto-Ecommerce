@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.comprador.entity.Comprador;
+import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.saque.entity.Saque;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

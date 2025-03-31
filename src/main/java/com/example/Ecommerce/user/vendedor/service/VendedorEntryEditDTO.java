@@ -1,35 +1,25 @@
-package com.example.Ecommerce.comprador.service;
+package com.example.Ecommerce.user.vendedor.service;
 
-public class CompradorEntryDTO {
-    
-    private String cpf;
+public class VendedorEntryEditDTO {
 
-    private String numero_telefone;
+     private String numeroTelefone;
 
-    private String rua;
+     private String rua;
 
-    private String numero;
+     private String numero;
 
-    private String cidade;
+     private String cidade;
 
-    private String estado;
+     private String estado;
 
-    private String cep;
+     private String cep;
 
-    public String getCpf() {
-        return cpf;
+    public String getNumeroTelefone() {
+        return numeroTelefone;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public String getNumero_telefone() {
-        return numero_telefone;
-    }
-
-    public void setNumero_telefone(String numero_telefone) {
-        this.numero_telefone = numero_telefone;
+    public void setNumeroTelefone(String numeroTelefone) {
+        this.numeroTelefone = numeroTelefone;
     }
 
     public String getRua() {
@@ -71,6 +61,4 @@ public class CompradorEntryDTO {
     public void setCep(String cep) {
         this.cep = cep;
     }
-
-    
 }

@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.Ecommerce.carrinho.entity.Carrinho;
-import com.example.Ecommerce.comprador.entity.Comprador;
+import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.favorito.entity.Favorito;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

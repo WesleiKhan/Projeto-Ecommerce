@@ -1,7 +1,7 @@
 package com.example.Ecommerce.anuncio_produto.avaliacoes.entity;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.comprador.entity.Comprador;
+import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 

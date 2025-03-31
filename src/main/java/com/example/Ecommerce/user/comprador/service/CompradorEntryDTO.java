@@ -1,41 +1,20 @@
-package com.example.Ecommerce.vendedor.service;
+package com.example.Ecommerce.user.comprador.service;
 
-import jakarta.validation.constraints.NotBlank;
-
-public class VendedorEntryDTO {
-
-    @NotBlank
+public class CompradorEntryDTO {
+    
     private String cpf;
 
-    private String cnpj;
-
-    @NotBlank
     private String numero_telefone;
 
-    @NotBlank
     private String rua;
 
-    @NotBlank
     private String numero;
 
-    @NotBlank
     private String cidade;
 
-    @NotBlank
     private String estado;
 
-    @NotBlank
     private String cep;
-
-    @NotBlank
-    private String agencia;
-
-    @NotBlank
-    private String conta;
-
-    @NotBlank
-    private String codigo_banco;
-
 
     public String getCpf() {
         return cpf;
@@ -43,14 +22,6 @@ public class VendedorEntryDTO {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
     }
 
     public String getNumero_telefone() {
@@ -99,30 +70,6 @@ public class VendedorEntryDTO {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
-        this.agencia = agencia;
-    }
-
-    public String getConta() {
-        return conta;
-    }
-
-    public void setConta(String conta) {
-        this.conta = conta;
-    }
-
-    public String getCodigo_banco() {
-        return codigo_banco;
-    }
-
-    public void setCodigo_banco(String codigo_banco) {
-        this.codigo_banco = codigo_banco;
     }
 
     

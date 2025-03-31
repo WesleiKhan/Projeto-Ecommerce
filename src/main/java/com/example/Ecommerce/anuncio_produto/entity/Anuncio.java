@@ -2,7 +2,6 @@ package com.example.Ecommerce.anuncio_produto.entity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
@@ -10,7 +9,7 @@ import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.transacoes.entity.Transacao;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;

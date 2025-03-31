@@ -1,4 +1,4 @@
-package com.example.Ecommerce.vendedor.controller;
+package com.example.Ecommerce.user.vendedor.controller;
 
 import com.stripe.exception.StripeException;
 import org.springframework.http.HttpStatus;

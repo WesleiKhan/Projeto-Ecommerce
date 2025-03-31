@@ -1,18 +1,18 @@
-package com.example.Ecommerce.vendedor.service;
+package com.example.Ecommerce.user.comprador.service;
 
-public class VendedorEntryEditDTO {
+public class CompradorEntryEditDTO {
 
-     private String numeroTelefone;
+    private String numeroTelefone;
 
-     private String rua;
+    private String rua;
 
-     private String numero;
+    private String numero;
 
-     private String cidade;
+    private String cidade;
 
-     private String estado;
+    private String estado;
 
-     private String cep;
+    private String cep;
 
     public String getNumeroTelefone() {
         return numeroTelefone;

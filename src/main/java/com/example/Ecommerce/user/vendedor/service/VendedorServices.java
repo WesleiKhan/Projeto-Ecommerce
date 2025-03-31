@@ -1,21 +1,22 @@
-package com.example.Ecommerce.vendedor.service;
+package com.example.Ecommerce.user.vendedor.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import com.example.Ecommerce.utils.service.stripe.StripeExcludeAccount;
+import com.example.Ecommerce.utils.service.sendGrid.interfaces.SendGridAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeAccountLinkAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnectAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeExcludeAccountAdpted;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.utils.service.sendGrid.SendGridServices;
-import com.example.Ecommerce.utils.service.stripe.StripeAccountLinkServices;
-import com.example.Ecommerce.utils.service.stripe.StripeConnectServices;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
-import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
 
 @Service
@@ -25,28 +26,28 @@ public class VendedorServices {
 
     private final UserServices userServices;
 
-    private final StripeConnectServices stripeConnectServices;
+    private final StripeConnectAdpted stripeConnectAdpted;
 
-    private final StripeAccountLinkServices stripeAccountLinkServices;
+    private final StripeAccountLinkAdpted stripeAccountLinkAdpted;
 
-    private final StripeExcludeAccount stripeExcludeAccount;
+    private final StripeExcludeAccountAdpted stripeExcludeAccountAdpted;
 
-    private final SendGridServices sendGridServices;
+    private final SendGridAdpted sendGridAdpted;
 
 
     public VendedorServices(VendedorRepository vendedorRepository,
                             UserServices userServices,
-                            StripeConnectServices stripeConnectServices,
-                            StripeAccountLinkServices stripeAccountLinkServices,
-                            StripeExcludeAccount stripeExcludeAccount,
-                            SendGridServices sendGridServices) {
+                            StripeConnectAdpted stripeConnectAdpted,
+                            StripeAccountLinkAdpted stripeAccountLinkAdpted,
+                            StripeExcludeAccountAdpted stripeExcludeAccountAdpted,
+                            SendGridAdpted sendGridAdpted) {
 
         this.vendedorRepository = vendedorRepository;
         this.userServices = userServices;
-        this.stripeConnectServices = stripeConnectServices;
-        this.stripeAccountLinkServices = stripeAccountLinkServices;
-        this.stripeExcludeAccount = stripeExcludeAccount;
-        this.sendGridServices = sendGridServices;
+        this.stripeConnectAdpted = stripeConnectAdpted;
+        this.stripeAccountLinkAdpted = stripeAccountLinkAdpted;
+        this.stripeExcludeAccountAdpted = stripeExcludeAccountAdpted;
+        this.sendGridAdpted = sendGridAdpted;
 
     }
 
@@ -64,14 +65,14 @@ public class VendedorServices {
         long mes =  dataNascimento.getMonthValue();
         long ano =  dataNascimento.getYear();
 
-        String id_stripe = stripeConnectServices.criarContaVendedorStripe(
+        String id_stripe = stripeConnectAdpted.criarContaVendedorStripe(
                 infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
                 infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
                 data.getNumero_telefone(), data.getConta(), data.getAgencia(),
                 data.getCodigo_banco(), data.getRua(), data.getNumero(),
                 data.getCidade(), data.getEstado(), data.getCep());
 
-        String urlCadastro = stripeAccountLinkServices.criarLinkDeOnboading(id_stripe);
+        String urlCadastro = stripeAccountLinkAdpted.criarLinkDeOnboading(id_stripe);
 
         Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
                 data.getNumero_telefone(), data.getRua(), data.getNumero(),
@@ -82,7 +83,7 @@ public class VendedorServices {
 
         newVendedor.setId_account_stripe(id_stripe);
 
-        sendGridServices.sendEmail(urlCadastro, infoVendedor.getEmail());
+        sendGridAdpted.sendEmail(urlCadastro, infoVendedor.getEmail());
            
         vendedorRepository.save(newVendedor);
 
@@ -122,25 +123,18 @@ public class VendedorServices {
 
         User user = userServices.getLoggedInUser();
 
-        Optional<Vendedor> optVendedor = vendedorRepository.findByNome(user);
+        Vendedor vendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrado."));
 
-        if(optVendedor.isPresent()) {
-
-            Vendedor vendedor = optVendedor.get();
-
-            String response =
-                    stripeExcludeAccount.deleteAccountStripe(vendedor
+        String response = stripeExcludeAccountAdpted.deleteAccountStripe(vendedor
                     .getId_account_stripe());
 
-            user.setCadastro_vendedor(null);
+        user.setCadastro_vendedor(null);
 
-            vendedorRepository.delete(vendedor);
+        vendedorRepository.delete(vendedor);
 
-            return response;
+        return response;
 
-        } else {
-            throw new UserNotFound("Vendedor não foi encontrado.");
-        }
     }
 
 }

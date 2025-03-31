@@ -1,5 +1,6 @@
 package com.example.Ecommerce.utils.service.stripe;
 
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeTransferAdpted;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import com.stripe.model.Transfer;
 import com.stripe.param.TransferCreateParams;
 
 @Service
-public class StripeTransferServices {
+public class StripeTransferServices implements StripeTransferAdpted {
 
     @Value("${stripe.api.key}")
     private String apiKey;

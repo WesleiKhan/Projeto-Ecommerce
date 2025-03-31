@@ -20,8 +20,8 @@ import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
 import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
 import com.example.Ecommerce.utils.service.cloudinary.FileUploadImpl;
 import com.example.Ecommerce.utils.service.melhorEnvio.FreteServices;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
-import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 
 @Service
 public class AnuncioServices {

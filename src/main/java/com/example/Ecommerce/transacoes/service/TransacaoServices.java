@@ -9,15 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.comprador.entity.Comprador;
-import com.example.Ecommerce.comprador.repositorie.CompradorRepository;
+import com.example.Ecommerce.user.comprador.entity.Comprador;
+import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.utils.service.stripe.StripePaymentServices;
-import com.example.Ecommerce.vendedor.entity.Vendedor;
-import com.example.Ecommerce.vendedor.repositorie.VendedorRepository;
+import com.example.Ecommerce.user.vendedor.entity.Vendedor;
+import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
 
 @Service
