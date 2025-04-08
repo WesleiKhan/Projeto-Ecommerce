@@ -1,5 +1,6 @@
 package com.example.Ecommerce.utils.service.stripe.interfaces;
 
+import com.example.Ecommerce.user.objectValue.Endereco;
 import com.stripe.exception.StripeException;
 
 public interface StripeConnectAdpted {
@@ -8,7 +9,6 @@ public interface StripeConnectAdpted {
                                     long mes, long ano, String cpf,
                                     String telefone, String conta,
                                     String agencia, String code_bank,
-                                    String rua, String numero, String cidade,
-                                    String estado, String cep)
+                                    Endereco endereco)
             throws StripeException;
 }

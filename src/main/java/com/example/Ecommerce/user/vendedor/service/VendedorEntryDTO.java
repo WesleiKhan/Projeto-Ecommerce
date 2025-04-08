@@ -1,5 +1,6 @@
 package com.example.Ecommerce.user.vendedor.service;
 
+import com.example.Ecommerce.user.objectValue.Endereco;
 import jakarta.validation.constraints.NotBlank;
 
 public class VendedorEntryDTO {
@@ -12,20 +13,7 @@ public class VendedorEntryDTO {
     @NotBlank
     private String numero_telefone;
 
-    @NotBlank
-    private String rua;
-
-    @NotBlank
-    private String numero;
-
-    @NotBlank
-    private String cidade;
-
-    @NotBlank
-    private String estado;
-
-    @NotBlank
-    private String cep;
+    private Endereco endereco;
 
     @NotBlank
     private String agencia;
@@ -61,44 +49,12 @@ public class VendedorEntryDTO {
         this.numero_telefone = numero_telefone;
     }
 
-    public String getRua() {
-        return rua;
+    public Endereco getEndereco() {
+        return endereco;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public String getAgencia() {

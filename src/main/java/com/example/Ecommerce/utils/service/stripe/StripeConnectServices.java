@@ -3,6 +3,7 @@ package com.example.Ecommerce.utils.service.stripe;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.Ecommerce.user.objectValue.Endereco;
 import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnectAdpted;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,10 @@ public class StripeConnectServices implements StripeConnectAdpted {
     @Value("${stripe.api.key}")
     private String apiKeyStripe;
     
-    public String criarContaVendedorStripe(String email, String nome, String sobrenome, long dia, long mes, long ano, String cpf, String telefone, String conta, String agencia, String code_bank, String rua, String numero, String cidade, String estado, String cep) throws StripeException {
+    public String criarContaVendedorStripe(String email, String nome, String sobrenome,
+                                           long dia, long mes, long ano, String cpf,
+                                           String telefone, String conta, String agencia,
+                                           String code_bank, Endereco endereco) throws StripeException {
 
         Stripe.apiKey = apiKeyStripe;
 
@@ -41,10 +45,11 @@ public class StripeConnectServices implements StripeConnectAdpted {
                                 .setYear(ano)    
                                 .build()
                         )
-                        .putExtraParam("address[line1]", rua + ", " + numero)
-                        .putExtraParam("address[city]", cidade)
-                        .putExtraParam("address[state]", estado)
-                        .putExtraParam("address[postal_code]", cep)
+                        .putExtraParam("address[line1]",
+                                endereco.getRua() + ", " + endereco.getNumero())
+                        .putExtraParam("address[city]", endereco.getCidade())
+                        .putExtraParam("address[state]", endereco.getEstado())
+                        .putExtraParam("address[postal_code]", endereco.getCep())
                         .putExtraParam("address[country]", "BR")
                         .build()
                 )

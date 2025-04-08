@@ -1,18 +1,12 @@
 package com.example.Ecommerce.user.comprador.service;
 
+import com.example.Ecommerce.user.objectValue.Endereco;
+
 public class CompradorEntryEditDTO {
 
     private String numeroTelefone;
 
-    private String rua;
-
-    private String numero;
-
-    private String cidade;
-
-    private String estado;
-
-    private String cep;
+    private Endereco endereco;
 
     public String getNumeroTelefone() {
         return numeroTelefone;
@@ -22,43 +16,13 @@ public class CompradorEntryEditDTO {
         this.numeroTelefone = numeroTelefone;
     }
 
-    public String getRua() {
-        return rua;
+    public Endereco getEndereco() {
+
+        return endereco;
     }
 
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
+    public void setEndereco(Endereco endereco) {
 
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
+        this.endereco = endereco;
     }
 }

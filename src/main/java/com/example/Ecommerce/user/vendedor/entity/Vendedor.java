@@ -5,18 +5,10 @@ import java.util.List;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.saque.entity.Saque;
 import com.example.Ecommerce.user.entity.User;
+import com.example.Ecommerce.user.objectValue.Endereco;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vendedores")
@@ -40,20 +32,8 @@ public class Vendedor {
     @Column(name = "numero_telefone")
     private String numero_telefone;
 
-    @Column(name = "rua")
-    private String rua;
-
-    @Column(name = "numero")
-    private String numero;
-
-    @Column(name = "cidade")
-    private String cidade;
-
-    @Column(name = "estado")
-    private String estado;
-
-    @Column(name = "cep")
-    private String cep;
+    @Embedded
+    private Endereco endereco;
 
     @Column(name = "anuncios_id")
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -74,17 +54,12 @@ public class Vendedor {
 
 
     public Vendedor(String cpf, String cnpj, String numero_telefone,
-                    String rua, String numero, String cidade,
-                    String estado, String cep) {
+                    Endereco endereco) {
 
         this.cpf = cpf;
         this.cnpj = (cnpj == null || cnpj.trim().isEmpty()) ? null : cnpj;
         this.numero_telefone = numero_telefone;
-        this.rua = rua;
-        this.numero = numero;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.cep = cep;
+        this.endereco = endereco;
 
     }
 
@@ -127,58 +102,19 @@ public class Vendedor {
         }
     }
 
-    public String getRua() {
-        return rua;
+    public Endereco getEndereco() {
+
+        return endereco;
     }
 
-    public void setRua(String rua) {
-        if(rua != null && !rua.trim().isEmpty()) {
-            this.rua = rua;
-        }
+    public void setEndereco(Endereco endereco) {
+
+        this.endereco.setRua(endereco.getRua());
+        this.endereco.setNumero(endereco.getNumero());
+        this.endereco.setCidade(endereco.getCidade());
+        this.endereco.setEstado(endereco.getEstado());
+        this.endereco.setCep(endereco.getCep());
     }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        if(numero != null && !numero.trim().isEmpty()) {
-            this.numero = numero;
-        }
-        this.numero = numero;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        if(cidade != null && !cidade.trim().isEmpty()) {
-            this.cidade = cidade;
-        }
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        if(estado != null && !estado.trim().isEmpty()) {
-            this.estado = estado;
-        }
-    }
-
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        if(cep != null && !cep.trim().isEmpty()) {
-            this.cep = cep;
-        }
-    }
-
-
 
     public List<Anuncio> getAnuncios() {
         return anuncios;

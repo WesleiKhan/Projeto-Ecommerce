@@ -32,8 +32,7 @@ public class CompradorServices {
             throw new UserAlreadyExists("Usuario ja e Cadastrado como Comprador!"); }
 
         Comprador newComprador = new Comprador(data.getCpf(),
-                data.getNumero_telefone(), data.getRua(), data.getNumero(),
-                data.getCidade(), data.getEstado(), data.getCep());
+                data.getNumero_telefone(), data.getEndereco());
 
         newComprador.setNome(infoComprador);
 
@@ -47,16 +46,8 @@ public class CompradorServices {
         Comprador newComprador = compradorRepository.findByNome(user)
                         .orElseThrow(() -> new UserNotFound("Comprador não foi encontrado."));
 
-        /*A Logica Para ve se os valores atribuidos a os metodos sets
-        são null ou blank esta dentros dos metodos sets da entidade.*/
-
         newComprador.setNumero_telefone(data.getNumeroTelefone());
-        newComprador.setRua(data.getRua());
-        newComprador.setNumero(data.getNumero());
-        newComprador.setCidade(data.getCidade());
-        newComprador.setEstado(data.getEstado());
-        newComprador.setCep(data.getCep());
-
+        newComprador.setEndereco(data.getEndereco());
 
         compradorRepository.save(newComprador);
     }

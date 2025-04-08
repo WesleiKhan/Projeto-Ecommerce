@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.utils.service.sendGrid.SendGridServices;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
@@ -69,14 +68,12 @@ public class VendedorServices {
                 infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
                 infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
                 data.getNumero_telefone(), data.getConta(), data.getAgencia(),
-                data.getCodigo_banco(), data.getRua(), data.getNumero(),
-                data.getCidade(), data.getEstado(), data.getCep());
+                data.getCodigo_banco(), data.getEndereco());
 
         String urlCadastro = stripeAccountLinkAdpted.criarLinkDeOnboading(id_stripe);
 
         Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
-                data.getNumero_telefone(), data.getRua(), data.getNumero(),
-                data.getCidade(), data.getEstado(), data.getCep()
+                data.getNumero_telefone(), data.getEndereco()
                 );
 
         newVendedor.setNome(infoVendedor);
@@ -106,11 +103,7 @@ public class VendedorServices {
             vazia o valor não sera atualizado no banco de dados.*/
 
             newVendedor.setNumero_telefone(data.getNumeroTelefone());
-            newVendedor.setRua(data.getRua());
-            newVendedor.setNumero(data.getNumero());
-            newVendedor.setCidade(data.getCidade());
-            newVendedor.setEstado(data.getEstado());
-            newVendedor.setCep(data.getCep());
+            newVendedor.setEndereco(data.getEndereco());
 
             vendedorRepository.save(newVendedor);
 
