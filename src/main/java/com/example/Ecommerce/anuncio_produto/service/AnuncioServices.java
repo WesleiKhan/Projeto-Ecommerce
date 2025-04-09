@@ -6,7 +6,7 @@ import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.service.UserServices;
 import com.example.Ecommerce.utils.service.cloudinary.interfaces.FileUpload;
-import com.example.Ecommerce.utils.service.melhorEnvio.interfaces.FreteAdpted;
+import com.example.Ecommerce.utils.service.melhorEnvio.interfaces.Frete;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,19 +33,19 @@ public class AnuncioServices {
 
     private final FileUpload fileUpload;
 
-    private final FreteAdpted freteAdpted;
+    private final Frete frete;
 
     public AnuncioServices(AnuncioRepository anuncioRepository,
                            UserServices userServices,
                            VendedorRepository vendedorRepository,
                            FileUpload fileUpload,
-                           FreteAdpted freteAdpted) {
+                           Frete frete) {
 
         this.anuncioRepository = anuncioRepository;
         this.userServices = userServices;
         this.vendedorRepository = vendedorRepository;
         this.fileUpload = fileUpload;
-        this.freteAdpted = freteAdpted;
+        this.frete = frete;
     }
 
     public void createAnuncio(AnuncioEntryDTO data) throws IOException{
@@ -127,7 +127,9 @@ public class AnuncioServices {
 
         Vendedor vendedor = anuncio.getVendedor();
 
-        return freteAdpted.calcularFrete(new FreteEntryDTO(vendedor.getCep(),
+        return frete.calcularFrete(new FreteEntryDTO(vendedor
+                        .getEndereco()
+                        .getCep(),
                         anuncio.getAltura(),
                         anuncio.getLargura(),
                         anuncio.getComprimento(),

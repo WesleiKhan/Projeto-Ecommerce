@@ -1,6 +1,6 @@
 package com.example.Ecommerce.utils.service.stripe;
 
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripePaymentAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripePayment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import com.stripe.param.PaymentIntentCreateParams;
 
 
 @Service
-public class StripePaymentServices implements StripePaymentAdpted {
+public class StripePaymentAdapter implements StripePayment {
 
     @Value("${stripe.api.key}")
     private String stripeApiKey;

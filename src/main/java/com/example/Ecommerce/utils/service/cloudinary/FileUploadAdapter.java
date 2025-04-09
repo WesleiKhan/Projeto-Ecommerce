@@ -11,11 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 
 @Service
-public class FileUploadImpl implements FileUpload {
+public class FileUploadAdapter implements FileUpload {
 
     private final Cloudinary cloudinary;
 
-    public FileUploadImpl(Cloudinary cloudinary) {
+    public FileUploadAdapter(Cloudinary cloudinary) {
         this.cloudinary = cloudinary;
     }
 

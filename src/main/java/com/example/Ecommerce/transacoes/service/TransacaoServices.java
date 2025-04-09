@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.example.Ecommerce.user.service.UserServices;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripePaymentAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripePayment;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -32,21 +32,21 @@ public class TransacaoServices {
 
     private final VendedorRepository vendedorRepository;
 
-    private final StripePaymentAdpted stripePaymentAdpted;
+    private final StripePayment stripePayment;
 
     public TransacaoServices(TransacaoRepository transacaoRepository,
                              AnuncioRepository anuncioRepository,
                              UserServices userServices,
                              CompradorRepository compradorRepository,
                              VendedorRepository vendedorRepository,
-                             StripePaymentAdpted stripePaymentAdpted) {
+                             StripePayment stripePayment) {
 
         this.transacaoRepository = transacaoRepository;
         this.anuncioRepository =anuncioRepository;
         this.userServices = userServices;
         this.compradorRepository = compradorRepository;
         this.vendedorRepository = vendedorRepository;
-        this.stripePaymentAdpted = stripePaymentAdpted;
+        this.stripePayment = stripePayment;
 
     }
 
@@ -69,7 +69,7 @@ public class TransacaoServices {
         long valor_total_centavos = valor_total.multiply(new BigDecimal(
                     "100")).longValueExact();
 
-        String id_charge = stripePaymentAdpted.createPaymentIntent(data.getToken(), valor_total_centavos);
+        String id_charge = stripePayment.createPaymentIntent(data.getToken(), valor_total_centavos);
 
         Transacao newTransacao = new Transacao(data.getQuantidade());
 

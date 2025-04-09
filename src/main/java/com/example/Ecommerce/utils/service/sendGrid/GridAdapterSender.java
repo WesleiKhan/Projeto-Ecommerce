@@ -2,7 +2,7 @@ package com.example.Ecommerce.utils.service.sendGrid;
 
 import java.io.IOException;
 
-import com.example.Ecommerce.utils.service.sendGrid.interfaces.SendGridAdpted;
+import com.example.Ecommerce.utils.service.sendGrid.interfaces.EmailSender;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SendGridServices implements SendGridAdpted {
+public class GridAdapterSender implements EmailSender {
 
 
     @Value("${sendgrid.email.remetente}")

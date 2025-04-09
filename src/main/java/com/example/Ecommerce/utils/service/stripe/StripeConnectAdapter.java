@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.Ecommerce.user.objectValue.Endereco;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnectAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import com.stripe.model.Account;
 import com.stripe.param.AccountCreateParams;
 
 @Service
-public class StripeConnectServices implements StripeConnectAdpted {
+public class StripeConnectAdapter implements StripeConnect {
 
     @Value("${stripe.api.key}")
     private String apiKeyStripe;

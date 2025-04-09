@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import com.example.Ecommerce.utils.service.sendGrid.interfaces.SendGridAdpted;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeAccountLinkAdpted;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnectAdpted;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeExcludeAccountAdpted;
+import com.example.Ecommerce.utils.service.sendGrid.interfaces.EmailSender;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeAccountLink;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnect;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeExcludeAccount;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;
@@ -25,28 +25,28 @@ public class VendedorServices {
 
     private final UserServices userServices;
 
-    private final StripeConnectAdpted stripeConnectAdpted;
+    private final StripeConnect stripeConnect;
 
-    private final StripeAccountLinkAdpted stripeAccountLinkAdpted;
+    private final StripeAccountLink stripeAccountLink;
 
-    private final StripeExcludeAccountAdpted stripeExcludeAccountAdpted;
+    private final StripeExcludeAccount stripeExcludeAccount;
 
-    private final SendGridAdpted sendGridAdpted;
+    private final EmailSender emailSender;
 
 
     public VendedorServices(VendedorRepository vendedorRepository,
                             UserServices userServices,
-                            StripeConnectAdpted stripeConnectAdpted,
-                            StripeAccountLinkAdpted stripeAccountLinkAdpted,
-                            StripeExcludeAccountAdpted stripeExcludeAccountAdpted,
-                            SendGridAdpted sendGridAdpted) {
+                            StripeConnect stripeConnect,
+                            StripeAccountLink stripeAccountLink,
+                            StripeExcludeAccount stripeExcludeAccount,
+                            EmailSender emailSender) {
 
         this.vendedorRepository = vendedorRepository;
         this.userServices = userServices;
-        this.stripeConnectAdpted = stripeConnectAdpted;
-        this.stripeAccountLinkAdpted = stripeAccountLinkAdpted;
-        this.stripeExcludeAccountAdpted = stripeExcludeAccountAdpted;
-        this.sendGridAdpted = sendGridAdpted;
+        this.stripeConnect = stripeConnect;
+        this.stripeAccountLink = stripeAccountLink;
+        this.stripeExcludeAccount = stripeExcludeAccount;
+        this.emailSender = emailSender;
 
     }
 
@@ -64,13 +64,13 @@ public class VendedorServices {
         long mes =  dataNascimento.getMonthValue();
         long ano =  dataNascimento.getYear();
 
-        String id_stripe = stripeConnectAdpted.criarContaVendedorStripe(
+        String id_stripe = stripeConnect.criarContaVendedorStripe(
                 infoVendedor.getEmail(), infoVendedor.getPrimeiro_nome(),
                 infoVendedor.getSobrenome(), dia, mes, ano, data.getCpf(),
                 data.getNumero_telefone(), data.getConta(), data.getAgencia(),
                 data.getCodigo_banco(), data.getEndereco());
 
-        String urlCadastro = stripeAccountLinkAdpted.criarLinkDeOnboading(id_stripe);
+        String urlCadastro = stripeAccountLink.criarLinkDeOnboading(id_stripe);
 
         Vendedor newVendedor = new Vendedor(data.getCpf(), data.getCnpj(),
                 data.getNumero_telefone(), data.getEndereco()
@@ -80,7 +80,7 @@ public class VendedorServices {
 
         newVendedor.setId_account_stripe(id_stripe);
 
-        sendGridAdpted.sendEmail(urlCadastro, infoVendedor.getEmail());
+        emailSender.sendEmail(urlCadastro, infoVendedor.getEmail());
            
         vendedorRepository.save(newVendedor);
 
@@ -119,7 +119,7 @@ public class VendedorServices {
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrado."));
 
-        String response = stripeExcludeAccountAdpted.deleteAccountStripe(vendedor
+        String response = stripeExcludeAccount.deleteAccountStripe(vendedor
                     .getId_account_stripe());
 
         user.setCadastro_vendedor(null);

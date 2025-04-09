@@ -3,10 +3,9 @@ package com.example.Ecommerce.saque.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserServices;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeTransferAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeTransfer;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.saque.entity.Saque;
@@ -16,7 +15,6 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.utils.service.stripe.StripeTransferServices;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
@@ -32,19 +30,19 @@ public class SaqueServices {
 
     private final TransacaoRepository transacaoRepository;
 
-    private final StripeTransferAdpted stripeTransferAdpted;
+    private final StripeTransfer stripeTransfer;
 
     public SaqueServices(SaqueRepository saqueRepository,
                          UserServices userServices,
                          VendedorRepository vendedorRepository,
                          TransacaoRepository transacaoRepository,
-                         StripeTransferAdpted stripeTransferAdpted) {
+                         StripeTransfer stripeTransfer) {
 
         this.saqueRepository = saqueRepository;
         this.userServices = userServices;
         this.vendedorRepository = vendedorRepository;
         this.transacaoRepository = transacaoRepository;
-        this.stripeTransferAdpted = stripeTransferAdpted;
+        this.stripeTransfer = stripeTransfer;
     }
 
 
@@ -69,7 +67,7 @@ public class SaqueServices {
 
         long valorEmCentavos = valor.multiply(new BigDecimal("100")).longValueExact();
 
-        stripeTransferAdpted.createTransfer(vendedor.getId_account_stripe(),
+        stripeTransfer.createTransfer(vendedor.getId_account_stripe(),
                     transacao.getId_charge_stripe(), valorEmCentavos);
 
         Saque newSaque = new Saque(valor);

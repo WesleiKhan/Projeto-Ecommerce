@@ -3,7 +3,7 @@ package com.example.Ecommerce.utils.service.stripe;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeAccountLinkAdpted;
+import com.example.Ecommerce.utils.service.stripe.interfaces.StripeAccountLink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import com.stripe.exception.StripeException;
 import com.stripe.model.AccountLink;
 
 @Service
-public class StripeAccountLinkServices implements StripeAccountLinkAdpted {
+public class StripeAccountLinkAdapter implements StripeAccountLink {
 
     @Value("${stripe.api.key}")
     private String apiKey;
