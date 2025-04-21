@@ -77,8 +77,7 @@ public class AnuncioServices {
 
         Vendedor vendeUser =
                 vendedorRepository.findByNome(user)
-                        .orElseThrow(() -> new UserNotFound("Vendedor com o Nome de "
-                                + user.getPrimeiro_nome() + " Não foi Encontrado."));
+                        .orElseThrow(() -> new UserNotFound("Vendedor Não foi Encontrado."));
 
         Anuncio newAnuncio =
                 anuncioRepository.findById(id).orElseThrow(AnuncioNotFound::new);
@@ -87,19 +86,11 @@ public class AnuncioServices {
             throw new UserNotAutorization();
         }
 
-        newAnuncio.setTitulo(data.getTitulo());
-        newAnuncio.setDescricao(data.getDescricao());
-        newAnuncio.setValor(data.getValor());
-        newAnuncio.setQuantidade_produto(data.getQuantidade());
-        newAnuncio.setAltura(data.getAltura());
-        newAnuncio.setLargura(data.getLargura());
-        newAnuncio.setComprimento(data.getComprimento());
-        newAnuncio.setPeso(data.getPeso());
-
         if(data.getImagem() != null && !data.getImagem().isEmpty()) {
             String newImagem =
                     fileUpload.updloadFile(data.getImagem());
-            newAnuncio.setImagem(newImagem);
+
+            newAnuncio.atualizarDados(data, newImagem);
         }
 
         anuncioRepository.save(newAnuncio);

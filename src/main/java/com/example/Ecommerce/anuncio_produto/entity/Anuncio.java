@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
+import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
 import com.example.Ecommerce.transacoes.entity.Transacao;
@@ -125,7 +126,9 @@ public class Anuncio {
     }
 
     public void setImagem(String imagem) {
-        this.imagem = imagem;
+        if(imagem != null && !imagem.trim().isEmpty()) {
+            this.imagem = imagem;
+        }
     }
 
     public BigDecimal getValor() {
@@ -240,5 +243,18 @@ public class Anuncio {
 
     public boolean vendedorEquals(Vendedor vendedorLogado) {
         return this.vendedor.equals(vendedorLogado);
+    }
+
+    public void atualizarDados(AnuncioEntryDTO data, String newImagem ) {
+
+        this.setTitulo(data.getTitulo());
+        this.setImagem(newImagem);
+        this.setDescricao(data.getDescricao());
+        this.setValor(data.getValor());
+        this.setQuantidade_produto(data.getQuantidade());
+        this.setAltura(data.getAltura());
+        this.setLargura(data.getLargura());
+        this.setComprimento(data.getComprimento());
+        this.setPeso(data.getPeso());
     }
 }
