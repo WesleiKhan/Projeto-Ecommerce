@@ -83,33 +83,26 @@ public class AnuncioServices {
         Anuncio newAnuncio =
                 anuncioRepository.findById(id).orElseThrow(AnuncioNotFound::new);
 
-        if(vendeUser.equals(newAnuncio.getVendedor())) {
-
-            /*A Logica Para ve se os valores atribuidos a os metodos sets
-            são null ou blank esta dentros dos metodos sets da entidade,
-            se os valores que estão sendo atribuido forem null ou um string
-            vazia o valor não sera atualizado no banco de dados.*/
-
-            newAnuncio.setTitulo(data.getTitulo());
-            newAnuncio.setDescricao(data.getDescricao());
-            newAnuncio.setValor(data.getValor());
-            newAnuncio.setQuantidade_produto(data.getQuantidade());
-            newAnuncio.setAltura(data.getAltura());
-            newAnuncio.setLargura(data.getLargura());
-            newAnuncio.setComprimento(data.getComprimento());
-            newAnuncio.setPeso(data.getPeso());
-
-            if(data.getImagem() != null && !data.getImagem().isEmpty()) {
-                String newImagem =
-                        fileUpload.updloadFile(data.getImagem());
-                newAnuncio.setImagem(newImagem);
-            }
-
-            anuncioRepository.save(newAnuncio);
-
-        } else {
+        if(!newAnuncio.vendedorEquals(vendeUser)) {
             throw new UserNotAutorization();
         }
+
+        newAnuncio.setTitulo(data.getTitulo());
+        newAnuncio.setDescricao(data.getDescricao());
+        newAnuncio.setValor(data.getValor());
+        newAnuncio.setQuantidade_produto(data.getQuantidade());
+        newAnuncio.setAltura(data.getAltura());
+        newAnuncio.setLargura(data.getLargura());
+        newAnuncio.setComprimento(data.getComprimento());
+        newAnuncio.setPeso(data.getPeso());
+
+        if(data.getImagem() != null && !data.getImagem().isEmpty()) {
+            String newImagem =
+                    fileUpload.updloadFile(data.getImagem());
+            newAnuncio.setImagem(newImagem);
+        }
+
+        anuncioRepository.save(newAnuncio);
     }
     
     public Page<Anuncio> getAnuncios(int page) {

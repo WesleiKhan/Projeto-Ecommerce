@@ -43,11 +43,6 @@ public class UserServices {
             
         User newUser = this.getLoggedInUser();
 
-        /*A Logica Para ve se os valores atribuidos a os metodos sets
-            são null ou blank esta dentros dos metodos sets da entidade,
-            se os valores que estão sendo atribuido forem null ou um string
-            vazia o valor não sera atualizado no banco de dados.*/
-
         newUser.setPrimeiro_nome(data.getPrimeiroNome());
         newUser.setSobrenome(data.getSobrenome());
         newUser.setUsername(data.getUsername());

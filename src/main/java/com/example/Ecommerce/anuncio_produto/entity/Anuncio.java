@@ -237,4 +237,8 @@ public class Anuncio {
                 avaliacoesNeutras,
                 avaliacaos);
     }
+
+    public boolean vendedorEquals(Vendedor vendedorLogado) {
+        return this.vendedor.equals(vendedorLogado);
+    }
 }
