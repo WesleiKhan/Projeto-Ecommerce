@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record AvaliacaoResponseDTO(BigDecimal nota,
-                                   Integer avaliacoesPositivas,
-                                   Integer avaliacoesNegativas,
-                                   Integer avaliacoesNeutras,
+                                   BigDecimal avaliacoesPositivas,
+                                   BigDecimal avaliacoesNegativas,
+                                   BigDecimal avaliacoesNeutras,
                                    List<Avaliacao> avaliacaos) {
 }

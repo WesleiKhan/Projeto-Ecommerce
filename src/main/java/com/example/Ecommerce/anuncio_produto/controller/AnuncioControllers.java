@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoEntryDTO;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
+import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.ResponseSQlAvaliacoes;
+import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.service.AvaliacaoService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -79,7 +81,7 @@ public class AnuncioControllers {
     @GetMapping("/avaliacoes/{id}")
     public ResponseEntity<AvaliacaoResponseDTO> getAvaliacoes(@PathVariable String id) {
 
-        AvaliacaoResponseDTO avaliacoes = avaliacaoService.getAvaliacoes(id);
+        AvaliacaoResponseDTO avaliacoes = avaliacaoService.seeAvaliacoes(id);
 
         return ResponseEntity.ok().body(avaliacoes);
     }

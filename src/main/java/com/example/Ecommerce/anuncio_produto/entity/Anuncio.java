@@ -200,45 +200,8 @@ public class Anuncio {
         }
     }
 
-    public AvaliacaoResponseDTO getAvaliacaos() {
-
-        BigDecimal notas = BigDecimal.ZERO;
-        Integer avaliacoesPositivas = 0;
-        Integer avaliacoesNegativas = 0;
-        Integer avaliacoesNeutras = 0;
-
-        for(int i = 0; i < avaliacaos.size(); i++) {
-
-            notas = notas.add(avaliacaos.get(i).getNota());
-
-            if(avaliacaos.get(i).getNota().compareTo(BigDecimal.valueOf(4))
-                    >= 0) {
-                avaliacoesPositivas++;
-
-            } else if(avaliacaos.get(i).getNota().compareTo(BigDecimal.valueOf(2))
-                    < 0) {
-                avaliacoesNegativas++;
-
-            } else {
-                avaliacoesNeutras++;
-            }
-        }
-
-        BigDecimal mediaNotas =
-                notas.divide(BigDecimal.valueOf(avaliacaos.size()), 2,
-                        RoundingMode.HALF_UP);
-
-        if(mediaNotas.compareTo(BigDecimal.ZERO) < 0) {
-            mediaNotas = BigDecimal.ZERO;
-
-        } else if (mediaNotas.compareTo(BigDecimal.valueOf(5)) > 5) {
-            mediaNotas = BigDecimal.valueOf(5);
-        }
-        return new AvaliacaoResponseDTO(mediaNotas,
-                avaliacoesPositivas,
-                avaliacoesNegativas,
-                avaliacoesNeutras,
-                avaliacaos);
+    public List<Avaliacao> getAvaliacaos() {
+        return this.avaliacaos;
     }
 
     public boolean vendedorEquals(Vendedor vendedorLogado) {

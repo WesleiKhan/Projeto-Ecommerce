@@ -2,6 +2,7 @@ package com.example.Ecommerce.anuncio_produto.avaliacoes.service;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoEntryDTO;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
+import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.ResponseSQlAvaliacoes;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.repositorie.AvaliacaoRepository;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -84,18 +85,25 @@ public class AvaliacaoService {
 
     }
 
-    public AvaliacaoResponseDTO getAvaliacoes(String id) {
 
-        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(id);
+    public AvaliacaoResponseDTO seeAvaliacoes(String id) {
 
-        if(anuncioOptional.isPresent()) {
+        Anuncio anuncio = anuncioRepository.findById(id)
+                .orElseThrow(AnuncioNotFound::new);
 
-            Anuncio anuncio = anuncioOptional.get();
+        Optional<ResponseSQlAvaliacoes> avaliacaos =
+                avaliacaoRepository.findByAvaliacoes(id);
 
-            return anuncio.getAvaliacaos();
+        if(avaliacaos.isPresent()) {
 
-        } else {
-            throw new AnuncioNotFound();
+            ResponseSQlAvaliacoes response = avaliacaos.get();
+
+            return new AvaliacaoResponseDTO(response.media(),
+                    response.positivas(), response.negativas(),
+                    response.neutras(), anuncio.getAvaliacaos());
+
+        }else {
+            throw new RuntimeException("erro ao obter avaliações do produto.");
         }
     }
 
