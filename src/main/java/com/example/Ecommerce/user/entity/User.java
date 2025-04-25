@@ -85,6 +85,10 @@ public class User {
         this.password = password;
     }
 
+    public void setId(String id) {
+
+        this.id = id;
+    }
 
     public String getId() {
         return id;
