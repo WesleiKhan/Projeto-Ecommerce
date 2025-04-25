@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -19,16 +19,16 @@ public class FavoritoServices {
 
     private final FavoritoRepository favoritoRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final AnuncioRepository anuncioRepository;
 
     public FavoritoServices(FavoritoRepository favoritoRepository,
-                            UserServices userServices,
+                            UserService userService,
                             AnuncioRepository anuncioRepository) {
 
         this.favoritoRepository = favoritoRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.anuncioRepository = anuncioRepository;
     }
 
@@ -40,7 +40,7 @@ public class FavoritoServices {
 
             Anuncio anuncio = anuncioOptional.get();
 
-            User user = userServices.getLoggedInUser();
+            User user = userService.getLoggedInUser();
 
             Favorito newFavorito = new Favorito();
 
@@ -57,7 +57,7 @@ public class FavoritoServices {
 
     public List<Favorito> getFavoritos() {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         return user.getFavoritos();
 
@@ -65,7 +65,7 @@ public class FavoritoServices {
 
     public void deleteFavorito(String id) {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Favorito favOptional = favoritoRepository.findById(id)
                 .orElseThrow(() -> new AnuncioNotFound("O Anuncio " +

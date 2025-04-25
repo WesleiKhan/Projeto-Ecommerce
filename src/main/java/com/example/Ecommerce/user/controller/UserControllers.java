@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.user.service.EditTypeUserDTO;
 import com.example.Ecommerce.user.service.UserEntryDTO;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 
 import jakarta.validation.Valid;
 
@@ -20,16 +19,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/user")
 public class UserControllers {
 
-    private final UserServices userServices;
+    private final UserService userService;
 
-    public UserControllers(UserServices userServices) {
-        this.userServices = userServices;
+    public UserControllers(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserEntryDTO data) {
 
-        userServices.createUser(data);
+        userService.createUser(data);
 
         return ResponseEntity.ok().body("Usuario Cadastrado com sucesso!");
          
@@ -38,7 +37,7 @@ public class UserControllers {
     @PutMapping("/edit")
     public ResponseEntity<String> updateUser(@Valid @RequestBody UserEntryEditDTO data) {
 
-        userServices.updateUser(data);
+        userService.updateUser(data);
 
         return ResponseEntity.ok().body("Tipo de Usuario Modificado com sucesso!"); 
 
@@ -47,7 +46,7 @@ public class UserControllers {
     @DeleteMapping("/delete/{id}") 
     public ResponseEntity<String> deleteUser(@PathVariable String id) {
 
-        userServices.deleteUser(id);
+        userService.deleteUser(id);
 
         return ResponseEntity.ok().body("Usuario deletado com sucesso!");
         

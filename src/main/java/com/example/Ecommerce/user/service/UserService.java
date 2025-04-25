@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import com.example.Ecommerce.auth.service.CustomUserDetails;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,11 +15,11 @@ import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.repositorie.UserRepository;
 
 @Service
-public class UserServices {
+public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserServices(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
 
         this.userRepository = userRepository;
     }

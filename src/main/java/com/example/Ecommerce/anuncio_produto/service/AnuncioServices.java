@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import com.example.Ecommerce.client.service.cloudinary.interfaces.FileUpload;
 import com.example.Ecommerce.client.service.melhorEnvio.interfaces.Frete;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class AnuncioServices {
 
     private final AnuncioRepository anuncioRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final VendedorRepository vendedorRepository;
 
@@ -36,13 +36,13 @@ public class AnuncioServices {
     private final Frete frete;
 
     public AnuncioServices(AnuncioRepository anuncioRepository,
-                           UserServices userServices,
+                           UserService userService,
                            VendedorRepository vendedorRepository,
                            FileUpload fileUpload,
                            Frete frete) {
 
         this.anuncioRepository = anuncioRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.vendedorRepository = vendedorRepository;
         this.fileUpload = fileUpload;
         this.frete = frete;
@@ -50,7 +50,7 @@ public class AnuncioServices {
 
     public void createAnuncio(AnuncioEntryDTO data) throws IOException{
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Usuario não foi encontrado no cadastro " +
@@ -73,7 +73,7 @@ public class AnuncioServices {
 
     public void updateAnuncio(String id, AnuncioEntryDTO data) throws IOException{
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendeUser =
                 vendedorRepository.findByNome(user)

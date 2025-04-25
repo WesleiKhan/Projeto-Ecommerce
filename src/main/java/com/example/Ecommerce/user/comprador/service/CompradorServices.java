@@ -1,7 +1,7 @@
 package com.example.Ecommerce.user.comprador.service;
 
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.comprador.entity.Comprador;
@@ -15,18 +15,18 @@ public class CompradorServices {
 
     private final CompradorRepository compradorRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     public CompradorServices(CompradorRepository compradorRepository,
-                             UserServices userServices) {
+                             UserService userService) {
 
         this.compradorRepository = compradorRepository;
-        this.userServices = userServices;
+        this.userService = userService;
     }
 
     public void createComprador(CompradorEntryDTO data) {
 
-        User infoComprador = userServices.getLoggedInUser();
+        User infoComprador = userService.getLoggedInUser();
 
         if (compradorRepository.findByNome(infoComprador).isPresent()) {
             throw new UserAlreadyExists("Usuario ja e Cadastrado como Comprador!"); }
@@ -41,7 +41,7 @@ public class CompradorServices {
     }
 
     public void updateComprador(CompradorEntryEditDTO data) {
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Comprador newComprador = compradorRepository.findByNome(user)
                         .orElseThrow(() -> new UserNotFound("Comprador não foi encontrado."));
@@ -54,7 +54,7 @@ public class CompradorServices {
 
     public void deleteComprador() {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Comprador comprador = compradorRepository.findByNome(user)
                         .orElseThrow(() -> new UserNotFound("Comprador não foi encontrado."));

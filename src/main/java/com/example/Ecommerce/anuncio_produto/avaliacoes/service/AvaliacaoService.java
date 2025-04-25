@@ -14,7 +14,7 @@ import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,26 +26,26 @@ public class AvaliacaoService {
 
     private final AvaliacaoRepository avaliacaoRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final CompradorRepository compradorRepository;
 
     private final AnuncioRepository anuncioRepository;
 
     public AvaliacaoService(AvaliacaoRepository avaliacaoRepository,
-                            UserServices userServices,
+                            UserService userService,
                             CompradorRepository compradorRepository,
                             AnuncioRepository anuncioRepository) {
 
         this.avaliacaoRepository = avaliacaoRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.compradorRepository = compradorRepository;
         this.anuncioRepository = anuncioRepository;
     }
 
     public void register(String id, AvaliacaoEntryDTO data) {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Comprador comprador = compradorRepository.findByNome(user)
                         .orElseThrow(() -> new UserNotFound("Comprador não " +

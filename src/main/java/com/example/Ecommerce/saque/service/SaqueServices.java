@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import com.example.Ecommerce.client.service.stripe.interfaces.StripeTransfer;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +24,7 @@ public class SaqueServices {
 
     private final SaqueRepository saqueRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final VendedorRepository vendedorRepository;
 
@@ -33,13 +33,13 @@ public class SaqueServices {
     private final StripeTransfer stripeTransfer;
 
     public SaqueServices(SaqueRepository saqueRepository,
-                         UserServices userServices,
+                         UserService userService,
                          VendedorRepository vendedorRepository,
                          TransacaoRepository transacaoRepository,
                          StripeTransfer stripeTransfer) {
 
         this.saqueRepository = saqueRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.vendedorRepository = vendedorRepository;
         this.transacaoRepository = transacaoRepository;
         this.stripeTransfer = stripeTransfer;
@@ -48,7 +48,7 @@ public class SaqueServices {
 
     public void sacar(String id) throws StripeException {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrador."));
@@ -82,7 +82,7 @@ public class SaqueServices {
 
     public List<Saque> getSaques() {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() ->  new UserNotFound("Vendedor não foi encontrado."));

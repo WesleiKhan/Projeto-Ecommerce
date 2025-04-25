@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
@@ -20,16 +20,16 @@ public class CarrinhoServices {
 
     private final CarrinhoRepository carrinhoRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final AnuncioRepository anuncioRepository;
 
     public CarrinhoServices(CarrinhoRepository carrinhoRepository,
-                            UserServices userServices,
+                            UserService userService,
                             AnuncioRepository anuncioRepository) {
 
         this.carrinhoRepository = carrinhoRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.anuncioRepository = anuncioRepository;
     }
 
@@ -41,7 +41,7 @@ public class CarrinhoServices {
 
             Anuncio anuncio = anunOptional.get();
 
-            User user = userServices.getLoggedInUser();
+            User user = userService.getLoggedInUser();
 
             Carrinho carrinho = new Carrinho(data.getQuantidade());
 
@@ -58,7 +58,7 @@ public class CarrinhoServices {
 
     public List<Carrinho> getCarrinhos() {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         return user.getCarrinhos();
 
@@ -66,7 +66,7 @@ public class CarrinhoServices {
 
     public void deleteCarrinho(String id) {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow();
 

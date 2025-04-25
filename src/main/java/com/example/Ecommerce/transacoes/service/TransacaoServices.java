@@ -3,7 +3,7 @@ package com.example.Ecommerce.transacoes.service;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import com.example.Ecommerce.client.service.stripe.interfaces.StripePayment;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class TransacaoServices {
 
     private final AnuncioRepository anuncioRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final CompradorRepository compradorRepository;
 
@@ -36,14 +36,14 @@ public class TransacaoServices {
 
     public TransacaoServices(TransacaoRepository transacaoRepository,
                              AnuncioRepository anuncioRepository,
-                             UserServices userServices,
+                             UserService userService,
                              CompradorRepository compradorRepository,
                              VendedorRepository vendedorRepository,
                              StripePayment stripePayment) {
 
         this.transacaoRepository = transacaoRepository;
         this.anuncioRepository =anuncioRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.compradorRepository = compradorRepository;
         this.vendedorRepository = vendedorRepository;
         this.stripePayment = stripePayment;
@@ -53,7 +53,7 @@ public class TransacaoServices {
 
     public void createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Comprador infoComprador = compradorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Usuario não foi encontrado no Cadatro de" +
@@ -87,7 +87,7 @@ public class TransacaoServices {
 
     public List<Transacao> getTransacao() {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(UserNotFound::new);

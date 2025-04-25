@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import com.example.Ecommerce.user.service.UserServices;
+import com.example.Ecommerce.user.service.UserService;
 import com.example.Ecommerce.client.service.sendGrid.interfaces.EmailSender;
 import com.example.Ecommerce.client.service.stripe.interfaces.StripeAccountLink;
 import com.example.Ecommerce.client.service.stripe.interfaces.StripeConnect;
@@ -23,7 +23,7 @@ public class VendedorServices {
 
     private final VendedorRepository vendedorRepository;
 
-    private final UserServices userServices;
+    private final UserService userService;
 
     private final StripeConnect stripeConnect;
 
@@ -35,14 +35,14 @@ public class VendedorServices {
 
 
     public VendedorServices(VendedorRepository vendedorRepository,
-                            UserServices userServices,
+                            UserService userService,
                             StripeConnect stripeConnect,
                             StripeAccountLink stripeAccountLink,
                             StripeExcludeAccount stripeExcludeAccount,
                             EmailSender emailSender) {
 
         this.vendedorRepository = vendedorRepository;
-        this.userServices = userServices;
+        this.userService = userService;
         this.stripeConnect = stripeConnect;
         this.stripeAccountLink = stripeAccountLink;
         this.stripeExcludeAccount = stripeExcludeAccount;
@@ -53,7 +53,7 @@ public class VendedorServices {
     public void createVendedor(VendedorEntryDTO data) throws StripeException,
             IOException{
 
-        User infoVendedor = userServices.getLoggedInUser();
+        User infoVendedor = userService.getLoggedInUser();
 
         if (vendedorRepository.findByNome(infoVendedor).isPresent()) {
             throw new UserAlreadyExists("Usuario ja e Cadastrado como Vendedor!");}
@@ -88,7 +88,7 @@ public class VendedorServices {
 
     public void updateVendedor(VendedorEntryEditDTO data) {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Optional<Vendedor> vendeOptional =
                 vendedorRepository.findByNome(user);
@@ -114,7 +114,7 @@ public class VendedorServices {
 
     public String deleteVendedor() throws  Exception {
 
-        User user = userServices.getLoggedInUser();
+        User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrado."));
