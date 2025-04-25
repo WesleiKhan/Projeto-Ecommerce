@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.example.Ecommerce.user.exceptions.UserNotFound;
-import com.example.Ecommerce.utils.exceptions.FreteException;
+import com.example.Ecommerce.client.exceptions.FreteException;
 
 @ControllerAdvice(basePackages = "com.example.Ecommerce.anuncio_produto.controller")
 public class AnuncioExceptions extends ResponseEntityExceptionHandler {

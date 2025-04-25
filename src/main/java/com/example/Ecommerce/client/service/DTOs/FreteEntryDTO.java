@@ -1,4 +1,4 @@
-package com.example.Ecommerce.utils.service.DTOs;
+package com.example.Ecommerce.client.service.DTOs;
 
 public class FreteEntryDTO {
     

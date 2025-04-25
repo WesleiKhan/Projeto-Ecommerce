@@ -1,4 +1,4 @@
-package com.example.Ecommerce.utils.config;
+package com.example.Ecommerce.client.config;
 
 import java.util.HashMap;
 import java.util.Map;

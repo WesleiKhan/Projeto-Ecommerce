@@ -1,4 +1,4 @@
-package com.example.Ecommerce.utils.service.cloudinary.interfaces;
+package com.example.Ecommerce.client.service.cloudinary.interfaces;
 
 import java.io.IOException;
 

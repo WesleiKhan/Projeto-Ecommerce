@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoEntryDTO;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.AvaliacaoResponseDTO;
-import com.example.Ecommerce.anuncio_produto.avaliacoes.DTOs.ResponseSQlAvaliacoes;
-import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.avaliacoes.service.AvaliacaoService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioServices;
-import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
+import com.example.Ecommerce.client.service.DTOs.CepEntryDTO;
 
 @RestController
 @RequestMapping("/anuncio")

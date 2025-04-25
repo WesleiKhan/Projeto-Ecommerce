@@ -1,4 +1,4 @@
-package com.example.Ecommerce.utils.exceptions;
+package com.example.Ecommerce.client.exceptions;
 
 public class FreteException extends RuntimeException {
 

@@ -1,10 +1,10 @@
-package com.example.Ecommerce.utils.service.stripe;
+package com.example.Ecommerce.client.service.stripe;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.example.Ecommerce.user.objectValue.Endereco;
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeConnect;
+import com.example.Ecommerce.client.service.stripe.interfaces.StripeConnect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

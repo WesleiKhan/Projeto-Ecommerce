@@ -1,4 +1,4 @@
-package com.example.Ecommerce.utils.service.sendGrid.interfaces;
+package com.example.Ecommerce.client.service.sendGrid.interfaces;
 
 import java.io.IOException;
 

@@ -1,11 +1,11 @@
-package com.example.Ecommerce.utils.service.melhorEnvio;
+package com.example.Ecommerce.client.service.melhorEnvio;
 
-import com.example.Ecommerce.utils.service.melhorEnvio.interfaces.Frete;
+import com.example.Ecommerce.client.service.melhorEnvio.interfaces.Frete;
 import org.springframework.stereotype.Service;
 
-import com.example.Ecommerce.utils.exceptions.FreteException;
-import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
-import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
+import com.example.Ecommerce.client.exceptions.FreteException;
+import com.example.Ecommerce.client.service.DTOs.CepEntryDTO;
+import com.example.Ecommerce.client.service.DTOs.FreteEntryDTO;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;

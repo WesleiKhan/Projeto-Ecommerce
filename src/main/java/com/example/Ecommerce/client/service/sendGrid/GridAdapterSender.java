@@ -1,8 +1,8 @@
-package com.example.Ecommerce.utils.service.sendGrid;
+package com.example.Ecommerce.client.service.sendGrid;
 
 import java.io.IOException;
 
-import com.example.Ecommerce.utils.service.sendGrid.interfaces.EmailSender;
+import com.example.Ecommerce.client.service.sendGrid.interfaces.EmailSender;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;

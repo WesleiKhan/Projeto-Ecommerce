@@ -1,6 +1,6 @@
-package com.example.Ecommerce.utils.service.stripe;
+package com.example.Ecommerce.client.service.stripe;
 
-import com.example.Ecommerce.utils.service.stripe.interfaces.StripeTransfer;
+import com.example.Ecommerce.client.service.stripe.interfaces.StripeTransfer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

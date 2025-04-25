@@ -1,7 +1,7 @@
-package com.example.Ecommerce.utils.service.melhorEnvio.interfaces;
+package com.example.Ecommerce.client.service.melhorEnvio.interfaces;
 
-import com.example.Ecommerce.utils.service.DTOs.CepEntryDTO;
-import com.example.Ecommerce.utils.service.DTOs.FreteEntryDTO;
+import com.example.Ecommerce.client.service.DTOs.CepEntryDTO;
+import com.example.Ecommerce.client.service.DTOs.FreteEntryDTO;
 
 public interface Frete {
 
