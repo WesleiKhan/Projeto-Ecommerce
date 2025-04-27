@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.List;
 
 import com.example.Ecommerce.user.service.UserService;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeTransfer;
+import com.example.Ecommerce.client.service.stripe.contract.StripeTransfer;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.saque.entity.Saque;

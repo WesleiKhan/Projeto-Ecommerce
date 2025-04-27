@@ -3,7 +3,7 @@ package com.example.Ecommerce.client.service.stripe;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeAccountLink;
+import com.example.Ecommerce.client.service.stripe.contract.StripeAccountLink;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

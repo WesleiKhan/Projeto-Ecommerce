@@ -1,6 +1,6 @@
 package com.example.Ecommerce.client.service.stripe;
 
-import com.example.Ecommerce.client.service.stripe.interfaces.StripePayment;
+import com.example.Ecommerce.client.service.stripe.contract.StripePayment;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

@@ -5,10 +5,10 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.Ecommerce.user.service.UserService;
-import com.example.Ecommerce.client.service.sendGrid.interfaces.EmailSender;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeAccountLink;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeConnect;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeExcludeAccount;
+import com.example.Ecommerce.client.service.sendGrid.contract.EmailSender;
+import com.example.Ecommerce.client.service.stripe.contract.StripeAccountLink;
+import com.example.Ecommerce.client.service.stripe.contract.StripeConnect;
+import com.example.Ecommerce.client.service.stripe.contract.StripeExcludeAccount;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.user.entity.User;

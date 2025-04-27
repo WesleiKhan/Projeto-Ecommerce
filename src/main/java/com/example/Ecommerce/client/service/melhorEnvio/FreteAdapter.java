@@ -1,6 +1,6 @@
 package com.example.Ecommerce.client.service.melhorEnvio;
 
-import com.example.Ecommerce.client.service.melhorEnvio.interfaces.Frete;
+import com.example.Ecommerce.client.service.melhorEnvio.contract.Frete;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.client.exceptions.FreteException;

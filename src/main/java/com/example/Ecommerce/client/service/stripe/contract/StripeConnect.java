@@ -1,4 +1,4 @@
-package com.example.Ecommerce.client.service.stripe.interfaces;
+package com.example.Ecommerce.client.service.stripe.contract;
 
 import com.example.Ecommerce.user.objectValue.Endereco;
 import com.stripe.exception.StripeException;

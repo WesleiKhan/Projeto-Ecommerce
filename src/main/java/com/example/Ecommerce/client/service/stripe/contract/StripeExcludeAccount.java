@@ -1,4 +1,4 @@
-package com.example.Ecommerce.client.service.stripe.interfaces;
+package com.example.Ecommerce.client.service.stripe.contract;
 
 public interface StripeExcludeAccount {
 

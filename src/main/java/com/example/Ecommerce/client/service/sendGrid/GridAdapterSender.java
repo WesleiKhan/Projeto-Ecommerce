@@ -2,7 +2,7 @@ package com.example.Ecommerce.client.service.sendGrid;
 
 import java.io.IOException;
 
-import com.example.Ecommerce.client.service.sendGrid.interfaces.EmailSender;
+import com.example.Ecommerce.client.service.sendGrid.contract.EmailSender;
 import com.sendgrid.*;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
@@ -18,9 +18,10 @@ public class GridAdapterSender implements EmailSender {
     @Value("${sendgrid.email.remetente}")
     private String remetente;
 
-    public void sendEmail(String contentEmail, String emailDestinatario) throws IOException {
+    @Value("${sendgrid.api.key}")
+    private String apiKey;
 
-        String apiKey = "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";
+    public void sendEmail(String contentEmail, String emailDestinatario) throws IOException {
 
         Email from = new Email(remetente);
         String subject = "E-mail para o vendedor terminar cadastro";

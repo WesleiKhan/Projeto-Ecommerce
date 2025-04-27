@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.Ecommerce.user.objectValue.Endereco;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripeConnect;
+import com.example.Ecommerce.client.service.stripe.contract.StripeConnect;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

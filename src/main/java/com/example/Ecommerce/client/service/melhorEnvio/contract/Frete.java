@@ -1,4 +1,4 @@
-package com.example.Ecommerce.client.service.melhorEnvio.interfaces;
+package com.example.Ecommerce.client.service.melhorEnvio.contract;
 
 import com.example.Ecommerce.client.service.DTOs.CepEntryDTO;
 import com.example.Ecommerce.client.service.DTOs.FreteEntryDTO;

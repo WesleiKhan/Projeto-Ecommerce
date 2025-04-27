@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.example.Ecommerce.user.service.UserService;
-import com.example.Ecommerce.client.service.stripe.interfaces.StripePayment;
+import com.example.Ecommerce.client.service.stripe.contract.StripePayment;
 import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;

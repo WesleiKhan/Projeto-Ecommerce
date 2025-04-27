@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
 
-import com.example.Ecommerce.client.service.cloudinary.interfaces.FileUpload;
+import com.example.Ecommerce.client.service.cloudinary.contract.FileUpload;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
