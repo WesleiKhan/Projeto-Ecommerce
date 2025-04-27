@@ -19,7 +19,7 @@ import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
 
 @Service
-public class VendedorServices {
+public class VendedorService {
 
     private final VendedorRepository vendedorRepository;
 
@@ -34,12 +34,12 @@ public class VendedorServices {
     private final EmailSender emailSender;
 
 
-    public VendedorServices(VendedorRepository vendedorRepository,
-                            UserService userService,
-                            StripeConnect stripeConnect,
-                            StripeAccountLink stripeAccountLink,
-                            StripeExcludeAccount stripeExcludeAccount,
-                            EmailSender emailSender) {
+    public VendedorService(VendedorRepository vendedorRepository,
+                           UserService userService,
+                           StripeConnect stripeConnect,
+                           StripeAccountLink stripeAccountLink,
+                           StripeExcludeAccount stripeExcludeAccount,
+                           EmailSender emailSender) {
 
         this.vendedorRepository = vendedorRepository;
         this.userService = userService;
@@ -90,26 +90,13 @@ public class VendedorServices {
 
         User user = userService.getLoggedInUser();
 
-        Optional<Vendedor> vendeOptional =
-                vendedorRepository.findByNome(user);
+        Vendedor newVendedor = vendedorRepository.findByNome(user)
+                .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrado."));
 
-        if(vendeOptional.isPresent()) {
+        newVendedor.atualizarDados(data);
 
-            Vendedor newVendedor = vendeOptional.get();
+        vendedorRepository.save(newVendedor);
 
-            /*A Logica Para ve se os valores atribuidos a os metodos sets
-            são null ou blank esta dentros dos metodos sets da entidade,
-            se os valores que estão sendo atribuido forem null ou um string
-            vazia o valor não sera atualizado no banco de dados.*/
-
-            newVendedor.setNumero_telefone(data.getNumeroTelefone());
-            newVendedor.setEndereco(data.getEndereco());
-
-            vendedorRepository.save(newVendedor);
-
-        }else {
-            throw new UserNotFound("Vendedor não foi encontrado.");
-        }
     }
 
     public String deleteVendedor() throws  Exception {

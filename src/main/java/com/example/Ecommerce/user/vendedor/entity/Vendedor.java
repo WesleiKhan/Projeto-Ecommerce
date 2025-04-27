@@ -6,6 +6,7 @@ import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.saque.entity.Saque;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.objectValue.Endereco;
+import com.example.Ecommerce.user.vendedor.service.VendedorEntryEditDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -108,12 +109,16 @@ public class Vendedor {
     }
 
     public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
-        this.endereco.setRua(endereco.getRua());
-        this.endereco.setNumero(endereco.getNumero());
-        this.endereco.setCidade(endereco.getCidade());
-        this.endereco.setEstado(endereco.getEstado());
-        this.endereco.setCep(endereco.getCep());
+    public void atualizarDados(VendedorEntryEditDTO data) {
+        setNumero_telefone(data.getNumeroTelefone());
+        this.endereco.setRua(data.getEndereco().getRua());
+        this.endereco.setNumero(data.getEndereco().getNumero());
+        this.endereco.setCidade(data.getEndereco().getCidade());
+        this.endereco.setEstado(data.getEndereco().getEstado());
+        this.endereco.setCep(data.getEndereco().getCep());
     }
 
     public List<Anuncio> getAnuncios() {

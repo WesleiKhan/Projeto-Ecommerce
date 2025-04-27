@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.user.vendedor.service.VendedorEntryDTO;
-import com.example.Ecommerce.user.vendedor.service.VendedorServices;
+import com.example.Ecommerce.user.vendedor.service.VendedorService;
 
 import jakarta.validation.Valid;
 
@@ -16,17 +16,17 @@ import java.io.IOException;
 @RequestMapping("/vendedor")
 public class VendedorControllers {
 
-    private final VendedorServices vendedorServices;
+    private final VendedorService vendedorService;
 
-    public VendedorControllers(VendedorServices vendedorServices) {
-        this.vendedorServices = vendedorServices;
+    public VendedorControllers(VendedorService vendedorService) {
+        this.vendedorService = vendedorService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody VendedorEntryDTO data)
     throws IOException, StripeException {
 
-        vendedorServices.createVendedor(data);
+        vendedorService.createVendedor(data);
 
         return ResponseEntity.ok().body("Usuario Cadastrado Como " +
                 "Vendedor Com Sucesso!");
@@ -36,7 +36,7 @@ public class VendedorControllers {
     @PutMapping("/edit")
     public ResponseEntity<String> edit(@Valid @RequestBody VendedorEntryEditDTO data) {
 
-        vendedorServices.updateVendedor(data);
+        vendedorService.updateVendedor(data);
 
         return ResponseEntity.ok().body("Cadastro De Vendedor Atualizado Com" +
                 " Sucesso.");
@@ -45,7 +45,7 @@ public class VendedorControllers {
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteVendedor() throws Exception {
 
-        vendedorServices.deleteVendedor();
+        vendedorService.deleteVendedor();
 
         return ResponseEntity.ok().body("Conta Foi Excluida Com Sucesso.");
     }
