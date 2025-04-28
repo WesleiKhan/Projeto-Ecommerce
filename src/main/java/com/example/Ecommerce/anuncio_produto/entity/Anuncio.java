@@ -96,7 +96,9 @@ public class Anuncio {
         this.peso = peso;
     }
 
-
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getId() {
         return id;
     }
@@ -205,7 +207,8 @@ public class Anuncio {
     }
 
     public boolean vendedorEquals(Vendedor vendedorLogado) {
-        return this.vendedor.equals(vendedorLogado);
+
+        return this.vendedor.idEquals(vendedor);
     }
 
     public void atualizarDados(AnuncioEntryDTO data, String newImagem ) {

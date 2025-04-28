@@ -64,6 +64,9 @@ public class Vendedor {
 
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getId() {
         return id;
@@ -138,6 +141,11 @@ public class Vendedor {
 
     public void setId_account_stripe(String id_account_stripe) {
         this.id_account_stripe = id_account_stripe;
+    }
+
+    public boolean idEquals(Vendedor vendedor) {
+
+        return this.id.equals(vendedor.getId());
     }
 
     

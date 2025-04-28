@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
-import com.example.Ecommerce.anuncio_produto.service.AnuncioServices;
+import com.example.Ecommerce.anuncio_produto.service.AnuncioService;
 import com.example.Ecommerce.client.service.DTOs.CepEntryDTO;
 
 @RestController
 @RequestMapping("/anuncio")
 public class AnuncioControllers {
 
-    private final AnuncioServices anuncioServices;
+    private final AnuncioService anuncioService;
 
     private final AvaliacaoService avaliacaoService;
 
-    public AnuncioControllers(AnuncioServices anuncioServices,
+    public AnuncioControllers(AnuncioService anuncioService,
                               AvaliacaoService avaliacaoService) {
 
-        this.anuncioServices = anuncioServices;
+        this.anuncioService = anuncioService;
         this.avaliacaoService = avaliacaoService;
     }
 
@@ -33,7 +33,7 @@ public class AnuncioControllers {
     public ResponseEntity<String> register(@ModelAttribute AnuncioEntryDTO data)
             throws IOException {
 
-        anuncioServices.createAnuncio(data);
+        anuncioService.createAnuncio(data);
 
         return ResponseEntity.ok().body("Anuncio de venda criado com sucesso!");
         
@@ -44,7 +44,7 @@ public class AnuncioControllers {
                                        @PathVariable String id)
             throws IOException {
 
-        anuncioServices.updateAnuncio(id, data);
+        anuncioService.updateAnuncio(id, data);
 
         return ResponseEntity.ok().body("O Anuncio do Produto Foi Editado " +
                 "Com Sucesso.");
@@ -54,7 +54,7 @@ public class AnuncioControllers {
     @PostMapping("/calcular-Frete/{id}")
     public ResponseEntity<String> getFrete(@PathVariable String id, @RequestBody CepEntryDTO cep) {
 
-        String result = anuncioServices.verFrete(id, cep);
+        String result = anuncioService.verFrete(id, cep);
 
         return ResponseEntity.ok(result);
         
@@ -63,7 +63,7 @@ public class AnuncioControllers {
     @GetMapping("/anuncios")
     public ResponseEntity<Page<Anuncio>> viewAnuncios(@RequestParam(defaultValue = "0") int page) {
 
-        Page<Anuncio> anuncios = anuncioServices.getAnuncios(page);
+        Page<Anuncio> anuncios = anuncioService.getAnuncios(page);
 
         return ResponseEntity.ok(anuncios);
     }

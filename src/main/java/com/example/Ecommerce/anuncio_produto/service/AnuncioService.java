@@ -23,7 +23,7 @@ import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 
 @Service
-public class AnuncioServices {
+public class AnuncioService {
 
     private final AnuncioRepository anuncioRepository;
 
@@ -35,11 +35,11 @@ public class AnuncioServices {
 
     private final Frete frete;
 
-    public AnuncioServices(AnuncioRepository anuncioRepository,
-                           UserService userService,
-                           VendedorRepository vendedorRepository,
-                           FileUpload fileUpload,
-                           Frete frete) {
+    public AnuncioService(AnuncioRepository anuncioRepository,
+                          UserService userService,
+                          VendedorRepository vendedorRepository,
+                          FileUpload fileUpload,
+                          Frete frete) {
 
         this.anuncioRepository = anuncioRepository;
         this.userService = userService;
@@ -86,12 +86,14 @@ public class AnuncioServices {
             throw new UserNotAutorization();
         }
 
-        if(data.getImagem() != null && !data.getImagem().isEmpty()) {
-            String newImagem =
-                    fileUpload.updloadFile(data.getImagem());
+        String newImagem = "";
 
-            newAnuncio.atualizarDados(data, newImagem);
+        if(data.getImagem() != null && !data.getImagem().isEmpty()) {
+            newImagem =
+                    fileUpload.updloadFile(data.getImagem());
         }
+
+        newAnuncio.atualizarDados(data, newImagem);
 
         anuncioRepository.save(newAnuncio);
     }
