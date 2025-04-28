@@ -215,7 +215,9 @@ public class VendedorServiceTest {
         when(stripeExcludeAccount.deleteAccountStripe(vendedor.getId_account_stripe()))
                 .thenReturn("200 : conta deletada");
 
-        vendedorService.deleteVendedor();
+        String response = vendedorService.deleteVendedor();
+
+        assertEquals("200 : conta deletada", response);
 
         verify(userService).getLoggedInUser();
 
