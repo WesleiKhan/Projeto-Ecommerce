@@ -11,14 +11,14 @@ import com.example.Ecommerce.user.exceptions.UserAlreadyExists;
 
 
 @Service
-public class CompradorServices {
+public class CompradorService {
 
     private final CompradorRepository compradorRepository;
 
     private final UserService userService;
 
-    public CompradorServices(CompradorRepository compradorRepository,
-                             UserService userService) {
+    public CompradorService(CompradorRepository compradorRepository,
+                            UserService userService) {
 
         this.compradorRepository = compradorRepository;
         this.userService = userService;
@@ -46,8 +46,7 @@ public class CompradorServices {
         Comprador newComprador = compradorRepository.findByNome(user)
                         .orElseThrow(() -> new UserNotFound("Comprador não foi encontrado."));
 
-        newComprador.setNumero_telefone(data.getNumeroTelefone());
-        newComprador.setEndereco(data.getEndereco());
+        newComprador.atualizarDados(data);
 
         compradorRepository.save(newComprador);
     }

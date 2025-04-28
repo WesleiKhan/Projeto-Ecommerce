@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.Ecommerce.user.comprador.service.CompradorEntryDTO;
-import com.example.Ecommerce.user.comprador.service.CompradorServices;
+import com.example.Ecommerce.user.comprador.service.CompradorService;
 
 import jakarta.validation.Valid;
 
@@ -13,16 +13,16 @@ import jakarta.validation.Valid;
 @RequestMapping("/comprador")
 public class CompradorControllers {
 
-    private final CompradorServices compradorServices;
+    private final CompradorService compradorService;
 
-    public CompradorControllers(CompradorServices compradorServices) {
-        this.compradorServices = compradorServices;
+    public CompradorControllers(CompradorService compradorService) {
+        this.compradorService = compradorService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@Valid @RequestBody CompradorEntryDTO data) {
  
-        compradorServices.createComprador(data);
+        compradorService.createComprador(data);
 
         return ResponseEntity.ok().body("Usuario cadstrado agora esta apto a realizar compras");
   
@@ -31,7 +31,7 @@ public class CompradorControllers {
     @PutMapping("/edit")
     public ResponseEntity<String> edit(@Valid @RequestBody CompradorEntryEditDTO data) {
 
-        compradorServices.updateComprador(data);
+        compradorService.updateComprador(data);
 
         return ResponseEntity.ok().body("Cadastro comprador atualizado com " +
                 "sucesso.");
@@ -40,7 +40,7 @@ public class CompradorControllers {
     @DeleteMapping("/delete")
     public ResponseEntity<String> deleteComprador() {
 
-        compradorServices.deleteComprador();
+        compradorService.deleteComprador();
 
         return ResponseEntity.ok().body("cadastro de comprador excluido com " +
                 "sucesso!");

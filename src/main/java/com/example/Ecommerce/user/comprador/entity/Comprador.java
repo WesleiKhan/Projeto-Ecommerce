@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.transacoes.entity.Transacao;
+import com.example.Ecommerce.user.comprador.service.CompradorEntryEditDTO;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.objectValue.Endereco;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -98,14 +99,20 @@ public class Comprador {
 
     public void setEndereco(Endereco endereco) {
 
-        this.endereco.setRua(endereco.getRua());
-        this.endereco.setNumero(endereco.getNumero());
-        this.endereco.setCidade(endereco.getCidade());
-        this.endereco.setEstado(endereco.getEstado());
-        this.endereco.setCep(endereco.getCep());
+        this.endereco = endereco;
     }
 
     public List<Transacao> getTransacoes() {
         return transacoes;
+    }
+
+    public void atualizarDados(CompradorEntryEditDTO data) {
+
+        setNumero_telefone(data.getNumeroTelefone());
+        this.endereco.setRua(data.getEndereco().getRua());
+        this.endereco.setNumero(data.getEndereco().getNumero());
+        this.endereco.setCidade(data.getEndereco().getCidade());
+        this.endereco.setEstado(data.getEndereco().getEstado());
+        this.endereco.setCep(data.getEndereco().getCep());
     }
 }
