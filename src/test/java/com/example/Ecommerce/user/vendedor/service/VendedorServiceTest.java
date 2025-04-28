@@ -131,7 +131,7 @@ public class VendedorServiceTest {
     }
 
     @Test
-    void createVendedor_withInvalidInput_throwsUserAlreadyExistsException()
+    void createVendedor_whenUserIsAlreadyASeller_throwsUserAlreadyExistsException()
             throws StripeException, IOException{
 
         when(userService.getLoggedInUser()).thenReturn(loggedInUser);
@@ -183,7 +183,7 @@ public class VendedorServiceTest {
     }
 
     @Test
-    void updateVendedor_withInvalidUser_throwsUserNotFound() {
+    void updateVendedor_whenInvalidUser_throwsUserNotFound() {
 
         when(userService.getLoggedInUser()).thenReturn(loggedInUser);
 
