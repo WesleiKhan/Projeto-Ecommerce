@@ -53,11 +53,9 @@ public class AvaliacaoService {
         Anuncio anuncio = anuncioRepository.findById(id)
                         .orElseThrow(AnuncioNotFound::new);
 
-        boolean transacaoEncontrada = comprador.transacaoExiste(anuncio);
-
-        if(!transacaoEncontrada) {
-            throw new AnuncioNotFound("Você não pode avaliar um anuncio que " +
-                    "de uma produto que você não fez a compra.");
+        if(!comprador.transacaoExiste(anuncio)) {
+            throw new AnuncioNotFound("Você não pode avaliar um anuncio " +
+                    "de um produto que você não fez a compra.");
         }
 
         List<Avaliacao> avaliacoes = avaliacaoRepository.findByProduto(anuncio);
@@ -84,20 +82,12 @@ public class AvaliacaoService {
         Anuncio anuncio = anuncioRepository.findById(id)
                 .orElseThrow(AnuncioNotFound::new);
 
-        Optional<ResponseSQlAvaliacoes> avaliacaos =
-                avaliacaoRepository.findByAvaliacoes(id);
+        ResponseSQlAvaliacoes response = avaliacaoRepository.findByAvaliacoes(id)
+                .orElseThrow(() -> new RuntimeException("erro ao obter " +
+                        "avaliações do produto."));
 
-        if(avaliacaos.isPresent()) {
+        return new AvaliacaoResponseDTO(response, anuncio.getAvaliacaos());
 
-            ResponseSQlAvaliacoes response = avaliacaos.get();
-
-            return new AvaliacaoResponseDTO(response.media(),
-                    response.positivas(), response.negativas(),
-                    response.neutras(), anuncio.getAvaliacaos());
-
-        }else {
-            throw new RuntimeException("erro ao obter avaliações do produto.");
-        }
     }
 
 

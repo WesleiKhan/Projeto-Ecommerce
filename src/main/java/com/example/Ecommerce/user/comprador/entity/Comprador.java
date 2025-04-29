@@ -57,6 +57,11 @@ public class Comprador {
         this.endereco = endereco;
     }
 
+    public void setId(String id) {
+
+        this.id = id;
+    }
+
     public String getId() {
 
         return id;
