@@ -106,6 +106,10 @@ public class Transacao {
     public void setId_charge_stripe(String id_charge_stripe) {
         this.id_charge_stripe = id_charge_stripe;
     }
-    
+
+    public boolean produtoEquals(Anuncio produto) {
+
+        return this.produto.anuncioEqualsId(produto);
+    }
     
 }

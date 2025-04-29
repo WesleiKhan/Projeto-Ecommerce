@@ -223,4 +223,9 @@ public class Anuncio {
         this.setComprimento(data.getComprimento());
         this.setPeso(data.getPeso());
     }
+
+    public boolean anuncioEqualsId(Anuncio produto) {
+
+        return this.id.equals(produto.getId());
+    }
 }

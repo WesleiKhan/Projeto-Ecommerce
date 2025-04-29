@@ -10,7 +10,6 @@ import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
-import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
@@ -51,14 +50,10 @@ public class AvaliacaoService {
                         .orElseThrow(() -> new UserNotFound("Comprador não " +
                                 "foi encontrado"));
 
-        List<Transacao> transacaos = comprador.getTransacoes();
-
         Anuncio anuncio = anuncioRepository.findById(id)
                         .orElseThrow(AnuncioNotFound::new);
 
-        boolean transacaoEncontrada = transacaos.stream()
-                .anyMatch(transacao -> transacao.getProduto()
-                        .equals(anuncio));
+        boolean transacaoEncontrada = comprador.transacaoExiste(anuncio);
 
         if(!transacaoEncontrada) {
             throw new AnuncioNotFound("Você não pode avaliar um anuncio que " +
@@ -68,20 +63,18 @@ public class AvaliacaoService {
         List<Avaliacao> avaliacoes = avaliacaoRepository.findByProduto(anuncio);
 
         boolean avaliacaoEncontrada = avaliacoes.stream()
-                .anyMatch(avaliacao -> avaliacao.getAutor()
-                        .equals(comprador));
+                .anyMatch(avaliacao -> avaliacao.authorEquals(comprador));
 
-        if(!avaliacaoEncontrada) {
-
-            Avaliacao avaliacao = new Avaliacao(data.getNota(), data.getComentario());
-
-            avaliacao.setAutor(comprador);
-            avaliacao.setProduto(anuncio);
-
-            avaliacaoRepository.save(avaliacao);
-        } else {
+        if(avaliacaoEncontrada) {
             throw new UserNotAutorization("Você ja avaliou esse anuncio.");
         }
+
+        Avaliacao avaliacao = new Avaliacao(data.getNota(), data.getComentario());
+
+        avaliacao.setAutor(comprador);
+        avaliacao.setProduto(anuncio);
+
+        avaliacaoRepository.save(avaliacao);
 
     }
 

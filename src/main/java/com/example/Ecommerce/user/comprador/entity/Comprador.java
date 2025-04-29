@@ -3,6 +3,7 @@ package com.example.Ecommerce.user.comprador.entity;
 import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
+import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.transacoes.entity.Transacao;
 import com.example.Ecommerce.user.comprador.service.CompradorEntryEditDTO;
 import com.example.Ecommerce.user.entity.User;
@@ -114,5 +115,17 @@ public class Comprador {
         this.endereco.setCidade(data.getEndereco().getCidade());
         this.endereco.setEstado(data.getEndereco().getEstado());
         this.endereco.setCep(data.getEndereco().getCep());
+    }
+
+    public boolean compradorEqualsId(Comprador comprador) {
+
+        return this.id.equals(comprador.getId());
+    }
+
+    public boolean transacaoExiste(Anuncio anuncio) {
+
+        return this.transacoes.stream().anyMatch(
+                trasacao -> trasacao.produtoEquals(anuncio)
+        );
     }
 }

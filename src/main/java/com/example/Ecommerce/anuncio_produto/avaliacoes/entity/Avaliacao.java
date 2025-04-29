@@ -85,4 +85,9 @@ public class Avaliacao {
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
+
+    public boolean authorEquals(Comprador comprador) {
+
+        return this.autor.compradorEqualsId(comprador);
+    }
 }
