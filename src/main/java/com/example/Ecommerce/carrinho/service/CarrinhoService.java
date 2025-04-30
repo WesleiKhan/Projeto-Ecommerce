@@ -16,7 +16,7 @@ import com.example.Ecommerce.user.entity.User;
 
 
 @Service
-public class CarrinhoServices {
+public class CarrinhoService {
 
     private final CarrinhoRepository carrinhoRepository;
 
@@ -24,9 +24,9 @@ public class CarrinhoServices {
 
     private final AnuncioRepository anuncioRepository;
 
-    public CarrinhoServices(CarrinhoRepository carrinhoRepository,
-                            UserService userService,
-                            AnuncioRepository anuncioRepository) {
+    public CarrinhoService(CarrinhoRepository carrinhoRepository,
+                           UserService userService,
+                           AnuncioRepository anuncioRepository) {
 
         this.carrinhoRepository = carrinhoRepository;
         this.userService = userService;
@@ -35,25 +35,20 @@ public class CarrinhoServices {
 
     public void addCarrinho(String id, CarrinhoEntryDTO data) {
 
-        Optional<Anuncio> anunOptional = anuncioRepository.findById(id);
+        User user = userService.getLoggedInUser();
 
-        if (anunOptional.isPresent()) {
+        Anuncio anuncio = anuncioRepository.findById(id)
+                .orElseThrow(AnuncioNotFound::new);
 
-            Anuncio anuncio = anunOptional.get();
+        Carrinho carrinho = new Carrinho(data.getQuantidade());
 
-            User user = userService.getLoggedInUser();
+        carrinho.setUser(user);
 
-            Carrinho carrinho = new Carrinho(data.getQuantidade());
+        carrinho.setAnuncio(anuncio);
 
-            carrinho.setUser(user);
+        carrinhoRepository.save(carrinho);
 
-            carrinho.setAnuncio(anuncio);
 
-            carrinhoRepository.save(carrinho);
-
-        } else {
-            throw new AnuncioNotFound();
-        }
     }
 
     public List<Carrinho> getCarrinhos() {
@@ -64,21 +59,19 @@ public class CarrinhoServices {
 
     }
 
-    public void deleteCarrinho(String id) {
+    public void deleteItem(String id) {
 
         User user = userService.getLoggedInUser();
 
-        Carrinho carrinho = carrinhoRepository.findById(id).orElseThrow();
+        Carrinho carrinho = carrinhoRepository.findById(id)
+                .orElseThrow(() -> new AnuncioNotFound("Item não foi " +
+                        "encontrado no carrinho."));
 
-        User user2 = carrinho.getUser();
-
-        if (user.equals(user2)) {
-
-            carrinhoRepository.delete(carrinho);
-            
-        } else {
+        if (!carrinho.userEquals(user)) {
             throw new UserNotAutorization();
         }
+
+        carrinhoRepository.delete(carrinho);
     }
     
 }

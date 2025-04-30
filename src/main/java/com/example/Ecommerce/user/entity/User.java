@@ -181,4 +181,9 @@ public class User {
     public void setCadastro_comprador(Comprador cadastro_comprador) {
         this.cadastro_comprador = cadastro_comprador;
     }
+
+    public boolean idEquals(User user) {
+
+        return this.id.equals(user.getId());
+    }
 }

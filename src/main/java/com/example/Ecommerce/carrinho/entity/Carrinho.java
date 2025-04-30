@@ -48,6 +48,10 @@ public class Carrinho {
         
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -74,6 +78,11 @@ public class Carrinho {
 
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public boolean userEquals(User user) {
+
+        return this.user.idEquals(user);
     }
   
 }
