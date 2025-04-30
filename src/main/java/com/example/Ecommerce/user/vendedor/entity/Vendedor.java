@@ -133,6 +133,10 @@ public class Vendedor {
         return saques;
     }
 
+    public void setSaques(List<Saque> saques) {
+        this.saques = saques;
+    }
+
 
     public String getId_account_stripe() {
         return id_account_stripe;

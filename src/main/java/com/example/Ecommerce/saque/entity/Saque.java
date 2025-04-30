@@ -41,6 +41,10 @@ public class Saque {
     public Saque() {
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public Saque(BigDecimal valor) {
         this.valor = valor;
     }

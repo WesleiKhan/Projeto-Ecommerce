@@ -10,23 +10,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Ecommerce.saque.entity.Saque;
-import com.example.Ecommerce.saque.service.SaqueServices;
+import com.example.Ecommerce.saque.service.SaqueService;
 import com.stripe.exception.StripeException;
 
 @RestController
 @RequestMapping("/saque")
 public class SaqueControllers {
 
-    private final SaqueServices saqueServices;
+    private final SaqueService saqueService;
 
-    public SaqueControllers(SaqueServices saqueServices) {
-        this.saqueServices = saqueServices;
+    public SaqueControllers(SaqueService saqueService) {
+        this.saqueService = saqueService;
     }
 
     @PostMapping("/sacar/{id}")
     public ResponseEntity<String> realizarSaque(@PathVariable String id) throws StripeException {
 
-        saqueServices.sacar(id);
+        saqueService.sacar(id);
 
         return ResponseEntity.ok().body("Saque Realizado com sucesso!");
    
@@ -35,7 +35,7 @@ public class SaqueControllers {
     @GetMapping("/saques")
     public ResponseEntity<List<Saque>> verSaques() {
 
-        List<Saque> saques = saqueServices.getSaques();
+        List<Saque> saques = saqueService.seeSaques();
 
         return ResponseEntity.ok().body(saques);
 

@@ -20,7 +20,7 @@ import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
 
 @Service
-public class SaqueServices {
+public class SaqueService {
 
     private final SaqueRepository saqueRepository;
 
@@ -32,11 +32,11 @@ public class SaqueServices {
 
     private final StripeTransfer stripeTransfer;
 
-    public SaqueServices(SaqueRepository saqueRepository,
-                         UserService userService,
-                         VendedorRepository vendedorRepository,
-                         TransacaoRepository transacaoRepository,
-                         StripeTransfer stripeTransfer) {
+    public SaqueService(SaqueRepository saqueRepository,
+                        UserService userService,
+                        VendedorRepository vendedorRepository,
+                        TransacaoRepository transacaoRepository,
+                        StripeTransfer stripeTransfer) {
 
         this.saqueRepository = saqueRepository;
         this.userService = userService;
@@ -53,7 +53,9 @@ public class SaqueServices {
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(() -> new UserNotFound("Vendedor não foi encontrador."));
 
-        Transacao transacao = transacaoRepository.findById(id).orElseThrow();
+        Transacao transacao = transacaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Trasação não " +
+                        "encontrada"));
 
         if (saqueRepository.findByTransacao(transacao).isPresent()) {
 
@@ -80,7 +82,7 @@ public class SaqueServices {
 
     }
 
-    public List<Saque> getSaques() {
+    public List<Saque> seeSaques() {
 
         User user = userService.getLoggedInUser();
 
