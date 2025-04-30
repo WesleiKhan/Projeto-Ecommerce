@@ -33,6 +33,10 @@ public class Favorito {
     public Favorito() {
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }
@@ -51,6 +55,11 @@ public class Favorito {
 
     public void setAnuncio(Anuncio anuncio) {
         this.anuncio = anuncio;
+    }
+
+    public boolean userEquals(User user) {
+
+        return this.user.idEquals(user);
     }
 
 }

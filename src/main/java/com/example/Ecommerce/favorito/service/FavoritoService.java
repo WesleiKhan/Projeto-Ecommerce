@@ -1,7 +1,6 @@
 package com.example.Ecommerce.favorito.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
@@ -15,7 +14,7 @@ import com.example.Ecommerce.favorito.repositorie.FavoritoRepository;
 import com.example.Ecommerce.user.entity.User;
 
 @Service
-public class FavoritoServices {
+public class FavoritoService {
 
     private final FavoritoRepository favoritoRepository;
 
@@ -23,36 +22,30 @@ public class FavoritoServices {
 
     private final AnuncioRepository anuncioRepository;
 
-    public FavoritoServices(FavoritoRepository favoritoRepository,
-                            UserService userService,
-                            AnuncioRepository anuncioRepository) {
+    public FavoritoService(FavoritoRepository favoritoRepository,
+                           UserService userService,
+                           AnuncioRepository anuncioRepository) {
 
         this.favoritoRepository = favoritoRepository;
         this.userService = userService;
         this.anuncioRepository = anuncioRepository;
     }
 
-    public void addFavorito(String id) {
+    public void addItem(String id) {
 
-        Optional<Anuncio> anuncioOptional = anuncioRepository.findById(id);
+        User user = userService.getLoggedInUser();
 
-        if (anuncioOptional.isPresent()) {
+        Anuncio anuncio = anuncioRepository.findById(id)
+                .orElseThrow(AnuncioNotFound::new);
 
-            Anuncio anuncio = anuncioOptional.get();
+        Favorito newFavorito = new Favorito();
 
-            User user = userService.getLoggedInUser();
+        newFavorito.setUser(user);
 
-            Favorito newFavorito = new Favorito();
+        newFavorito.setAnuncio(anuncio);
 
-            newFavorito.setUser(user);
+        favoritoRepository.save(newFavorito);
 
-            newFavorito.setAnuncio(anuncio);
-
-            favoritoRepository.save(newFavorito);
-
-        } else {
-            throw new AnuncioNotFound();
-        }
     } 
 
     public List<Favorito> getFavoritos() {
@@ -63,22 +56,19 @@ public class FavoritoServices {
 
     }
 
-    public void deleteFavorito(String id) {
+    public void deleteItem(String id) {
 
         User user = userService.getLoggedInUser();
 
-        Favorito favOptional = favoritoRepository.findById(id)
+        Favorito item = favoritoRepository.findById(id)
                 .orElseThrow(() -> new AnuncioNotFound("O Anuncio " +
                         "Favoritado não foi encontrado."));
 
-        User userFavorito = favOptional.getUser();
-
-        if (user.equals(userFavorito)) {
-
-            favoritoRepository.delete(favOptional);
-
-        } else {
+        if (!item.userEquals(user)) {
             throw new UserNotAutorization();
         }
+
+        favoritoRepository.delete(item);
+
     }
 }

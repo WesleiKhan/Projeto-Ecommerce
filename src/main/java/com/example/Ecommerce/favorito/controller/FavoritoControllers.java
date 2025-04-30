@@ -2,7 +2,6 @@ package com.example.Ecommerce.favorito.controller;
 
 import java.util.List;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Ecommerce.favorito.entity.Favorito;
-import com.example.Ecommerce.favorito.service.FavoritoServices;
+import com.example.Ecommerce.favorito.service.FavoritoService;
 
 @RestController
 @RequestMapping("/favorito")
 public class FavoritoControllers {
 
-    private final FavoritoServices favoritoServices;
+    private final FavoritoService favoritoService;
 
-    public FavoritoControllers(FavoritoServices favoritoServices) {
-        this.favoritoServices = favoritoServices;
+    public FavoritoControllers(FavoritoService favoritoService) {
+        this.favoritoService = favoritoService;
     }
 
     @PostMapping("/add/{id}")
     public ResponseEntity<String> adicionar(@PathVariable String id) {
 
-        favoritoServices.addFavorito(id);
+        favoritoService.addItem(id);
 
         return ResponseEntity.ok().body("produto adicionado aos favoritos com sucesso!");
     }
@@ -35,7 +34,7 @@ public class FavoritoControllers {
     @GetMapping("/meus-favoritos")
     public ResponseEntity<List<Favorito>> viewFavoritos() {
 
-        List<Favorito> favoritos = favoritoServices.getFavoritos();
+        List<Favorito> favoritos = favoritoService.getFavoritos();
 
         return ResponseEntity.ok(favoritos);
     }
@@ -43,7 +42,7 @@ public class FavoritoControllers {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFavorito(@PathVariable String id) {
 
-        favoritoServices.deleteFavorito(id);
+        favoritoService.deleteItem(id);
 
         return ResponseEntity.ok().body("Produto deletado de favoritos com sucesso!");
 
