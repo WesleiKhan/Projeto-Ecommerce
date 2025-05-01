@@ -1,19 +1,18 @@
-package com.example.Ecommerce.transacoes.saque.controller;
+package com.example.Ecommerce.transacoes.controller;
 
+import com.example.Ecommerce.transacoes.saque.execeptions.SaqueInvalidoException;
+import com.example.Ecommerce.user.exceptions.UserNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.example.Ecommerce.transacoes.saque.execeptions.SaqueInvalidoException;
-import com.example.Ecommerce.user.exceptions.UserNotFound;
-
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.saque.controller")
-public class SaqueExceptions extends ResponseEntityExceptionHandler {
+@ControllerAdvice(basePackages = "com.example.Ecommerce.transacoes.controller" )
+public class TransacaoException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFound.class)
     private ResponseEntity<String> userNotFound(UserNotFound e) {
@@ -36,5 +35,4 @@ public class SaqueExceptions extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response.get("Erro"));
     }
-    
 }
