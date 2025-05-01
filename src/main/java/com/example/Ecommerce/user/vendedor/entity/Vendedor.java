@@ -3,7 +3,7 @@ package com.example.Ecommerce.user.vendedor.entity;
 import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.saque.entity.Saque;
+import com.example.Ecommerce.transacoes.saque.entity.Saque;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.objectValue.Endereco;
 import com.example.Ecommerce.user.vendedor.service.VendedorEntryEditDTO;

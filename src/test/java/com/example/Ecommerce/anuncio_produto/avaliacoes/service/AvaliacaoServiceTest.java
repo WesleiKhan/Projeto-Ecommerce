@@ -8,7 +8,7 @@ import com.example.Ecommerce.anuncio_produto.avaliacoes.repositorie.AvaliacaoRep
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.transacoes.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.user.entity.User;

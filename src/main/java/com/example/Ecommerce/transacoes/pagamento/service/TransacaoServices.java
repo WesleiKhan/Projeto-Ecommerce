@@ -1,4 +1,4 @@
-package com.example.Ecommerce.transacoes.service;
+package com.example.Ecommerce.transacoes.pagamento.service;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,8 +11,8 @@ import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
-import com.example.Ecommerce.transacoes.entity.Transacao;
-import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.repositorie.TransacaoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;

@@ -1,4 +1,4 @@
-package com.example.Ecommerce.saque.controller;
+package com.example.Ecommerce.transacoes.saque.controller;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.saque.entity.Saque;
-import com.example.Ecommerce.saque.service.SaqueService;
+import com.example.Ecommerce.transacoes.saque.entity.Saque;
+import com.example.Ecommerce.transacoes.saque.service.SaqueService;
 import com.stripe.exception.StripeException;
 
 @RestController

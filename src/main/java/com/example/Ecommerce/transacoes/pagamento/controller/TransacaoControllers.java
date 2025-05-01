@@ -1,4 +1,4 @@
-package com.example.Ecommerce.transacoes.controller;
+package com.example.Ecommerce.transacoes.pagamento.controller;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.transacoes.entity.Transacao;
-import com.example.Ecommerce.transacoes.service.TransacaoEntryDTO;
-import com.example.Ecommerce.transacoes.service.TransacaoServices;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.service.TransacaoEntryDTO;
+import com.example.Ecommerce.transacoes.pagamento.service.TransacaoServices;
 import com.stripe.exception.StripeException;
 
 @RestController

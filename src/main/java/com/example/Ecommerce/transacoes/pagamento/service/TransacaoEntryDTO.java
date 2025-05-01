@@ -1,4 +1,4 @@
-package com.example.Ecommerce.transacoes.service;
+package com.example.Ecommerce.transacoes.pagamento.service;
 
 public class TransacaoEntryDTO {
 

@@ -1,11 +1,11 @@
-package com.example.Ecommerce.transacoes.entity;
+package com.example.Ecommerce.transacoes.pagamento.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
-import com.example.Ecommerce.saque.entity.Saque;
+import com.example.Ecommerce.transacoes.saque.entity.Saque;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;

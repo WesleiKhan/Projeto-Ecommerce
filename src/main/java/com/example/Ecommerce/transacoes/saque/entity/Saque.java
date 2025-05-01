@@ -1,9 +1,9 @@
-package com.example.Ecommerce.saque.entity;
+package com.example.Ecommerce.transacoes.saque.entity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.example.Ecommerce.transacoes.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 
 import jakarta.persistence.Column;

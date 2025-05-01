@@ -1,11 +1,12 @@
-package com.example.Ecommerce.saque.service;
+package com.example.Ecommerce.transacoes.saque.service;
 
 import com.example.Ecommerce.client.service.stripe.contract.StripeTransfer;
-import com.example.Ecommerce.saque.entity.Saque;
-import com.example.Ecommerce.saque.execeptions.SaqueInvalidoException;
-import com.example.Ecommerce.saque.repositorie.SaqueRepository;
-import com.example.Ecommerce.transacoes.entity.Transacao;
-import com.example.Ecommerce.transacoes.repositorie.TransacaoRepository;
+import com.example.Ecommerce.transacoes.saque.entity.Saque;
+import com.example.Ecommerce.transacoes.saque.execeptions.SaqueInvalidoException;
+import com.example.Ecommerce.transacoes.saque.repositorie.SaqueRepository;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.repositorie.TransacaoRepository;
+import com.example.Ecommerce.transacoes.saque.service.SaqueService;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.service.UserService;

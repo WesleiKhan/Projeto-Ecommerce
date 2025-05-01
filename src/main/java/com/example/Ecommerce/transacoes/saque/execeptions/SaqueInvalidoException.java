@@ -1,4 +1,4 @@
-package com.example.Ecommerce.saque.execeptions;
+package com.example.Ecommerce.transacoes.saque.execeptions;
 
 public class SaqueInvalidoException extends RuntimeException {
 

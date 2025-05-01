@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.transacoes.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
 import com.example.Ecommerce.user.comprador.service.CompradorEntryEditDTO;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.objectValue.Endereco;
