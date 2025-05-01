@@ -1,4 +1,4 @@
-package com.example.Ecommerce.favorito.service;
+package com.example.Ecommerce.interacoes_do_usuario.favorito.service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;

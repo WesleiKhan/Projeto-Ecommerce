@@ -1,4 +1,4 @@
-package com.example.Ecommerce.carrinho.service;
+package com.example.Ecommerce.interacoes_do_usuario.carrinho.service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
