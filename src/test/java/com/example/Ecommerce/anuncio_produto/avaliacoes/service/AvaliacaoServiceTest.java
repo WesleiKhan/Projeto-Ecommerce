@@ -8,7 +8,7 @@ import com.example.Ecommerce.anuncio_produto.avaliacoes.repositorie.AvaliacaoRep
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
 import com.example.Ecommerce.user.entity.User;
@@ -92,9 +92,9 @@ public class AvaliacaoServiceTest {
         compradorMock.setId("123");
         compradorMock.setNome(loggedInUser);
 
-        Transacao transacaoMock = mock(Transacao.class);
-        transacaoMock.setProduto(anuncio);
-        transacaoMock.setComprador(compradorMock);
+        Pagamento pagamentoMock = mock(Pagamento.class);
+        pagamentoMock.setProduto(anuncio);
+        pagamentoMock.setComprador(compradorMock);
 
         when(compradorRepository.findByNome(loggedInUser))
                 .thenReturn(Optional.of(compradorMock));
@@ -169,9 +169,9 @@ public class AvaliacaoServiceTest {
         compradorMock.setId("123");
         compradorMock.setNome(loggedInUser);
 
-        Transacao transacaoMock = mock(Transacao.class);
-        transacaoMock.setProduto(anuncio);
-        transacaoMock.setComprador(compradorMock);
+        Pagamento pagamentoMock = mock(Pagamento.class);
+        pagamentoMock.setProduto(anuncio);
+        pagamentoMock.setComprador(compradorMock);
 
         when(compradorRepository.findByNome(loggedInUser))
                 .thenReturn(Optional.of(compradorMock));
@@ -198,9 +198,9 @@ public class AvaliacaoServiceTest {
         compradorMock.setId("123");
         compradorMock.setNome(loggedInUser);
 
-        Transacao transacaoMock = mock(Transacao.class);
-        transacaoMock.setProduto(anuncio);
-        transacaoMock.setComprador(compradorMock);
+        Pagamento pagamentoMock = mock(Pagamento.class);
+        pagamentoMock.setProduto(anuncio);
+        pagamentoMock.setComprador(compradorMock);
 
         when(compradorRepository.findByNome(loggedInUser))
                 .thenReturn(Optional.of(compradorMock));

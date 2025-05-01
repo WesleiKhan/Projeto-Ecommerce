@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
 import com.example.Ecommerce.user.comprador.service.CompradorEntryEditDTO;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.objectValue.Endereco;
@@ -37,7 +37,7 @@ public class Comprador {
     @Column(name = "transacoes_id")
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Transacao> transacoes;
+    private List<Pagamento> transacoes;
 
     @Column(name = "avaliacoes_id")
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -108,7 +108,7 @@ public class Comprador {
         this.endereco = endereco;
     }
 
-    public List<Transacao> getTransacoes() {
+    public List<Pagamento> getTransacoes() {
         return transacoes;
     }
 

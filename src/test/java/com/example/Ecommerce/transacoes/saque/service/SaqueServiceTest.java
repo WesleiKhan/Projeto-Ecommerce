@@ -4,9 +4,8 @@ import com.example.Ecommerce.client.service.stripe.contract.StripeTransfer;
 import com.example.Ecommerce.transacoes.saque.entity.Saque;
 import com.example.Ecommerce.transacoes.saque.execeptions.SaqueInvalidoException;
 import com.example.Ecommerce.transacoes.saque.repositorie.SaqueRepository;
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
-import com.example.Ecommerce.transacoes.pagamento.repositorie.TransacaoRepository;
-import com.example.Ecommerce.transacoes.saque.service.SaqueService;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
+import com.example.Ecommerce.transacoes.pagamento.repositorie.PagamentoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.service.UserService;
@@ -41,7 +40,7 @@ public class SaqueServiceTest {
     UserService userService;
 
     @Mock
-    TransacaoRepository transacaoRepository;
+    PagamentoRepository pagamentoRepository;
 
     @Mock
     VendedorRepository vendedorRepository;
@@ -55,7 +54,7 @@ public class SaqueServiceTest {
     private User loggedInUser;
     private Vendedor vendedor;
     private Saque saque;
-    private Transacao transacao;
+    private Pagamento pagamento;
     private long valorEmCendtavos;
 
     @BeforeEach
@@ -78,15 +77,15 @@ public class SaqueServiceTest {
         vendedor.setId_account_stripe("id_Account");
         vendedor.setSaques(saques);
 
-        this.transacao = new Transacao();
-        transacao.setValor_total(new BigDecimal(1000));
-        transacao.setId("321");
-        transacao.setId_charge_stripe("id_charge");
+        this.pagamento = new Pagamento();
+        pagamento.setValor_total(new BigDecimal(1000));
+        pagamento.setId("321");
+        pagamento.setId_charge_stripe("id_charge");
 
         this.saque = new Saque();
         saque.setId("123");
         saque.setSacador(vendedor);
-        saque.setTransacao(transacao);
+        saque.setTransacao(pagamento);
 
         this.valorEmCendtavos = 90000;
     }
@@ -98,9 +97,9 @@ public class SaqueServiceTest {
 
         when(vendedorRepository.findByNome(loggedInUser)).thenReturn(Optional.of(vendedor));
 
-        when(transacaoRepository.findById("321")).thenReturn(Optional.of(transacao));
+        when(pagamentoRepository.findById("321")).thenReturn(Optional.of(pagamento));
 
-        when(saqueRepository.findByTransacao(transacao)).thenReturn(Optional.empty());
+        when(saqueRepository.findByTransacao(pagamento)).thenReturn(Optional.empty());
 
         when(stripeTransfer.createTransfer(anyString(), anyString(),
                 anyLong())).thenReturn(mock(Transfer.class));
@@ -111,12 +110,12 @@ public class SaqueServiceTest {
 
         verify(vendedorRepository).findByNome(loggedInUser);
 
-        verify(transacaoRepository).findById("321");
+        verify(pagamentoRepository).findById("321");
 
-        verify(saqueRepository).findByTransacao(transacao);
+        verify(saqueRepository).findByTransacao(pagamento);
 
         verify(stripeTransfer).createTransfer(vendedor.getId_account_stripe(),
-                transacao.getId_charge_stripe(), valorEmCendtavos);
+                pagamento.getId_charge_stripe(), valorEmCendtavos);
 
         verify(saqueRepository).save(any(Saque.class));
     }
@@ -147,7 +146,7 @@ public class SaqueServiceTest {
 
         when(vendedorRepository.findByNome(loggedInUser)).thenReturn(Optional.of(vendedor));
 
-        when(transacaoRepository.findById("321")).thenReturn(Optional.empty());
+        when(pagamentoRepository.findById("321")).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> saqueService.sacar("321"));
@@ -167,9 +166,9 @@ public class SaqueServiceTest {
 
         when(vendedorRepository.findByNome(loggedInUser)).thenReturn(Optional.of(vendedor));
 
-        when(transacaoRepository.findById("321")).thenReturn(Optional.of(transacao));
+        when(pagamentoRepository.findById("321")).thenReturn(Optional.of(pagamento));
 
-        when(saqueRepository.findByTransacao(transacao)).thenReturn(Optional.of(saque));
+        when(saqueRepository.findByTransacao(pagamento)).thenReturn(Optional.of(saque));
 
         SaqueInvalidoException exception = assertThrows(SaqueInvalidoException.class,
                 () -> saqueService.sacar("321"));

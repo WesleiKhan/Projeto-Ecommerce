@@ -7,7 +7,7 @@ import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
 import com.example.Ecommerce.carrinho.entity.Carrinho;
 import com.example.Ecommerce.favorito.entity.Favorito;
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -67,7 +67,7 @@ public class Anuncio {
     @Column(name = "transacoes_id")
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private List<Transacao> transacoes;
+    private List<Pagamento> transacoes;
 
     @Column(name = "avaliacoes_id")
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)

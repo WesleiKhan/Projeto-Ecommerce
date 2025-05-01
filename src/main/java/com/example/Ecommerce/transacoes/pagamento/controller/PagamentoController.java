@@ -10,34 +10,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
-import com.example.Ecommerce.transacoes.pagamento.service.TransacaoEntryDTO;
-import com.example.Ecommerce.transacoes.pagamento.service.TransacaoServices;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
+import com.example.Ecommerce.transacoes.pagamento.service.PagamentoEntryDTO;
+import com.example.Ecommerce.transacoes.pagamento.service.PagamentoService;
 import com.stripe.exception.StripeException;
 
 @RestController
 @RequestMapping("/transacoes")
-public class TransacaoControllers {
+public class PagamentoController {
 
-    private final TransacaoServices transacaoServices;
+    private final PagamentoService pagamentoService;
 
-    public TransacaoControllers(TransacaoServices transacaoServices) {
-        this.transacaoServices = transacaoServices;
+    public PagamentoController(PagamentoService pagamentoService) {
+        this.pagamentoService = pagamentoService;
     }
 
     @PostMapping("/comprar/{id}")
-    public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody TransacaoEntryDTO data) throws StripeException {
+    public ResponseEntity<String> comprar(@PathVariable String id, @RequestBody PagamentoEntryDTO data) throws StripeException {
 
-        transacaoServices.createTrasacao(id, data);
+        pagamentoService.makePayment(id, data);
 
         return ResponseEntity.ok().body("Compra realizada com sucesso !");
        
     }
 
     @GetMapping("/ver-transacoes")
-    public ResponseEntity<List<Transacao>> verTransacoes() {
+    public ResponseEntity<List<Pagamento>> verTransacoes() {
 
-        List<Transacao> transacoes = transacaoServices.getTransacao();
+        List<Pagamento> transacoes = pagamentoService.seeTransacao();
 
         return ResponseEntity.ok().body(transacoes);
     

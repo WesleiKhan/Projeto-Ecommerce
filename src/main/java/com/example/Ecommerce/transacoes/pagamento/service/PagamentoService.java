@@ -3,6 +3,7 @@ package com.example.Ecommerce.transacoes.pagamento.service;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.service.UserService;
 import com.example.Ecommerce.client.service.stripe.contract.StripePayment;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,8 @@ import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
 import com.example.Ecommerce.user.comprador.entity.Comprador;
 import com.example.Ecommerce.user.comprador.repositorie.CompradorRepository;
-import com.example.Ecommerce.transacoes.pagamento.entity.Transacao;
-import com.example.Ecommerce.transacoes.pagamento.repositorie.TransacaoRepository;
+import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
+import com.example.Ecommerce.transacoes.pagamento.repositorie.PagamentoRepository;
 import com.example.Ecommerce.user.entity.User;
 import com.example.Ecommerce.user.exceptions.UserNotFound;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
@@ -20,9 +21,9 @@ import com.example.Ecommerce.user.vendedor.repositorie.VendedorRepository;
 import com.stripe.exception.StripeException;
 
 @Service
-public class TransacaoServices {
+public class PagamentoService {
 
-    private final TransacaoRepository transacaoRepository;
+    private final PagamentoRepository pagamentoRepository;
 
     private final AnuncioRepository anuncioRepository;
 
@@ -34,14 +35,14 @@ public class TransacaoServices {
 
     private final StripePayment stripePayment;
 
-    public TransacaoServices(TransacaoRepository transacaoRepository,
-                             AnuncioRepository anuncioRepository,
-                             UserService userService,
-                             CompradorRepository compradorRepository,
-                             VendedorRepository vendedorRepository,
-                             StripePayment stripePayment) {
+    public PagamentoService(PagamentoRepository pagamentoRepository,
+                            AnuncioRepository anuncioRepository,
+                            UserService userService,
+                            CompradorRepository compradorRepository,
+                            VendedorRepository vendedorRepository,
+                            StripePayment stripePayment) {
 
-        this.transacaoRepository = transacaoRepository;
+        this.pagamentoRepository = pagamentoRepository;
         this.anuncioRepository =anuncioRepository;
         this.userService = userService;
         this.compradorRepository = compradorRepository;
@@ -51,7 +52,7 @@ public class TransacaoServices {
     }
 
 
-    public void createTrasacao(String id, TransacaoEntryDTO data) throws StripeException {
+    public void makePayment(String id, PagamentoEntryDTO data) throws StripeException {
 
         User user = userService.getLoggedInUser();
 
@@ -60,7 +61,8 @@ public class TransacaoServices {
                         " Compradores."));
 
 
-        Anuncio anuncio = anuncioRepository.findById(id).orElseThrow();
+        Anuncio anuncio = anuncioRepository.findById(id)
+                .orElseThrow(AnuncioNotFound::new);
 
         BigDecimal valor = anuncio.getValor();
 
@@ -71,28 +73,28 @@ public class TransacaoServices {
 
         String id_charge = stripePayment.createPaymentIntent(data.getToken(), valor_total_centavos);
 
-        Transacao newTransacao = new Transacao(data.getQuantidade());
+        Pagamento newPagamento = new Pagamento(data.getQuantidade());
 
-        newTransacao.setProduto(anuncio);
+        newPagamento.setProduto(anuncio);
 
-        newTransacao.setComprador(infoComprador);
+        newPagamento.setComprador(infoComprador);
 
-        newTransacao.setValor_total(valor_total);
+        newPagamento.setValor_total(valor_total);
 
-        newTransacao.setId_charge_stripe(id_charge);
+        newPagamento.setId_charge_stripe(id_charge);
 
-        transacaoRepository.save(newTransacao);
+        pagamentoRepository.save(newPagamento);
 
     }
 
-    public List<Transacao> getTransacao() {
+    public List<Pagamento> seeTransacao() {
 
         User user = userService.getLoggedInUser();
 
         Vendedor vendedor = vendedorRepository.findByNome(user)
                 .orElseThrow(UserNotFound::new);
 
-        return transacaoRepository.findByProdutoVendedor(vendedor);
+        return pagamentoRepository.findByProdutoVendedor(vendedor);
 
     }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice(basePackages = "com.example.Ecommerce.transacoes.controller")
-public class TransacaoExceptions extends ResponseEntityExceptionHandler {
+public class PagamentoExceptions extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UserNotFound.class)
     private ResponseEntity<String> userNotFound(UserNotFound e) {

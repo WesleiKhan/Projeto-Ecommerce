@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "transacoes")
-public class Transacao {
+public class Pagamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -52,10 +52,10 @@ public class Transacao {
     @Column(name = "id_charge_stripe")
     private String id_charge_stripe;
 
-    public Transacao() {
+    public Pagamento() {
     }
 
-    public Transacao(int quantidade) {
+    public Pagamento(int quantidade) {
         this.quantidade = quantidade;
     }
 

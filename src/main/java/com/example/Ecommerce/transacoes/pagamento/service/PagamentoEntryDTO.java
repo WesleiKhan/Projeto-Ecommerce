@@ -1,6 +1,6 @@
 package com.example.Ecommerce.transacoes.pagamento.service;
 
-public class TransacaoEntryDTO {
+public class PagamentoEntryDTO {
 
     private String token;
     
