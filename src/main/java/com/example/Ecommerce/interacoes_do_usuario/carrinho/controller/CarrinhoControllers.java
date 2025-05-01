@@ -1,4 +1,4 @@
-package com.example.Ecommerce.carrinho.controller;
+package com.example.Ecommerce.interacoes_do_usuario.carrinho.controller;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.carrinho.entity.Carrinho;
-import com.example.Ecommerce.carrinho.service.CarrinhoEntryDTO;
-import com.example.Ecommerce.carrinho.service.CarrinhoService;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.entity.Carrinho;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.service.CarrinhoEntryDTO;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.service.CarrinhoService;
 
 import jakarta.validation.Valid;
 

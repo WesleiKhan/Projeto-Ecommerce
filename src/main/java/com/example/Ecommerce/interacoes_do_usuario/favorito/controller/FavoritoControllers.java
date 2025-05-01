@@ -1,4 +1,4 @@
-package com.example.Ecommerce.favorito.controller;
+package com.example.Ecommerce.interacoes_do_usuario.favorito.controller;
 
 import java.util.List;
 
@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Ecommerce.favorito.entity.Favorito;
-import com.example.Ecommerce.favorito.service.FavoritoService;
+import com.example.Ecommerce.interacoes_do_usuario.favorito.entity.Favorito;
+import com.example.Ecommerce.interacoes_do_usuario.favorito.service.FavoritoService;
 
 @RestController
 @RequestMapping("/favorito")

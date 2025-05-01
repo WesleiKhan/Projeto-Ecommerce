@@ -1,4 +1,4 @@
-package com.example.Ecommerce.carrinho.service;
+package com.example.Ecommerce.interacoes_do_usuario.carrinho.service;
 
 public class CarrinhoEntryDTO {
     

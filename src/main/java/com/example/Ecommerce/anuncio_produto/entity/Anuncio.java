@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.example.Ecommerce.anuncio_produto.avaliacoes.entity.Avaliacao;
 import com.example.Ecommerce.anuncio_produto.service.AnuncioEntryDTO;
-import com.example.Ecommerce.carrinho.entity.Carrinho;
-import com.example.Ecommerce.favorito.entity.Favorito;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.entity.Carrinho;
+import com.example.Ecommerce.interacoes_do_usuario.favorito.entity.Favorito;
 import com.example.Ecommerce.transacoes.pagamento.entity.Pagamento;
 import com.example.Ecommerce.user.vendedor.entity.Vendedor;
 import com.fasterxml.jackson.annotation.JsonIgnore;

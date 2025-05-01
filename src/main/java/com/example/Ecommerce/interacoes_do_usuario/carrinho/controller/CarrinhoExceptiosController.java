@@ -1,4 +1,4 @@
-package com.example.Ecommerce.favorito.controller;
+package com.example.Ecommerce.interacoes_do_usuario.carrinho.controller;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
@@ -11,8 +11,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice(basePackages = "com.example.Ecommerce.favorito.controller")
-public class FavoritoExceptiosController extends ResponseEntityExceptionHandler {
+@ControllerAdvice(basePackages = "com.example.Ecommerce.carrinho.controller")
+public class CarrinhoExceptiosController extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(AnuncioNotFound.class)
     private ResponseEntity<String> anuncioNotFound(AnuncioNotFound e) {
@@ -21,8 +21,7 @@ public class FavoritoExceptiosController extends ResponseEntityExceptionHandler 
 
         response.put("Erro", e.getMessage());
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(response.get("Erro"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro");
     }
 
     @ExceptionHandler(UserNotAutorization.class)
@@ -30,9 +29,9 @@ public class FavoritoExceptiosController extends ResponseEntityExceptionHandler 
 
         Map<String, String> response = new HashMap<>();
 
-        response.put("Erro", e.getMessage());
+        response.put("Message", e.getMessage());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(response.get("Erro"));
+                .body(response.get("Message"));
     }
 }

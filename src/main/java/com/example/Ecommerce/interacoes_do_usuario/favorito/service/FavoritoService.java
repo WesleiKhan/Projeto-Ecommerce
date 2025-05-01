@@ -1,4 +1,4 @@
-package com.example.Ecommerce.favorito.service;
+package com.example.Ecommerce.interacoes_do_usuario.favorito.service;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.favorito.entity.Favorito;
-import com.example.Ecommerce.favorito.repositorie.FavoritoRepository;
+import com.example.Ecommerce.interacoes_do_usuario.favorito.entity.Favorito;
+import com.example.Ecommerce.interacoes_do_usuario.favorito.repositorie.FavoritoRepository;
 import com.example.Ecommerce.user.entity.User;
 
 @Service

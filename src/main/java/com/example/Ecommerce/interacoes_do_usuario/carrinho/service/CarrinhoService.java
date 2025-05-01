@@ -1,7 +1,6 @@
-package com.example.Ecommerce.carrinho.service;
+package com.example.Ecommerce.interacoes_do_usuario.carrinho.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.example.Ecommerce.anuncio_produto.exceptions.AnuncioNotFound;
 import com.example.Ecommerce.user.exceptions.UserNotAutorization;
@@ -10,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.anuncio_produto.repositorie.AnuncioRepository;
-import com.example.Ecommerce.carrinho.entity.Carrinho;
-import com.example.Ecommerce.carrinho.repositorie.CarrinhoRepository;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.entity.Carrinho;
+import com.example.Ecommerce.interacoes_do_usuario.carrinho.repositorie.CarrinhoRepository;
 import com.example.Ecommerce.user.entity.User;
 
 

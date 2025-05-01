@@ -1,4 +1,4 @@
-package com.example.Ecommerce.favorito.entity;
+package com.example.Ecommerce.interacoes_do_usuario.favorito.entity;
 
 import com.example.Ecommerce.anuncio_produto.entity.Anuncio;
 import com.example.Ecommerce.user.entity.User;
