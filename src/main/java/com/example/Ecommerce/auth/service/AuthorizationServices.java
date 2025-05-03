@@ -1,7 +1,5 @@
 package com.example.Ecommerce.auth.service;
 
-import java.util.Optional;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,18 +22,14 @@ public class AuthorizationServices implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<User> user = userRepository.findByEmail(username);
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new UserNotFound("Você ainda não e cadastrado, " +
+                        "por favor realizar o cadastro antes de tentar efetuar o login!"));
 
-        if (user.isPresent()) {
+        return new CustomUserDetails(user.getId(), user.getEmail(),
+                user.getTipo_user(), user.getPassword());
 
-            User user1 = user.get();
 
-            return new CustomUserDetails(user1.getId(), user1.getEmail(), user1.getTipo_user(), user1.getPassword());
-
-        } else {
-
-            throw new UserNotFound("Você ainda não e cadastrado, por favor realizar o cadastror antes de tentar efetuar o login!");
-        }
     }
     
 }
